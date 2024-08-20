@@ -1,0 +1,25 @@
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  width: 300px; 
+  background-color: #DCE7F0;
+  color: #4B4B4B;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.content {
+  flex: 1; 
+  overflow-y: auto;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.channels h3,
+.direct-messages h3 {
+  margin-bottom: 10px;
+}

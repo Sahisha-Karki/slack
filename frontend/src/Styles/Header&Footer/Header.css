@@ -1,0 +1,71 @@
+.landing-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 50px;
+  gap: 28px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.landing-logo img {
+  height: 40px;
+  transition: transform 0.3s;
+}
+
+.landing-logo img:hover {
+  transform: rotate(15deg);
+}
+
+.landing-nav {
+  display: flex;
+  justify-content: center;
+  background-color: #073458;
+  padding: 16px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.landing-nav:hover {
+  background-color: #041f3b;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.landing-nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.landing-nav a:hover {
+  color: #ffdd57;
+  transform: translateY(-3px);
+}
+
+.landing-sign-in {
+  background-color: white;
+  color: #032A53;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 1px solid black;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.landing-header .landing-learn-more,
+.landing-header .landing-sign-in {
+  margin-left: 10px;
+}
+
+.landing-learn-more{
+  background-color: #073458;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+}
+
+.landing-header .header-buttons{
+  margin-left: 0;
+}

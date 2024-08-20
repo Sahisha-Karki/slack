@@ -1,0 +1,160 @@
+*{
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  
+  .audio-video-settings {
+    flex: 1;
+    padding: 20px;
+    max-height: calc(100vh - 80px); /* Adjust for modal size */
+    overflow-y: auto;
+    background-color: #FBFCFC;
+    }
+    
+    .settings-card {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #2e2e2e;
+    }
+    
+    .setting-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 16px;
+      color: #837979;
+    }
+    
+    select, input[type="range"] {
+      width:250px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .preview {
+      background-color: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 20px 180px;
+      text-align: center;
+    }
+    
+    .preview-image {
+      margin-bottom: 40px;
+    }
+    
+    .setting-row {
+      display: flex;
+      gap: 130px;
+      align-items: center;
+      
+    }
+    .setting-row1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+    }
+    
+   
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    
+    .sound-icon {
+      margin-left: 10px;
+    }
+  
+  
+    .preview-image img {
+      display: block; /* Ensure it’s not hidden */
+      width: 100%;
+      height: auto; /* Maintain aspect ratio */
+      align-items: center;
+    }
+    
+  .slider-label {
+      color: #095283; /* Blue color for the percentage label */
+      font-size: 14px;
+      margin-left: 10px;
+      font-weight: bold;
+  }
+  
+  /* MicTest component styles */
+  .mic-test-container {
+      display: flex;
+      align-items: center;
+      padding: 10px; /* Adjust padding as needed */
+      background-color: #f0f0f0; /* Adjust background color as needed */
+  }
+  
+  .text-container {
+      margin-right: 10px; /* Adjust margin as needed */
+      font-size: 16px; /* Adjust font size as needed */
+      font-family: 'poppins';
+  }
+  
+  
+  .check-button {
+      background-color: #9ee08a;
+      color: rgb(228, 26, 26);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+  }
+  
+  
+  
+  .slider-grp select, input[type="range"] {
+    width:250px;
+    padding: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  
+  .test-button {
+    background-color: #0073e6;
+    color: white;
+    font-family: 'Poppins';
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+  }
+  
+  .test-button:hover {
+    background-color: #5ec066;
+  }
+  
+  .test-button:active {
+    transform: scale(0.95);
+    background-color: #5ec066;
+  }
+  

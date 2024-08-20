@@ -1,0 +1,120 @@
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  background-color: #032A53;
+  color: white;
+  padding: 20px;
+}
+
+.footer-center,
+.footer-right {
+  flex: 1;
+  margin: 10px 10px;
+}
+
+.footer-logo {
+  margin-left: 120px;
+  margin-bottom: 20px;
+  width: 50px;
+  height: auto;
+  transition: transform 0.3s;
+}
+
+.footer-logo:hover {
+  transform: scale(1.1);
+}
+
+.footer-contact p,
+.footer-services p,
+.footer-right p {
+  margin: 16px 0;
+  margin-left: 50px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.footer-contact p:hover,
+.footer-services p:hover,
+.footer-right p:hover {
+  transform: translateX(5px);
+}
+
+.contact-icon {
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+
+.contact-icon:hover {
+  transform: rotate(15deg);
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.footer-social svg {
+  font-size: 24px;
+  margin: 0 50px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.footer-social svg:hover {
+  transform: scale(1.2);
+}
+
+.footer-services {
+  margin: 20px;
+}
+
+.inner-footer-service {
+  margin-left: 200px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-links p {
+  flex: 1 1 calc(40% - 5px);
+  margin: 0;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.footer-links p:hover {
+  transform: translateX(5px);
+}
+
+.footer-subscribe {
+  margin-right: 50px;
+}
+
+.footer-subscribe input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  width: 300px;
+  transition: box-shadow 0.3s;
+}
+
+.footer-subscribe button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #032A53;
+  color: #ffffff;
+  border: 1px solid #fff;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.footer-subscribe button:hover {
+  background-color: #ffffff;
+  color: #000;
+  border: 1px solid black;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,65 @@
+.modal-overlay {
+  position: fixed;
+  font-family: 'Poppins', sans-serif;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 1000px; /* Adjusted width for better fit */
+  height: 75%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Center all items horizontally */
+    align-items: center; /* Center items vertically */
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    
+}
+
+.modal-header > * {
+    margin: 0; /* Add space between items */
+}
+
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modal-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+
+
+.settings-button .fa-icon {
+  margin-right: 8px;
+  font-size: 24px;
+}
+
+h2{
+  font-size: 24px;
+  font-weight: 500;
+}

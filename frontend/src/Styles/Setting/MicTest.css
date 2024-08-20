@@ -1,0 +1,48 @@
+.mic-test-container {
+    background-color: #ffffff;
+    padding: 0px; 
+    max-width: 100%;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mic-test-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.test-button {
+    background-color: #008000;
+    color: #fff;
+    padding: 10px 10px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.test-button1:hover {
+    background-color: #005700;
+}
+
+.mic-bars {
+    display: flex;
+    flex-grow: 1;
+}
+
+.mic-bar {
+    width: 8px;
+    height: 20px;
+    background-color: #bdbdbd;
+    margin-right: 2px;
+    border-radius: 4px;
+    transition: height 0.3s, background-color 0.3s;
+}
+
+.mic-bar.active {
+    height: 25px; /* Adjust height based on mic input */
+    width: 8px;
+    background-color: #4caf50;
+}

@@ -1,0 +1,377 @@
+.messages-media-container {
+    background-color: #FBFCFC;
+    padding: 20px;
+    flex: 1;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+   }
+  
+  .section {
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #3A3A3A;
+     line-height: 30px;
+  }
+  
+  .radio-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+    
+   }
+  
+  .radio-group-vertical label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #747474;
+   }
+  
+  .divider {
+     border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin: 15px 0;
+  }
+
+  p{
+    color: #747474;
+    font-size: 13px;
+    font-weight: 500;
+   }
+
+  .example {
+    background-color: #F8F8F8;
+    border-radius: 10px;
+    padding: 8px, 10px, 8px, 10px;
+     display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    transition: all 0.3s ease;
+    height: 68px;
+  }
+  
+  .example.clean {
+    flex-direction: row;
+    }
+  
+  .example.compact {
+    padding: 8px, 10px, 8px, 10px;
+    align-items: center;
+    flex-direction: row;
+    height: 40px;
+    gap: 15px;
+  }
+  
+  .example.compact .avatar {
+    display: none;
+   }
+  
+   
+  .example.compact .time {
+    order: 1;
+    margin-left: 25px;
+    margin-top: 1px;
+    }
+  
+  .example.compact .name {
+    order: 2;
+  }
+  
+  .example.compact .message {
+    order: 3;
+   }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    gap: 0px;
+    border-radius: 100px;
+    background-color: white;
+    margin: 10px 20px;
+   
+    
+  }
+  
+  .message-content {
+    display: flex;
+    flex-direction: column;
+     /* background-color: red; */
+
+  }
+  
+.name-time{
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    
+}
+
+  .time {
+    color: #616061;
+    font-size: 12px;
+    margin-top: 3px;
+    font-weight: 400;
+  }
+  
+  .name {
+    font-weight: 900;
+    font-size: 15px;
+    color: #1D1C1D;
+   }
+  
+  .message {
+     color: #1D1C1D;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+
+  
+  .lastname {
+    transition: opacity 0.3s ease, width 0.3s ease;
+    display: inline-block;
+    margin-left: 4px;
+    margin-right: 15px;
+    
+    
+  }
+  
+  .lastname.hide {
+    opacity: 0;
+    height: 0;
+    width: 0;
+     overflow: hidden;
+ 
+  }
+  
+  .lastname.show {
+    opacity: 1;
+ 
+   }
+  
+
+
+
+
+
+
+
+
+  
+  .additional-options ul {
+    list-style-type: none;
+    padding: 0;
+   }
+  
+  .additional-options li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .additional-options span {
+    font-size: 13px;
+    color: #747474;
+    font-weight: 500;
+  }
+  
+  .additional-options button {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  .additional-options button.on {
+    background-color: #2ecc71;
+  }
+  
+  .additional-options button.off {
+    background-color: #e74c3c;
+  }
+  
+
+  .subsection h4{
+ font-size: 15px;
+    font-weight: 500;
+    margin-bottom: -10px;
+    margin-top: -8px;
+   
+  }
+
+  .emoji-skin-tones {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+   }
+  
+   .emoji-skin-tone {
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+  }
+  .emoji-skin-tone.selected {
+    border-color: #1264a3;
+    box-shadow: 0 0 0 2px #1264a3;
+  }
+  
+ 
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .checkbox-group label {
+    color: #747474;
+    font-weight: 500;
+    font-size: 13px;
+     display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .radio-group-verticall
+   {
+    margin: 9px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+    
+   }
+  
+  .radio-group-verticall label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #747474;
+   }
+   
+  
+ 
+  
+  .custom-emoji-selection {
+    margin-left: 27px;
+    margin-top: -20px;
+  }
+  
+  .emoji-options {
+    display: flex;
+    gap: 10px;
+    }
+  
+  .emoji-option {
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .emoji-option.selected {
+    border-color: #1264a3;
+    box-shadow: 0 0 0 2px #1264a3;
+  }
+  
+  .emoji-example {
+    height: 64px;
+    position: relative;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+  }
+
+  .message-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .emoji-reactions {
+    position: absolute;
+    height: 34px;
+    right: 20px;
+    top: -15px;
+    display: flex;
+    gap: 2px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .reaction {
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px ,4px;
+    border-radius: 4px;
+  }
+  
+  .reaction:hover {
+    background-color: #f0f0f0;
+  }
+  .reaction.more {
+    font-weight: bold;
+  }
+
+  .indented {
+    margin-left: 20px;
+  }
+
+
+  .emoji-reactions .icon{
+            font-size: 21px;
+            margin-top: 5px;
+  }
+
+
+
+
+
+
+
+  

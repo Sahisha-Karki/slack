@@ -1,0 +1,178 @@
+.profile-modal-overlay {
+  position: fixed;
+  top: 6.2%;
+  left: 82.5%;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.profile-modal-content {
+  background: #C4CCD3;
+  padding: 20px;
+  width: 280px;
+  max-width: 90%;
+  height: 825px;
+  position: relative;
+}
+
+.profile-header {
+  padding: 15px;
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.profile-header h2 {
+  text-align: center;
+  margin: 0;
+  color: #333;
+}
+
+.profile-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: #333;
+}
+
+.profile-title {
+  margin: 0 0 15px;
+  color: #6a6e73;
+}
+
+.profile-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #31a24c;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-text {
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: space-between; /* Arrange buttons in a row */
+  gap: 12px;
+}
+
+.action-button {
+  background-color: #e4e6eb;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.2s;
+  flex: 1; /* Make buttons take equal space */
+}
+
+.action-button:hover {
+  background-color: #d8dadf;
+  transform: scale(1.02);
+}
+
+.icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.contact-info {
+  margin-top: 30px;
+}
+
+.contact-info p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.contact-item .icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.contact-item .value {
+  font-size: 16px;
+  color: #6a6e73;
+}
+
+.about-me {
+  margin-top: 30px;
+}
+
+.about-me p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.about-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.about-item .label {
+  font-size: 16px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.about-item .value {
+  font-size: 16px;
+  color: #6a6e73;
+}

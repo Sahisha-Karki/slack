@@ -1,0 +1,29 @@
+.thread-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .thread-container h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .thread-container p {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .discover-link {
+    font-size: 15px;
+    color: #1264A3; 
+    text-decoration: none;
+  }
+  
+  .discover-link:hover {
+    text-decoration: underline;
+  }
+  

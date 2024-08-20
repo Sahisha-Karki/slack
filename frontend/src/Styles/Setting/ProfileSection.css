@@ -1,0 +1,210 @@
+.profile-section {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    position: relative;  /* Ensure positioning for buttons */
+    flex: 1;
+    padding: 10px 20px ;
+    max-height: calc(100vh - 80px); /* Adjust for modal size */
+    overflow-y: auto;
+    background-color: #ffffff;
+ }
+ .profile-section:hover{
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+ }
+  
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #3A3A3A;
+   }
+  
+  .profile-header h2 {
+    margin: 0;
+    font-size: 20px;
+     color: #3A3A3A;
+  font-weight: 600;
+
+
+
+  }
+  
+  .profile-edit-button {
+    background-color: #085FA7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 109px;
+    height: 44px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-button-hidden {
+    background-color: transparent;
+    border: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+  }
+  
+  .edit-icon {
+    font-size: 16px;
+    color: #666;
+    transition: transform 0.3s ease;
+  }
+  
+  .edit-icon.rotate {
+    transform: rotate(180deg);
+  }
+  
+  .profile-image-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 40px;
+
+    
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    cursor: pointer;  /* Added for better user experience */
+
+  }
+  
+  .profile-name-role h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #747474;
+    font-weight: 600;
+   }
+  
+  .profile-name-role p {
+    margin: 5px 0 0;
+    color: #747474;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+      
+  }
+  
+  .profile-fields {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-fields label {
+    margin-top: 15px;
+    font-weight: 400;
+    color: #747474;
+    font-size: 15px;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-top: 5px;
+    
+  }
+  
+  .input-container input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #747474;
+    font-weight: 500;
+    line-height: 24px;
+   }
+   .voice-button{
+    width: 83%;
+    padding: 10px;
+    border: 1px solid #EE8A8A;
+    border-radius: 5px;
+    height: 45px;
+    background-color: white;
+    cursor: pointer;
+    color: #616161;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21.28px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+   }
+
+   .microphone{
+    font-size: 20px;
+   }
+  
+  .input-container .edit-icon {
+    position: absolute;
+    right: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    cursor: pointer;
+  }
+  .profile-edit {
+    position: relative; /* Ensure the profile-edit container has relative positioning */
+    padding-bottom: 60px; /* Make space for buttons */
+    margin-bottom: 20px;
+  }
+  
+  
+
+.savee-button, .cancel-button {
+    background-color: #0A7148;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    bottom: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: -18px;
+ }
+  
+  .savee-button {
+    right: 20px; /* Adjust position */
+    bottom: -10px; 
+  }
+  
+  .cancel-button {
+    right: 130px; /* Adjust position */
+    background-color: #CF3014;
+    bottom: -10px;
+  }
+  
+  .savee-button:hover, .cancel-button:hover {
+    opacity: 0.9;
+  }
+
+  .savee-button + .cancel-button {
+    margin-right: 10px; /* Add space between buttons */
+    
+  }
+
+  .emailcom{
+    font-weight: 900;
+    font-size: 13px;
+  }

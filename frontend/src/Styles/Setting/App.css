@@ -1,0 +1,8 @@
+/* index.css or App.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+.app {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background-color: #fff;
+  }

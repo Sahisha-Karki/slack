@@ -1,0 +1,204 @@
+*{
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .notification-settings {
+    flex: 1;
+    padding: 20px;
+    max-height: calc(100vh - 80px); /* Adjust for modal size */
+    overflow-y: auto;
+    background-color: #FBFCFC;
+  
+  }
+  
+  .setting-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .setting-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .setting-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  
+  .setting-description {
+    font-size: 14px;
+    color: #5e5e5e;
+    margin: 0 0 16px 0;
+    max-width: 90%;
+    margin-top: 10px;
+  }
+  
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  
+  .radio-group label,
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #313131;
+  }
+  
+  .radio-group input[type="radio"],
+  .checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  .schedule-selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .schedule-selectors select {
+    padding: 8px;
+    border: 1px solid #505050;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    width: 100%; /* Ensures full width */
+    max-width: 435px; /* Set a maximum width */
+  }
+  
+  .schedule-selectors span {
+    font-size: 14px;
+  }
+  
+  .custom-day {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    margin-top:10px;
+  
+  }
+  
+  
+  .custom-day span {
+    font-size: 14px;
+    color: #313131;
+    display: flex;
+    align-items: center; /* Align text vertically */
+    margin: 0; /* Ensure no extra margins are added */
+    min-width:85px;
+  }
+  .custom-day .to{
+    justify-content: center;
+    min-width: 20px;
+  }
+  .custom-day select {
+    padding: 8px 10px;
+    border: 1px solid #505050;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    max-width: 150px;
+    height: 36px; 
+    box-sizing: border-box; 
+    display: flex;
+    align-items: center; 
+  }
+  
+
+  @media (min-width: 480px) {
+    .custom-day select {
+        width: 100%; 
+    }
+  }
+  
+  
+  h4 {
+    font-size: 14px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  .learn-more {
+    color: #1264a3;
+    text-decoration: none;
+  }
+  
+  .learn-more:hover {
+    text-decoration: underline;
+  }
+  
+  .sound-settings {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sound-setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .sound-setting-item span {
+    font-size: 14px;
+    color: #2b2b2b;
+  }
+  
+  @media (max-width: 480px) {
+    .notification-settings {
+        padding: 10px;
+    }
+  
+    .schedule-selectors {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+  
+    .custom-days {
+        flex-direction: column;
+    }
+  
+    .custom-day select {
+        max-width: 50px;
+        margin-bottom: 8px;
+    }
+  }
+  
+  #remind select {
+    padding: 8px;
+    border: 1px solid #6b6b6b;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    width: 435px; /* Ensures full width */
+  }
+  
+  
+  .time-range select{
+    width: 25%;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }

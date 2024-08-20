@@ -1,0 +1,91 @@
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.chat-header-brand {
+  background-color: #F7F8F9;
+  padding: 12px 18px;
+  border-radius: 20px;
+  color: black;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  cursor: pointer; 
+}
+
+.chat-header-dropdown-icon {
+  color: #4B4B4B;
+  margin: 0;
+}
+
+.chat-header-nav-icons,
+.chat-header-nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header-nav-item {
+  margin: 0 10px;
+  position: relative;
+}
+
+.chat-header-nav-link {
+  color: black;
+  text-decoration: none;
+  margin: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.chat-header-nav-link img {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.chat-header-dropdown-arrow {
+  margin-left: 10px;
+}
+
+.chat-header-dropdown-menu {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 1000;
+  width: 200px;
+}
+
+.chat-header-dropdown-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.chat-header-dropdown-item:hover {
+  background-color: #f7f7f7;
+}
+
+.chat-header-user-id {
+  margin-left: 8px;
+  font-size: 0.875rem; /* Adjust font size as needed */
+  color: #888; /* Adjust color as needed */
+}

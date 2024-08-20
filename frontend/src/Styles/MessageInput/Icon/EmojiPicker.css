@@ -1,0 +1,23 @@
+.emoji-picker-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .emoji-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .emoji-picker {
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    z-index: 1000;
+  }
+  

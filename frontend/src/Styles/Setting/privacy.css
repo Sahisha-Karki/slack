@@ -1,0 +1,94 @@
+.settings-container {
+    flex: 1;
+    padding: 20px;
+    max-height: calc(100vh - 80px); /* Adjust for modal size */
+    overflow-y: auto;
+    background-color: #FBFCFC;
+  }
+  
+  .privacy-settings-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .privacy-settings-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+ font-size: 20px;
+font-weight: 600;
+line-height: 30px;
+color: #3A3A3A;
+ 
+  }
+  
+  .privacy-settings-box p {
+    margin-bottom: 15px;
+    color: #747474;
+ font-size: 13px;
+font-weight: 500;
+line-height: 19.5px;
+ 
+  }
+  
+  .privacy-settings-box label {
+    font-weight: 500;
+    font-size: 13px;
+     display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    color: #747474;
+  }
+  
+  .privacy-settings-box input[type="radio"] {
+     margin-right: 10px;
+    margin-top: 3px; /* Align radio button with the first line of text */
+  }
+  
+  .radio-label {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sub-text {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #747474;
+    font-size: 13px;
+    font-weight: 500; 
+  
+}
+  
+  .info-message {
+
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5%;
+    color: #747474;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+align-items:center ;
+  }
+  
+  .info-icon {
+    margin-right: 5px;
+    font-weight: bold;
+  }
+  
+  a {
+    color: #1264a3;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .frameicon{
+    font-size: 30px;
+    margin-top: 5px;
+  }

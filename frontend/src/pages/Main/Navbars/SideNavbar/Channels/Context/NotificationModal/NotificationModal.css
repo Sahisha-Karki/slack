@@ -1,0 +1,93 @@
+.notification-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .notification-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    height: 550px;
+    position: relative;
+  }
+  
+  .notification-modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .notification-options p {
+    margin: 10px 0;
+  }
+  
+  .notification-options label {
+    display: block;
+    margin: 14px 0;
+    color: #000;
+  }
+  
+  .notification-checkbox,
+  .mute-channel {
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    color: #000;
+  }
+  
+  .mute-channel p{
+    color: #636363;
+  }
+  .note {
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .note-note{
+    color: #000;
+  }
+  
+  .notification-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 25px;
+  }
+  
+  .notification-modal-buttons button {
+    margin-left: 10px;
+  }
+  
+  .notification-cancel-btn{
+    padding: 8px 20px;
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .notification-save-btn{
+    padding: 8px 20px;
+    border: none;
+    background: #073458;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+

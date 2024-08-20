@@ -1,0 +1,63 @@
+.sub-chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: width 0.3s ease;
+  width: 100%;
+}
+
+.profile-active {
+  width: calc(100% - 325px); 
+}
+
+.profile-section {
+  position: fixed;
+  right: 0;
+  top: 70px;
+  width: 280px;
+  height: 87.1%;
+  background-color: #F7F8F9;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  overflow-y: auto;
+  transition: transform 0.3s ease; 
+  transform: translateX(0);
+}
+
+.profile-active .profile-section {
+  transform: translateX(0);
+}
+
+.close-profile {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+}
+
+.notes-active {
+  width: calc(100% - 325px);
+}
+.no-messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+}
+
+.reply-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+

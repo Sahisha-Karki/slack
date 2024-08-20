@@ -1,0 +1,120 @@
+/* Header Styles */
+.header {
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* NavBar Styles */
+.nav-bar {
+    display: flex;
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.nav-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: #555;
+    font-size: 16px;
+}
+
+.nav-button.active {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+/* MessageItem Styles */
+.message-item {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #e1e4e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.message-item:hover {
+    background-color: #f9f9f9;
+}
+
+.message-item.selected {
+    border-color: #007bff;
+}
+
+.message-item.edit-mode {
+    padding-left: 40px;
+}
+
+.message-item input[type="checkbox"] {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.message-content {
+    flex-grow: 1;
+}
+
+.message-title {
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.message-text {
+    margin: 5px 0 0 0;
+    color: #666;
+}
+
+.message-time {
+    color: #999;
+}
+
+/* MessageActions Styles */
+.message-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #e1e4e8;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.delete-button.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}

@@ -1,0 +1,48 @@
+/* DeleteConfirmationModal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000; /* Ensure it's above other elements */
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 150px;
+    text-align: center;
+  }
+  
+  .modal-buttons {
+    margin-top: 20px;
+  }
+  
+  .modal-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+  
+  .modal-buttons button:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-buttons button:last-child {
+    background-color: #6c757d;
+  }
+  
+  .modal-buttons button:last-child:hover {
+    background-color: #5a6268;
+  }
+  

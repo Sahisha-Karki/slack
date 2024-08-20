@@ -1,0 +1,156 @@
+/* Enhanced CSS */
+
+.toolbar-main-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.message-input-box {
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.message-input {
+  width: 95%;
+  min-height: 50px;
+  max-height: 150px;
+  border: 1px solid #ddd; /* Slightly darker border for better visibility */
+  outline: none;
+  font-size: 16px;
+  background-color: #fafafa; /* Slightly lighter background for a modern look */
+  border-radius: 8px 8px 0 0;
+  margin: 0;
+  margin-left: 24px;
+  padding: 0;
+  padding-top: 20px;
+  padding-left: 20px;
+  overflow: auto;
+  resize: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.message-input::placeholder {
+  color: #aaa; /* Slightly lighter placeholder color */
+  font-size: 16px;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.message-input:focus::placeholder {
+  opacity: 0;
+}
+
+.message-input.left {
+  text-align: left;
+}
+
+.message-input.center {
+  text-align: center;
+}
+
+.message-input.right {
+  text-align: right;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  margin-right: 40px;
+}
+
+.edit-buttons button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  margin-right: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transition for scaling effect */
+}
+
+.edit-buttons button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+.edit-buttons button.cancel {
+  background-color: #6c757d;
+}
+
+.edit-buttons button.cancel:hover {
+  background-color: #5a6268;
+}
+
+.toolbar-icons {
+  display: flex;
+  align-items: center;
+  width: 94.4%;
+  margin: 0;
+  margin-left: 24px;
+  background-color: #0a2a4a; /* Darker background for better contrast */
+  padding: 16px; /* Reduced padding for a more compact look */
+  border-radius: 0 0 15px 15px;
+}
+
+.toolbar-icons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px; /* Slightly larger font size for better readability */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px; /* Increased padding for better touch targets */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transition for scaling effect */
+}
+
+.toolbar-icons button:hover {
+  transform: scale(1.1); /* Slight scale effect on hover */
+}
+
+.icon-section {
+  display: flex;
+  align-items: center;
+  padding: 0 12px; /* Increased padding for better spacing */
+  position: relative;
+}
+
+.second-icon-section::before,
+.third-icon-section::before {
+  content: "";
+  position: absolute;
+  left: -15px; /* Adjusted for better separation */
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: white;
+}
+
+.second-icon-section,
+.third-icon-section {
+  margin-left: 50px; /* Increased margin for better spacing */
+}
+
+.icon-section:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: -15px; /* Adjusted for better separation */
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: white;
+}
+
+.forth-icon-section {
+  margin-left: auto;
+}
+
+.toolbar-icons button.active {
+  background-color: rgba(255, 255, 255, 0.3); /* Slightly lighter active state */
+}

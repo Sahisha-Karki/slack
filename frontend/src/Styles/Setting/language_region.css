@@ -1,0 +1,49 @@
+.settings-container {
+  padding: 20px;
+  max-height: calc(100vh - 80px); /* Adjust for modal size */
+  overflow-y: auto;
+  overflow-x: visible; /* Allow overflow for dropdown */
+  background-color: #FBFCFC;
+}
+
+.settings-box {
+  border: 1px solid #AFAFAF;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: visible; /* Ensure dropdowns are fully visible */
+  height: auto;
+  min-height: 200px; /* Optional: set a min-height */
+}
+
+.settings-box h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  color: #3A3A3A;
+}
+
+.settings-box label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: #747474;
+  min-width: 100%;
+}
+
+.settings-box small {
+  font-size: 12px;
+  font-weight: 500;
+  display: block;
+  color: #747474;
+  margin-top: 15px;
+}
+
+.settings-box input[type="checkbox"] {
+  margin-right: 5px;
+}

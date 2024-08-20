@@ -1,0 +1,67 @@
+/* Basic styles for the toggle container */
+.toggle-button {
+    display: flex;
+    align-items: center; /* Centered alignment */
+    justify-content: left; /* Centered alignment */
+    padding: 0px 3px;
+    width: 45px; /* Adjusted width for better appearance */
+    height: 32px; /* Adjusted height for a more rounded look */
+    border-radius: 16px; /* Rounded corners for the toggle button */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(214, 214, 214, 0.2);
+    background-color: #f44336; /* Default background color (red) */
+}
+
+/* Styles for the active state */
+.toggle-button.on {
+    background-color: #4CAF50; /* Green */
+}
+
+/* Styles for the inactive state */
+.toggle-button.off {
+    background-color: #f44336; /* Red */
+}
+
+/* Styles for the toggle switch element */
+.toggle-switch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%; /* Circular toggle */
+    background-color: #ffffff; /* White background for better contrast */
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    box-shadow: 0 2px 4px rgba(230, 218, 218, 0.2);
+    position: relative; /* Required for smooth transition */
+}
+
+/* Position of the toggle switch when active */
+.toggle-button.on .toggle-switch {
+    transform: translateY(10px);
+    transform: translateX(20px); /* Adjusted for new button width */
+}
+
+/* Position of the toggle switch when inactive */
+.toggle-button.off .toggle-switch {
+    transform: translateX(0);
+}
+
+/* Styles for icons within the toggle switch */
+.icon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #424242; /* Black color for better contrast */
+}
+
+/* Accessibility styles */
+.toggle-button:focus {
+    outline: 3px solid #dbe9e9; /* Outline color for focus state */
+}
+
+/* Additional styles */
+.icon img {
+    width: 14px; /* Adjusted icon size */
+    height: 14px; /* Adjusted icon size */
+}

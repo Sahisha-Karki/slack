@@ -1,0 +1,19 @@
+.create-workspace-step5-container {
+  text-align: center;
+}
+
+.launch-slack-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007a5a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.launch-slack-button.launching {
+  background-color: #005c4e; /* Darker shade or any style to indicate loading */
+  cursor: wait;
+}
