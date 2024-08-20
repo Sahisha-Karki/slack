@@ -10,7 +10,7 @@ function ProfileSection() {
   const [audioUrl, setAudioUrl] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
-  
+
   const [profile, setProfile] = useState({
     name: 'John Doe',
     title: 'Developer',
@@ -77,34 +77,6 @@ function ProfileSection() {
     }
   };
 
-  
-  const testRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-  
-      recorder.ondataavailable = (e) => {
-        const audioUrl = URL.createObjectURL(e.data);
-        const audio = new Audio(audioUrl);
-        audio.play();
-      };
-  
-      recorder.start();
-      console.log('MediaRecorder started');
-  
-      setTimeout(() => {
-        recorder.stop();
-        console.log('MediaRecorder stopped');
-      }, 5000); // Record for 5 seconds
-    } catch (err) {
-      console.error('Test Recording Error:', err);
-    }
-  };
-  
-  navigator.mediaDevices.enumerateDevices().then(devices => {
-    console.log('Available devices:', devices);
-  });
-  
   const handleStopRecording = () => {
     console.log('Stop Recording clicked'); // Debugging statement
 
@@ -126,78 +98,77 @@ function ProfileSection() {
   };
 
   return (
-    <div className="profile-section">
-      <div className="profile-header">
+    <div className="settings-profile-section">
+      <div className="settings-profile-header">
         <h2>Profile</h2>
         <button 
-          className={`profile-edit-button ${isEditing ? 'edit-button-hidden' : ''}`} 
+          className={`settings-profile-edit-button ${isEditing ? 'settings-profile-edit-button-hidden' : ''}`} 
           onClick={handleEdit}
         >
-          {isEditing ? <FaChevronUp className="edit-icon rotate" /> : 'Edit'}
+          {isEditing ? <FaChevronUp className="settings-profile-edit-icon rotate" /> : 'Edit'}
         </button>
       </div>
       {isEditing && (
-       <div className="profile-edit">
-       <div className="profile-image-container">
-         <input
-           type="file"
-           accept="image/*"
-           id="profilePictureUpload"
-           style={{ display: 'none' }}
-           onChange={handleFileChange}
-         />
-         <label htmlFor="profilePictureUpload">
-           <img
-             src={profile.profilePicture}
-             alt="Profile"
-             className="profile-image"
-           />
-         </label>
-           
-            <div className="profile-name-role">
+        <div className="settings-profile-edit">
+          <div className="settings-profile-image-container">
+            <input
+              type="file"
+              accept="image/*"
+              id="profilePictureUpload"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
+            <label htmlFor="profilePictureUpload">
+              <img
+                src={profile.profilePicture}
+                alt="Profile"
+                className="settings-profile-image"
+              />
+            </label>
+            <div className="settings-profile-name-role">
               <h3>{profile.name}</h3>
-              <p>{profile.role}</p>
+              <p>{profile.title}</p>
             </div>
           </div>
-          <div className="profile-fields">
+          <div className="settings-profile-fields">
             <label>Username</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <input
                 type="text"
                 name="username"
                 value={profile.username}
                 onChange={handleChange}
               />
-              <span className="edit-icon">✎</span>
+              <span className="settings-profile-edit-icon">✎</span>
             </div>
             <label>Email</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <input
                 type="email"
                 name="email"
                 value={profile.email}
                 onChange={handleChange}
               />
-              <span className="edit-icon">✎</span>
+              <span className="settings-profile-edit-icon">✎</span>
             </div>
             <label>Display Name</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <input
                 type="text"
                 name="displayname"
                 value={profile.displayname}
                 onChange={handleChange}
               />
-              <span className="edit-icon">✎</span>
+              <span className="settings-profile-edit-icon">✎</span>
             </div>
 
             <label>Name recording</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <button 
-                className="voice-button" 
+                className="settings-profile-voice-button" 
                 onClick={handleVoiceButtonClick}
               >
-                <FontAwesomeIcon className="microphone" icon={faMicrophone} />
+                <FontAwesomeIcon className="settings-profile-microphone" icon={faMicrophone} />
                 {isRecording ? 'Stop Recording' : 'Record audio clip'}
               </button>
               {audioUrl && (
@@ -209,39 +180,39 @@ function ProfileSection() {
             </div>
 
             <label>Title</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <input
                 type="text"
                 name="title"
                 value={profile.title}
                 onChange={handleChange}
               />
-              <span className="edit-icon">✎</span>
+              <span className="settings-profile-edit-icon">✎</span>
             </div>
 
             <label>Phone Number</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <input
                 type="tel"
                 name="phoneNumber"
                 value={profile.phoneNumber}
                 onChange={handleChange}
               />
-              <span className="edit-icon">✎</span>
+              <span className="settings-profile-edit-icon">✎</span>
             </div>
 
             <label>Joined Date</label>
-            <div className="input-container">
+            <div className="settings-profile-input-container">
               <input
                 type="date"
                 name="date"
-                value={profile.date}
+                value={profile.date || ''}
                 onChange={handleChange}
               />
-             </div>
+            </div>
           </div>
-          <button className="savee-button" onClick={handleSave}>Save</button>
-          <button className="cancel-button" onClick={handleCancelEdit}>Cancel</button>
+          <button className="settings-profile-save-button" onClick={handleSave}>Save</button>
+          <button className="settings-profile-cancel-button" onClick={handleCancelEdit}>Cancel</button>
         </div>
       )}
     </div>

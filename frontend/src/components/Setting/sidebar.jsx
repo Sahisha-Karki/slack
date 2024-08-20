@@ -24,7 +24,7 @@ function Sidebar({ onSectionChange }) {
   };
 
   return (
-    <div className="sidebar">
+    <div className="settings-sidebar">
       <ul>
         {sections.map((section) => (
           <li
@@ -32,7 +32,7 @@ function Sidebar({ onSectionChange }) {
             onClick={() => handleSectionClick(section.name)}
             className={activeSection === section.name ? 'active' : ''}
           >
-            <span className="icon">
+            <span className="settings-sidebar-icon">
               <FontAwesomeIcon icon={section.icon} />
             </span>
             {section.name}

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../src/Styles/Setting/AccessibilitySettings.css';
+import '../../../src/Styles/Setting/accessibility.css';
 
 function AccessibilitySettings() {
   return (

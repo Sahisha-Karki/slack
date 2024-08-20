@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../../src/Styles/Setting/AudioVideoSettings.css';
 import ToggleButton from './ToggleButton';
-import cameraIcon from '../image/vector-vintage-camera.png';
 import MicTest from './MicTest';
-import clickSound from '../sounds/door_bell.mp3'; // Replace with the correct path to your audio file
+import clickSound from '../../sounds/door_bell.mp3'; // Replace with the correct path to your audio file
 
 const AudioVideoSettings = () => {
     const [camera, setCamera] = useState('Default');
@@ -66,7 +65,7 @@ const AudioVideoSettings = () => {
                 </div>
                 <div className="preview">
                     <div className="preview-image">
-                        <img src={cameraIcon} alt="Camera Icon" />
+                        <img src='./images/vector-vintage-camera.png' alt="Camera Icon" />
                     </div>
                     <button className="test-button">Test Video</button>
                 </div>

@@ -30,7 +30,7 @@ function TwoFactorAuth() {
           <button className="setupp-button">
             Set up Two-Factor Authentication
           </button>
-          <p className="note">
+          <p className="auth-note">
             Note: Activating two-factor authentication will sign you out of all other sessions.
           </p>
         </div>

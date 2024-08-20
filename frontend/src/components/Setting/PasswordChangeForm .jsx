@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../src/Styles/Setting/passwordChangeForm.css';
+import '../../../src/Styles/Setting/passwordChange.css';
 import { FaChevronUp, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function PasswordChange() {

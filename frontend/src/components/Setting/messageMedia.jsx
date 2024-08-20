@@ -6,7 +6,6 @@ import { PiShareFatLight } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiBookmark } from "react-icons/ci";
 import ToggleButton from './ToggleButton';
-import appleImage from '../image/apple.jpg'; // Adjust the path as necessary
 
 
 
@@ -97,7 +96,7 @@ function MessagesMedia() {
 
            {theme === 'clean' && (
             <>
-              <img src={appleImage} alt="Alice" className="avatar" />
+              <img src='./images/apple.png' alt="Alice" className="avatar" />
               <div className="message-content">
                 <div className="name-time">
                   <span className="name">Alice</span>
@@ -144,7 +143,7 @@ function MessagesMedia() {
         <hr className="divider" />
         <p>Here is the example</p>
         <div className="example">
-          <img src={appleImage} alt="Alice" className="avatar" />
+          <img src='./images/apple.png' alt="Alice" className="avatar" />
           <div className="message-content">
             <div className="name-time">
               <span className="name">
@@ -274,7 +273,7 @@ function MessagesMedia() {
   <p>Here is the example</p>
   <div className="example emoji-example">
     <div className="message-box">
-    <img src={appleImage} alt="Alice" className="avatar" />
+    <img src='./images/apple.png' alt="Alice" className="avatar" />
     <div className="message-content">
       <div className="name-time">
         <span className="name">Alice</span>

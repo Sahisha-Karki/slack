@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { FaChevronUp } from 'react-icons/fa';
 import ISO6391 from 'iso-639-1';
-import '../../../src/Styles/Setting/language.css';
+import '../../../src/Styles/Setting/Language.css';
 
 function LanguageSelection() {
   const [isExpanded, setIsExpanded] = useState(false);

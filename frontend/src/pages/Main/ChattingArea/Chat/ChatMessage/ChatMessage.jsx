@@ -80,16 +80,16 @@ const ChatMessage = ({
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
-      <div className="message-avatar" onClick={handleAvatarClick}>
+      <div className="chat-message-avatar" onClick={handleAvatarClick}>
         <img src="https://via.placeholder.com/40" alt={message.user} />
       </div>
-      <div className="message-text">
-        <div className="message-author-time">
-          <span className="message-author">{message.user}</span>
-          <span className="message-time">{formatDate(message.createdAt)}</span>
+      <div className="chat-message-text">
+        <div className="chat-message-author-time">
+          <span className="chat-message-author">{message.user}</span>
+          <span className="chat-message-time">{formatDate(message.createdAt)}</span>
         </div>
         {isEditing ? (
-          <div className="message-edit">
+          <div className="chat-message-edit">
             <textarea
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
@@ -101,11 +101,11 @@ const ChatMessage = ({
           <>
             <p>{formatMessageContent(message.content)}</p>
             {reactions[message.id] && (
-              <div className="reaction-display">
+              <div className="chat-reaction-display">
                 <img
                   src={reactions[message.id].src}
                   alt={reactions[message.id].alt}
-                  className="emoji"
+                  className="chat-emoji"
                 />
               </div>
             )}

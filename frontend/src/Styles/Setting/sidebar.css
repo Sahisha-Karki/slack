@@ -1,4 +1,4 @@
-.sidebar {
+.settings-sidebar {
   width: 240px;
   background-color: #ffffff;
   height: 100%;
@@ -7,13 +7,13 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.sidebar ul {
+.settings-sidebar ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.sidebar ul li {
+.settings-sidebar ul li {
   padding: 17.5px 27px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
@@ -24,20 +24,20 @@
   color: #333;
 }
 
-.sidebar ul li:hover {
+.settings-sidebar ul li:hover {
   background-color: #e9ecef;
 }
 
-.sidebar ul li.active {
+.settings-sidebar ul li.active {
   background-color: #073458;
   color: white;
 }
 
-.sidebar ul li.active .icon {
+.settings-sidebar ul li.active .settings-sidebar-icon {
   color: white; /* Ensures the icon color also changes to white */
 }
 
-.sidebar .icon {
+.settings-sidebar .settings-sidebar-icon {
   margin-right: 10px;
   color: #333; /* Default icon color */
 }

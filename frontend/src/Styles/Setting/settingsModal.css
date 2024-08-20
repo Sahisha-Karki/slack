@@ -1,4 +1,4 @@
-.modal-overlay {
+.settings-modal-overlay {
   position: fixed;
   font-family: 'Poppins', sans-serif;
   top: 0;
@@ -12,7 +12,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.settings-modal-content {
   background-color: #fff;
   border-radius: 8px;
   width: 100%;
@@ -25,7 +25,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.modal-header {
+.settings-modal-header {
     display: flex;
     justify-content: space-between; /* Center all items horizontally */
     align-items: center; /* Center items vertically */
@@ -34,32 +34,29 @@
     
 }
 
-.modal-header > * {
+.settings-modal-header > * {
     margin: 0; /* Add space between items */
 }
 
-
-.close-button {
+.settings-close-button {
   background: none;
   border: none;
   font-size: 28px;
   cursor: pointer;
 }
 
-.modal-body {
+.settings-modal-body {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
-
-
 
 .settings-button .fa-icon {
   margin-right: 8px;
   font-size: 24px;
 }
 
-h2{
+.settings-modal-header  h2{
   font-size: 24px;
   font-weight: 500;
 }

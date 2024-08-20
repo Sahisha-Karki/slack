@@ -3,7 +3,7 @@ import Sidebar from './sidebar'; // Adjust the import path if necessary
 import SettingsContent from './settingsContent'; // Adjust the import path if necessary
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import '../../../src/Styles/Setting/settingModal.css';
+import '../../../src/Styles/Setting/settingsModal.css';
 
 const SettingsModal = ({ isOpen, onClose }) => {
   const [selectedSection, setSelectedSection] = useState('Account');
@@ -15,13 +15,13 @@ const SettingsModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <div className="modal-header">
+    <div className="settings-modal-overlay">
+      <div className="settings-modal-content">
+        <div className="settings-modal-header">
           <h2> <FontAwesomeIcon icon={faCog} /> Settings</h2>
-          <button className="close-button" onClick={handleClose}>×</button>
+          <button className="settings-close-button" onClick={handleClose}>×</button>
         </div>
-        <div className="modal-body">
+        <div className="settings-modal-body">
           <Sidebar onSectionChange={setSelectedSection} />
           <SettingsContent section={selectedSection} />
         </div>
