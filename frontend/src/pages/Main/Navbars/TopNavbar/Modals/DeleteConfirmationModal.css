@@ -1,0 +1,71 @@
+.delete-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.delete-confirmation {
+  position: relative; /* Ensure the close button can be positioned relative to this container */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  max-width: 350px;
+  width: 90%;
+}
+
+.delete-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+}
+
+.delete-confirmation h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.delete-confirmation p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.delete-confirmation-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-confirmation-buttons .delete-confirmation-cancel,
+.delete-confirmation-buttons .delete-confirmation-delete {
+  margin: 0 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-confirmation-buttons .delete-confirmation-cancel {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.delete-confirmation-buttons .delete-confirmation-delete {
+  background-color: #D32F2F; /* Red background */
+  color: #fff; /* White text */
+}

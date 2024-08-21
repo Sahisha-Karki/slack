@@ -38,14 +38,13 @@
 }
 
 .landing-nav a:hover {
-  color: #ffdd57;
   transform: translateY(-3px);
 }
 
 .landing-sign-in {
   background-color: white;
   color: #032A53;
-  font-weight: bold;
+  font-weight: 700;
   padding: 10px 20px;
   border: 1px solid black;
   border-radius: 30px;

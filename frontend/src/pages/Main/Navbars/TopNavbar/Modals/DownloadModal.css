@@ -1,0 +1,142 @@
+/* General Modal Styling */
+.download-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.download-modal {
+  background-color: #ffffff; /* White background */
+  border-radius: 8px;
+  padding: 20px;
+  width: 480px;
+  max-width: 100%;
+  position: relative; /* Ensure positioning for header buttons */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Header Styling */
+.download-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd; /* Line separator */
+}
+
+.download-modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #000; /* Black text color */
+  font-family: Arial, sans-serif;
+}
+
+.clear-all {
+  background-color: #ffffff;
+  border: 1px solid #ccc; /* Gray border */
+  color: #333; /* Dark gray text color */
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+
+.clear-all i {
+  margin-right: 5px;
+}
+
+.dld_close {
+  border: none;
+  color: #333;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+}
+
+/* File List Styling */
+.download-list {
+  list-style: none;
+  padding: 0;
+}
+
+.download-modal-download-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px; /* Margin between items */
+  background-color: #f9f9f9;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.download-modal-file-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+}
+
+.download-modal-file-name {
+  font-size: 14px;
+  flex: 1;
+  color: #000;
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Prevent text overflow */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Action Buttons Styling */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.action-button {
+  margin-left: 10px;
+  padding: 6px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.action-button:hover {
+  background-color: #f0f0f0;
+}
+
+.action-button i {
+  color: #000;
+}
+
+.delete-button i {
+  color: #D32F2F; /* Red color */
+}
+
+.move-button i {
+  color: #4CAF50; /* Green color */
+}
+
+/* Divider Styling */
+.divider {
+  border-left: 1px solid #ddd;
+  height: 24px;
+  margin: 0 10px;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import '../../Styles/ReactionEmojies/ReactionEmojies.css';
+import Tooltip from '@mui/material/Tooltip'; // Import Tooltip
 import DeleteConfirmationModal from './DeleteModal'; // Import the modal component
 
 const emojis = [
@@ -54,30 +55,34 @@ const EmojiReactions = ({ onReact, onEdit, messageId, messageContent }) => {
     <div className="emoji-reactions-wrapper" ref={emojiReactionsRef}>
       <div className="emoji-reactions">
         {emojis.map((emoji, index) => (
-          <div className="emoji-wrapper" key={index}>
-            <img
-              src={emoji.src}
-              alt={emoji.alt}
-              className={`emoji ${emoji.type}`}
-              onClick={() => handleClick(emoji)}
-            />
-            {emoji.type === 'action' && (
-              <span className="emoji-name">{emoji.name}</span>
-            )}
-            {emoji.type === 'more' && showDropdown && (
-              <div className="dropdown-menu">
-                <ul>
-                  <li onClick={() => handleDropdownAction('Copy text')}>Copy text</li>
-                  <li onClick={() => handleDropdownAction('Reply')}>Reply</li>
-                  <li onClick={() => handleDropdownAction('Edit message')}>Edit message</li>
-                  <li onClick={() => handleDropdownAction('Mentions')}>Mentions</li>
-                  <li onClick={() => handleDropdownAction('Copy Message Link')}>Copy Message Link</li>
-                  <li onClick={() => handleDropdownAction('Report')}>Report</li>
-                  <li onClick={() => handleDropdownAction('Delete')}>Delete</li>
-                </ul>
-              </div>
-            )}
-          </div>
+          <Tooltip
+            key={index}
+            title={emoji.name}
+            arrow
+            placement="top" // Set tooltip placement to top
+          >
+            <div className="emoji-wrapper">
+              <img
+                src={emoji.src}
+                alt={emoji.alt}
+                className={`emoji ${emoji.type}`}
+                onClick={() => handleClick(emoji)}
+              />
+              {emoji.type === 'more' && showDropdown && (
+                <div className="dropdown-menu">
+                  <ul>
+                    <li onClick={() => handleDropdownAction('Copy text')}>Copy text</li>
+                    <li onClick={() => handleDropdownAction('Reply')}>Reply</li>
+                    <li onClick={() => handleDropdownAction('Edit message')}>Edit message</li>
+                    <li onClick={() => handleDropdownAction('Mentions')}>Mentions</li>
+                    <li onClick={() => handleDropdownAction('Copy Message Link')}>Copy Message Link</li>
+                    <li onClick={() => handleDropdownAction('Report')}>Report</li>
+                    <li onClick={() => handleDropdownAction('Delete')}>Delete</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </Tooltip>
         ))}
       </div>
       <DeleteConfirmationModal

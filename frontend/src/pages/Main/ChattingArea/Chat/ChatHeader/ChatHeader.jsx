@@ -80,13 +80,6 @@ const ChatHeader = ({ onDropdownClick, channelName, channelType, userId, onCanva
                 Canvases
               </div>
             </div>
-            <div className="chat-header-nav-icons">
-              <div className="chat-header-nav-item">
-                <div className="chat-header-nav-link">
-                  <img src="./images/bell.png" alt="Bell" />
-                </div>
-              </div>
-            </div>
           </div>
         </nav>
       </header>

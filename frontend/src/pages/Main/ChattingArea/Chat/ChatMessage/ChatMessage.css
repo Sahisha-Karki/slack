@@ -22,6 +22,8 @@
 }
 
 .chat-message-text p{
+  color: #000;
+  font-size: 16px;
   margin: 4px;
 }
 
@@ -41,7 +43,7 @@
 }
 
 .chat-message-time {
-  font-size: 12px;
+  font-size: 14px;
   color: #888888;
 }
 

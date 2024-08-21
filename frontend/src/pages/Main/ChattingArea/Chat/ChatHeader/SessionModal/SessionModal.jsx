@@ -38,6 +38,10 @@ const SessionModal = ({ isOpen, onClose }) => {
     { name: "Participant 2", isMicOn: false, imgSrc: "./images/profile2.jpg" },
   ]);
 
+  const [screenShareStream, setScreenShareStream] = useState(null);
+  const [isSharing, setIsSharing] = useState(false);
+  const modalRef = useRef(null);
+
   const toggleVideo = () => setIsVideoOn(!isVideoOn);
   const toggleMic = () => setIsMicOn(!isMicOn);
   const toggleVolume = () => setIsVolumeOn(!isVolumeOn);
@@ -45,7 +49,24 @@ const SessionModal = ({ isOpen, onClose }) => {
   const toggleCanvasModal = () => setIsCanvasModalOpen(!isCanvasModalOpen);
   const toggleAddPeopleModal = () => setIsAddPeopleModalOpen(!isAddPeopleModalOpen);
   const toggleMinimize = () => setIsMinimized(!isMinimized);
-  const modalRef = useRef(null);
+
+  const startScreenSharing = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      setScreenShareStream(stream);
+      setIsSharing(true);
+    } catch (error) {
+      console.error('Error sharing screen:', error);
+    }
+  };
+
+  const stopScreenSharing = () => {
+    if (screenShareStream) {
+      screenShareStream.getTracks().forEach(track => track.stop());
+      setScreenShareStream(null);
+      setIsSharing(false);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -111,10 +132,10 @@ const SessionModal = ({ isOpen, onClose }) => {
                 <div className="icon-container">
                   <FontAwesomeIcon icon={isMicOn ? faMicrophone : faMicrophoneSlash} />
                 </div>
-                <div className="icon-container">
+                <div className="icon-container" onClick={startScreenSharing}>
                   <img src={SCREENS_SHARE_ICON} alt="screenshare" />
                 </div>
-                <button className="leave-button">Leave</button>
+                <button className="leave-button" onClick={onClose}>Leave</button>
               </div>
             </div>
           ) : (
@@ -167,7 +188,7 @@ const SessionModal = ({ isOpen, onClose }) => {
                     <div className="icon-container">
                       <FontAwesomeIcon icon={isMicOn ? faMicrophone : faMicrophoneSlash} />
                     </div>
-                    <div className="icon-container">
+                    <div className="icon-container" onClick={startScreenSharing}>
                       <img src={SCREENS_SHARE_ICON} alt="screenshare" />
                     </div>
                     <div className="icon-container">
@@ -196,19 +217,21 @@ const SessionModal = ({ isOpen, onClose }) => {
             </>
           )}
         </div>
+        {isSharing && (
+          <div className="screenshare-overlay">
+            <div className="screenshare-preview">
+              <video
+                autoPlay
+                muted
+                playsInline
+                srcObject={screenShareStream}
+                className="screenshare-video"
+              />
+              <button className="screenshare-stop-button" onClick={stopScreenSharing}>Stop Sharing</button>
+            </div>
+          </div>
+        )}
       </div>
-      {isSignalModalOpen && (
-        <SignalIconModal 
-          isOpen={isSignalModalOpen} 
-          onClose={() => setIsSignalModalOpen(false)} 
-        />
-      )}
-      {isAddPeopleModalOpen && (
-        <AddPeopleModal 
-          isOpen={isAddPeopleModalOpen} 
-          onClose={toggleAddPeopleModal} 
-        />
-      )}
     </div>
   );
 };

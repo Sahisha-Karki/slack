@@ -1,3 +1,4 @@
+/* General styles for larger screens (desktop) */
 .landing-page-main-container {
   display: flex;
   flex-direction: column;
@@ -115,81 +116,80 @@
   height: auto;
 }
 
-/* .landing-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  gap: 20px;
-  background: #DCC2961A;
+/* Media Queries for smaller screens (tablet and mobile) */
+
+@media (max-width: 1200px) {
+  .landing-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .landing-hero-content {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .landing-hero-content h1 {
+    font-size: 36px;
+    width: 100%;
+  }
+
+  .landing-hero-content p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .landing-hero-image {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .polygon-top-img {
+    width: 80%;
+    left: 50%;
+  }
 }
 
-.landing-info-image {
-  flex: 1;
-  position: relative;
-  max-width: 40%;
-  margin-left: 150px;
+@media (max-width: 768px) {
+  .landing-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .landing-hero-content p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .landing-button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .landing-hero-image img {
+    width: 100%;
+    height: auto;
+  }
 }
 
-.Semi-rectangle-img {
-  display: block;
-  width: 50%;
-  height: auto;
+@media (max-width: 480px) {
+  .landing-hero-content h1 {
+    font-size: 24px;
+  }
+
+  .landing-hero-content p {
+    font-size: 10px;
+    line-height: 18px;
+  }
+
+  .landing-button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .landing-contact-button, .landing-email-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
 }
-
-.semi-rectangle-top-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: auto;
-}
-
-.landing-info{
-  width: 100%;
-
-}
-
-.landing-info-content {
-  flex: 1;
-  max-width: 50%;
-  margin-left: 100px;
-}
-
-.info-heading {
-  font-size: 34px;
-  font-weight: 600;
-  color: #343434;
-}
-
-.info-subheading {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0;
-  margin-bottom: 4px;
-}
-
-.info-description {
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 36px;
-  width: 600px;
-  margin: 0;
-  margin-bottom: 30px;
-}
-
-.info-channels {
-  margin-bottom: 20px;
-  display: flex;
-  gap: 30px;
-}
-
-.channel {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: bold;
-} */

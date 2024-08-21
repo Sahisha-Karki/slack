@@ -1,31 +1,195 @@
+/* Container */
 .mention-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-  }
-  
-  .mention-header {
-    font-size: 16px;
-    margin: 0;
-    margin-bottom: 8px;
-    color: #333; /* Dark text color */
-  }
-  
-  .mention-body {
-    max-width: 600px;
-  }
-  
-  .mention-body p {
-    margin-bottom: 20px;
-    font-size: 1em;
-    color: #666; /* Slightly lighter text color */
-  }
-  
-  .mention-image {
-    width: 100px; /* Adjust size as needed */
-    height: auto;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #ffffff; /* Background color white */
+  max-width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enables vertical scrolling */
+}
+
+/* Empty State */
+.no-message-mention-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 300px; /* Adjust height to match image */
+  color: #4a4a4a; /* Dark gray for text */
+}
+
+.mention-image {
+  width: 120px; /* Increase the size for better visibility */
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.mention-header {
+  font-size: 20px; /* Slightly larger font size */
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333; /* Dark gray for the header */
+}
+
+.mention-body p {
+  font-size: 1em;
+  color: #666; /* Lighter gray for the paragraph */
+  max-width: 460px; /* Adjust max-width for better alignment */
+  line-height: 1.5;
+}
+
+/* Header */
+.mention-container h2 {
+  font-size: 26px; /* Larger font size for main title */
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333; /* Dark gray text */
+}
+
+/* Sections */
+.mentions-section, .reactions-section {
+  margin-bottom: 30px;
+}
+
+.mentions-section h3, .reactions-section h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #444; /* Slightly lighter gray */
+}
+
+/* Mention Items */
+.mention-item {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  margin-bottom: 15px;
+  background-color: #ffffff; /* White background for items */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 8px;
+  padding: 15px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.mention-item:hover {
+  background-color: #f5f5f5; /* Light gray on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+.user-avatar {
+  width: 50px; /* Larger avatar size */
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.mention-content {
+  flex-grow: 1;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #333; /* Dark gray text */
+  display: block;
+}
+
+.mention-message {
+  margin-top: 5px;
+  color: #555; /* Mid-gray for message content */
+}
+
+.mention-time {
+  font-size: 0.85em;
+  color: #888; /* Lighter gray for time */
+  display: block;
+  margin-top: 5px;
+}
+
+.mention-tag {
+  background-color: #e0f7fa; /* Light cyan background for tags */
+  color: #00796b; /* Dark cyan text */
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-right: 5px;
+  font-size: 0.9em;
+}
+
+/* Reaction Items */
+.reaction-item {
+  background-color: #f9f9f9; /* Light gray background */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.reaction-item:hover {
+  background-color: #f5f5f5; /* Light gray on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+.reaction-header {
+  font-size: 1em;
+  color: #333; /* Dark gray text */
+  margin-bottom: 10px;
+}
+
+.reaction-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reaction-left {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+}
+
+.reaction-message-content {
+  margin-left: 15px;
+}
+
+.reaction-right {
+  display: flex;
+  align-items: center;
+}
+
+.reaction-emojis {
+  display: flex;
+}
+
+.reaction-emoji {
+  font-size: 1.5em;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.reaction-emoji:hover {
+  transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+.reaction-emoji:active {
+  transform: scale(1); /* Return to original size on click */
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

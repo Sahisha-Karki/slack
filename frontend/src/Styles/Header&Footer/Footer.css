@@ -2,12 +2,13 @@
   display: flex;
   justify-content: space-between;
   background-color: #032A53;
-  color: white;
+  color: #fff;
   padding: 20px;
 }
 
+.footer-left,
 .footer-center,
-.footer-right {
+.footer-subscribe-section {
   flex: 1;
   margin: 10px 10px;
 }
@@ -24,17 +25,18 @@
   transform: scale(1.1);
 }
 
-.footer-contact p,
-.footer-services p,
-.footer-right p {
+.footer-contact-item,
+.footer-link-item,
+.footer-subscribe-title {
   margin: 16px 0;
   margin-left: 50px;
   transition: color 0.3s, transform 0.3s;
+  color: #fff;
 }
 
-.footer-contact p:hover,
-.footer-services p:hover,
-.footer-right p:hover {
+.footer-contact-item:hover,
+.footer-link-item:hover,
+.footer-subscribe-title:hover {
   transform: translateX(5px);
 }
 
@@ -71,19 +73,24 @@
   margin-left: 200px;
 }
 
+.footer-services-title {
+  color: #fff;
+}
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.footer-links p {
+.footer-link-item {
   flex: 1 1 calc(40% - 5px);
   margin: 0;
   transition: color 0.3s, transform 0.3s;
+  color: #fff;
 }
 
-.footer-links p:hover {
+.footer-link-item:hover {
   transform: translateX(5px);
 }
 
@@ -91,16 +98,17 @@
   margin-right: 50px;
 }
 
-.footer-subscribe input {
+.footer-subscribe-input {
   padding: 10px;
   border: none;
   border-radius: 4px 0 0 4px;
   outline: none;
   width: 300px;
   transition: box-shadow 0.3s;
+  color: #fff;
 }
 
-.footer-subscribe button {
+.footer-subscribe-button {
   padding: 10px 20px;
   border: none;
   background-color: #032A53;
@@ -111,7 +119,7 @@
   transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
-.footer-subscribe button:hover {
+.footer-subscribe-button:hover {
   background-color: #ffffff;
   color: #000;
   border: 1px solid black;

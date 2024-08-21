@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMicrophone,
-  faVideo,
+  faVideo as faScreenRecord, // Use this for screen recording icon
   faFont,
   faBold,
   faItalic,
@@ -21,14 +21,62 @@ import Tooltip from '@mui/material/Tooltip';
 import AddFile from './Icons/AddFile';
 import AddImage from './Icons/AddImage';
 import EmojiPickerComponent from './Icons/EmojiPicker';
+import RecordingPreviewModal from './RecordingPreviewModal'; // Import the modal component
 
 const MessageInputToolbar = ({ 
   handleEmojiSelect, 
   handleLinkInsert, 
   handleSend, 
-  message = '', // Default to empty string if not provided
-  isLoading
+  message = '', 
+  isLoading 
 }) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordedBlob, setRecordedBlob] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+  const mediaRecorderRef = useRef(null);
+  const [stream, setStream] = useState(null);
+
+  const startScreenRecording = async () => {
+    try {
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true
+      });
+      setStream(screenStream);
+      const mediaRecorder = new MediaRecorder(screenStream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      const chunks = [];
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        setRecordedBlob(blob);
+        setPreviewUrl(URL.createObjectURL(blob));
+        setOpenModal(true); // Open modal after recording
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (err) {
+      console.error("Error accessing screen: ", err);
+    }
+  };
+
+  const stopScreenRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setStream(null);
+      setIsRecording(false);
+    }
+  };
+
+  const handleCloseModal = () => setOpenModal(false);
+
   return (
     <div className="toolbar-icons">
       <div className="icon-section first-icon-section">
@@ -37,8 +85,12 @@ const MessageInputToolbar = ({
         <button title="Record Audio" aria-label="Record Audio">
           <FontAwesomeIcon icon={faMicrophone} />
         </button>
-        <button title="Start Video Call" aria-label="Start Video Call">
-          <FontAwesomeIcon icon={faVideo} />
+        <button 
+          title={isRecording ? "Stop Recording" : "Start Screen Recording"} 
+          aria-label={isRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
+          onClick={isRecording ? stopScreenRecording : startScreenRecording}
+        >
+          <FontAwesomeIcon icon={faScreenRecord} />
         </button>
         <EmojiPickerComponent onSelect={handleEmojiSelect} />
       </div>
@@ -83,18 +135,24 @@ const MessageInputToolbar = ({
       </div>
 
       <div className="icon-section forth-icon-section">
-      <Tooltip title="Send Message" arrow>
-  <button
-    className="send-button"
-    onClick={handleSend}
-    disabled={isLoading || !message.trim()}
-    aria-label="Send Message"
-  >
-    <FontAwesomeIcon icon={faPaperPlane} />
-  </button>
-</Tooltip>
-
+        <Tooltip title="Send Message" arrow>
+          <button
+            className="send-button"
+            onClick={handleSend}
+            disabled={isLoading || !message.trim()}
+            aria-label="Send Message"
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </button>
+        </Tooltip>
       </div>
+
+      {/* Use the modal component */}
+      <RecordingPreviewModal 
+        open={openModal} 
+        onClose={handleCloseModal} 
+        previewUrl={previewUrl} 
+      />
     </div>
   );
 };

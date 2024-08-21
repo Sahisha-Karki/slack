@@ -26,20 +26,6 @@
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.emoji-name {
-  display: none;
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: #fff;
-  padding: 5px;
-  border-radius: 3px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
 .emoji-wrapper:hover .emoji-name {
   display: block;
 }
@@ -79,3 +65,4 @@
 .dropdown-menu li:hover {
   background-color: #f0f0f0;
 }
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation for accessing route state
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./Company.css";
 
@@ -10,7 +10,7 @@ const CompanyHeading = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation(); // Access route state
+  const location = useLocation();
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setIsOpen((prevState) => !prevState);
@@ -33,12 +33,10 @@ const CompanyHeading = () => {
   }, []);
 
   useEffect(() => {
-    // Check if workspace data is passed through navigation state
     if (location.state && location.state.workspace) {
       setWorkspace(location.state.workspace);
       setLoading(false);
     } else {
-      // Fetch workspace data if not passed through location state
       const fetchWorkspaceData = async () => {
         try {
           const response = await axios.get("http://localhost:5000/api/workspaces/current-workspace", {
@@ -60,7 +58,7 @@ const CompanyHeading = () => {
 
   const handleNavigate = () => {
     if (workspace) {
-      navigate("/main", { state: { workspace } }); // Pass workspace data to Main page
+      navigate("/main", { state: { workspace } });
     }
   };
 
@@ -69,7 +67,7 @@ const CompanyHeading = () => {
 
   return (
     <div className="company-heading-container" ref={dropdownRef}>
-      <div className="company-heading-header" onClick={handleNavigate}>
+      <div className="company-heading-header" onClick={toggleDropdown}>
         <span className="company-heading-name">{workspace?.name || "Your Company"}</span>
         <img
           src="./images/v.png"

@@ -3,7 +3,9 @@ import "./TopNav.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ProfileModal from "../../../../components/Profile/SelfProfile/ProfileModal";
 import CustomStatusModal from "./Modals/CustomStatusModal";
-import SettingsModal from "../../../../components/Setting/SettingModal"; // Import the SettingsModal component
+import SettingsModal from "../../../../components/Setting/SettingModal";
+import DownloadModal from './Modals/DownloadModal';
+import HistoryModal from './Modals/HistoryModal';
 
 const TopNav = ({ showContent, onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +14,15 @@ const TopNav = ({ showContent, onSearch }) => {
   const [isCustomStatusModalOpen, setIsCustomStatusModalOpen] = useState(false);
   const [isPauseNotificationSubdropdownOpen, setIsPauseNotificationSubdropdownOpen] = useState(false);
   const [isSetYourselfSubdropdownOpen, setIsSetYourselfSubdropdownOpen] = useState(false);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+
+  const [files, setFiles] = useState([
+    { name: 'Proposal for Application.docx', icon: '/path/to/word-icon.png' },
+    { name: 'Employee List.xlsx', icon: '/path/to/excel-icon.png' },
+    { name: 'Awsdawd.docx', icon: '/path/to/word-icon.png' },
+    { name: 'awdawwdaw.docx', icon: '/path/to/word-icon.png' },
+  ]);
 
   // Add state for SettingsModal
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -63,6 +74,18 @@ const TopNav = ({ showContent, onSearch }) => {
     setIsSetYourselfSubdropdownOpen(!isSetYourselfSubdropdownOpen);
   };
 
+
+  const handleVisitFolder = (file) => {
+    console.log('Visiting folder of', file.name);
+  };
+
+  const handleRemove = (fileToRemove) => {
+    setFiles(files.filter(file => file !== fileToRemove));
+  };
+
+  const handleClearAll = () => {
+    setFiles([]);
+  };
   return (
     <div className="top-nav-header">
       {showContent && (
@@ -97,10 +120,10 @@ const TopNav = ({ showContent, onSearch }) => {
           </div>
 
           <div className="top-nav-header-actions">
-            <button>
+          <button onClick={() => setShowHistoryModal(true)}>
               <img src="./images/btn1.png" alt="history" />
             </button>
-            <button>
+            <button onClick={() => setShowDownloadModal(true)}>
               <img src="./images/btn2.png" alt="download" />
             </button>
             <button>
@@ -211,7 +234,20 @@ const TopNav = ({ showContent, onSearch }) => {
         isOpen={isCustomStatusModalOpen}
         onClose={closeCustomStatusModal}
       />
-      <SettingsModal isOpen={isSettingsModalOpen} onClose={closeSettingsModal} /> {/* Add SettingsModal here */}
+      <SettingsModal isOpen={isSettingsModalOpen} onClose={closeSettingsModal} /> 
+      {showDownloadModal && (
+        <DownloadModal
+          files={files}
+          onClose={() => setShowDownloadModal(false)}
+          onVisitFolder={handleVisitFolder}
+          onRemove={handleRemove}
+          onClearAll={handleClearAll}
+        />
+      )}
+
+      {showHistoryModal && (
+        <HistoryModal onClose={() => setShowHistoryModal(false)} />
+      )}
     </div>
   );
 };

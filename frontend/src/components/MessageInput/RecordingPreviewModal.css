@@ -1,0 +1,110 @@
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .custom-modal {
+    background: #fff;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-out;
+  }
+  .custom-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .custom-modal-header h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .custom-modal-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-modal-button {
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #555;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+  }
+  
+  .custom-modal-button:hover {
+    background: #e0e0e0;
+  }
+   
+  .custom-modal-close {
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .custom-modal-close:hover {
+    color: #333;
+  }
+  
+  .custom-modal-body {
+    margin-bottom: 20px;
+  }
+  
+  .custom-modal-video {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .custom-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .custom-modal-footer .custom-modal-button {
+    margin-left: 20px;
+  }
+  
+  .custom-modal-footer .download {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .custom-modal-footer .download:hover {
+    background: #0056b3;
+  }
+  
+  .custom-modal-footer .done {
+    background: #28a745;
+    color: #fff;
+    border-color: #28a745;
+  }
+  
+  .custom-modal-footer .done:hover {
+    background: #218838;
+  }

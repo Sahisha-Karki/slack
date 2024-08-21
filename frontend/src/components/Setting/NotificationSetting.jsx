@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../src/Styles/Setting/NotificationSettings.css';
+import '../../Styles/Setting/NotificationSettings.css';
 import ToggleButton from './ToggleButton'; // Import the ToggleButton component
 
 const NotificationSettings = () => {

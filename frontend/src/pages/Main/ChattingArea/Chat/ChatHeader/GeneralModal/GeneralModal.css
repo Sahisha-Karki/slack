@@ -1,127 +1,249 @@
 .general-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s ease;
-    z-index: 1000; /* Ensure modal is above other content */
-  }
-  
-  .general-modal-content {
-    display: flex;
-    background: #fff;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 800px;
-    height: 80%;
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.3s ease;
-  }
-  
-  .close-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .modal-body {
-    display: flex;
-    height: 100%;
-    flex-direction: row;
-  }
-  
-  .modal-nav {
-    width: 250px;
-    background: #f8f9fa;
-    border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-  }
-  
-  .modal-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .modal-nav li {
-    padding: 15px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background 0.3s ease;
-    border-radius: 4px;
-  }
-  
-  .modal-nav li:hover {
-    background: #e9ecef;
-  }
-  
-  .modal-nav li svg {
-    margin-right: 10px;
-  }
-  
-  .modal-content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  
-  
-.channel-content {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    padding: 16px;
-  }
-  
-  .channel-section {
-    margin-bottom: 16px;
-  }
-  
-  .channel-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .channel-section-title {
-    font-weight: bold;
-  }
-  
-  .channel-section-edit-button {
-    background: transparent;
-    border: none;
-    color: #007a5a;
-    cursor: pointer;
-  }
-  
-  .channel-section-body {
-    font-size: 14px;
-  }
-  
-  .leave-channel-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .leave-channel-button:hover {
-    background-color: #c9302c;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.general-modal-content {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 700px;
+  height: 79%;
+  overflow: hidden;
+  position: relative;
+}
+
+.general-modal-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.general-modal-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.general-modal-title {
+  margin: 0;
+}
+
+.general-modal-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.general-modal-close-modal {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #333;
+}
+
+.general-modal-body {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+}
+
+.general-modal-nav {
+  width: 200px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.general-modal-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.general-modal-nav li {
+  padding: 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease;
+  color: #000;
+}
+
+.general-modal-nav li:hover {
+  background: #073458;
+  color: #fff;
+}
+
+.general-modal-nav li svg {
+  margin-right: 10px;
+}
+
+.general-modal-content {
+  flex: 1;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.general-content-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.general-channel-section {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.general-channel-section1 {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  padding: 16px;
+}
+
+.general-channel-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.general-channel-section-title {
+  font-weight: 600;
+}
+
+.general-channel-section-edit-button {
+  background: none;
+  border: none;
+  color: #1550C1;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.general-channel-section-body {
+  font-size: 14px;
+  margin: 0;
+}
+
+.general-leave-channel-button {
+  background-color: #f8f8f8;
+  color: #A71010;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.general-content-row {
+  margin-bottom: 16px;
+}
+
+.general-edit-button {
+  background: none;
+  color: #A71010;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.general-content-section-search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #6C6C6C;
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 16px; /* Space below the search bar */
+}
+
+.general-content-section-search-icon {
+  color: #888;
+  margin-right: 8px; /* Space between icon and input */
+}
+
+.general-content-section-search-input {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  width: 100%; /* Takes full width of the container */
+  padding: 0;
+  outline: none;
+}
+
+.general-content-section-search-input::placeholder {
+  color: #888;
+}
+
+.general-content-section-add-member-section {
+  margin-bottom: 16px; /* Space below the button */
+}
+
+.general-content-section-add-member-button {
+  display: flex;
+  align-items: center;
+  background:none;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.general-content-section-add-member-icon {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+.general-content-section-members-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.general-content-section-member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.general-content-section-member-name {
+  font-weight: 600;
+}
+
+.general-content-section-member-id {
+  color: #888;
+}
+
+.general-content-section-remove-member-button {
+  background: none;
+  border: none;
+  color: #d9534f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.general-content-section-remove-member-button svg {
+  margin-right: 4px; /* Space between icon and text */
+}

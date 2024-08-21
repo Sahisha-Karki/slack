@@ -193,7 +193,7 @@ const SearchResults = ({ query }) => {
         <div className="filter-container">
           <button className="filter" onClick={toggleFilterDropdown}>
             <img src="./images/filter.png" alt="fliter" className='fa-filter' />Filter
-            <FontAwesomeIcon icon={faChevronDown} className="dropdown-icon" />
+            <FontAwesomeIcon icon={faChevronDown} className="fliter-dropdown-icon" />
           </button>
           {isFilterDropdownOpen && (
             <div className="filter-dropdown">
@@ -237,7 +237,7 @@ const SearchResults = ({ query }) => {
         <div className="sort-by-container">
           <button className="sort-by" onClick={toggleSortDropdown}>
             Sort By
-            <FontAwesomeIcon icon={faChevronDown} className="dropdown-icon" />
+            <FontAwesomeIcon icon={faChevronDown} className="fliter-dropdown-icon" />
           </button>
           {isSortDropdownOpen && (
             <div className="sort-dropdown">
