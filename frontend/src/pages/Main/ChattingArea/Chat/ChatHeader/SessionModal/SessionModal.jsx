@@ -6,6 +6,8 @@ import {
   faVideoSlash,
   faMicrophoneSlash,
   faVolumeUp,
+  faPencilAlt, 
+  faCommentDots,  
   faVolumeMute,
   faExpandArrowsAlt,
   faTimes
@@ -17,13 +19,10 @@ import AddPeopleModal from "./AddPeopleModal/AddPeopleModal";
 
 const SIGNAL_ICON = "./images/videocallIcon/signal.png";
 const MINIMIZE_ICON = "./images/videocallIcon/minimize.png";
-const CALL_ICON = "./images/videocallIcon/call.png";
 const SCREENS_SHARE_ICON = "./images/videocallIcon/screenshare.png";
 const SMILEY_ICON = "./images/videocallIcon/smiley.png";
 const SETTING_ICON = "./images/videocallIcon/setting.png";
 const ADD_PEOPLE_ICON = "./images/videocallIcon/addpeople.png";
-const CANVAS_ICON = "./images/videocallIcon/canvas.png";
-const CHAT_ICON = "./images/videocallIcon/chat.png";
 
 const SessionModal = ({ isOpen, onClose }) => {
   const [isVideoOn, setIsVideoOn] = useState(true);
@@ -32,7 +31,8 @@ const SessionModal = ({ isOpen, onClose }) => {
   const [isSignalModalOpen, setIsSignalModalOpen] = useState(false);
   const [isCanvasModalOpen, setIsCanvasModalOpen] = useState(false);
   const [isAddPeopleModalOpen, setIsAddPeopleModalOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true); // Default minimized state
+
   const [participants, setParticipants] = useState([
     { name: "Participant 1", isMicOn: true, imgSrc: "./images/profile1.jpg" },
     { name: "Participant 2", isMicOn: false, imgSrc: "./images/profile2.jpg" },
@@ -42,12 +42,36 @@ const SessionModal = ({ isOpen, onClose }) => {
   const [isSharing, setIsSharing] = useState(false);
   const modalRef = useRef(null);
 
+  useEffect(() => {
+    if (isOpen) {
+      // Reset to minimized state every time the modal is opened
+      setIsMinimized(true);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        // Prevent closing when clicking outside
+        // if (event.target.classList.contains('session-modal-overlay')) {
+        //   onClose();
+        // }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   const toggleVideo = () => setIsVideoOn(!isVideoOn);
   const toggleMic = () => setIsMicOn(!isMicOn);
   const toggleVolume = () => setIsVolumeOn(!isVolumeOn);
   const toggleSignalModal = () => setIsSignalModalOpen(!isSignalModalOpen);
   const toggleCanvasModal = () => setIsCanvasModalOpen(!isCanvasModalOpen);
   const toggleAddPeopleModal = () => setIsAddPeopleModalOpen(!isAddPeopleModalOpen);
+  
   const toggleMinimize = () => setIsMinimized(!isMinimized);
 
   const startScreenSharing = async () => {
@@ -68,27 +92,13 @@ const SessionModal = ({ isOpen, onClose }) => {
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        if (event.target.classList.contains('session-modal-overlay')) {
-          onClose();
-        }
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
-
   if (!isOpen) return null;
 
   return (
     <div className="session-modal-overlay" onClick={(e) => {
       if (e.target === e.currentTarget) {
-        onClose();
+        // Optionally disable this to prevent closing when clicking outside
+        // onClose();
       }
     }}>
       <div
@@ -96,7 +106,7 @@ const SessionModal = ({ isOpen, onClose }) => {
         onClick={(e) => e.stopPropagation()}
         ref={modalRef}
       >
-        <div className="session-modal-navbar">
+        <div className="session-modal-header">
           <div className="session-navbar-title">
             <FontAwesomeIcon icon={faVideo} />
             <span>Session</span>
@@ -122,10 +132,7 @@ const SessionModal = ({ isOpen, onClose }) => {
                   </div>
                 ))}
               </div>
-              <div className="minimized-footer">
-                <div className="icon-container">
-                  <img src={CALL_ICON} alt="call" />
-                </div>
+              <div className="minimized-control-bar">
                 <div className="icon-container">
                   <FontAwesomeIcon icon={isVideoOn ? faVideo : faVideoSlash} />
                 </div>
@@ -135,87 +142,77 @@ const SessionModal = ({ isOpen, onClose }) => {
                 <div className="icon-container" onClick={startScreenSharing}>
                   <img src={SCREENS_SHARE_ICON} alt="screenshare" />
                 </div>
-                <button className="leave-button" onClick={onClose}>Leave</button>
+                <button className="end-call" onClick={onClose}>
+                  End
+                </button>
               </div>
             </div>
           ) : (
             <>
-              <div className="volume-control">
-                <button onClick={toggleVolume}>
-                  <FontAwesomeIcon icon={isVolumeOn ? faVolumeUp : faVolumeMute} />
-                </button>
-              </div>
-              <div className="video-container">
+              <div className="video-grid">
                 {participants.map((participant, index) => (
-                  <div key={index} className="video-box">
-                    <div className="video-screen">
-                      <img
-                        src={participant.imgSrc}
-                        alt={`Participant ${index + 1}`}
-                        className="video-image"
+                  <div key={index} className="video-container">
+                    <img
+                      src={participant.imgSrc}
+                      alt={`Participant ${index + 1}`}
+                      className="video-feed"
+                    />
+                    <div className="participant-info">
+                      <FontAwesomeIcon
+                        icon={participant.isMicOn ? faMicrophone : faMicrophoneSlash}
+                        className={participant.isMicOn ? "mic-on" : "mic-off"}
                       />
-                      <div className="participant-info">
-                        <div className="participant-avatar">
-                          <FontAwesomeIcon
-                            icon={
-                              participant.isMicOn ? faMicrophone : faMicrophoneSlash
-                            }
-                          />
-                        </div>
-                        <span className="participant-name">{participant.name}</span>
-                      </div>
+                      <span className="participant-name">{participant.name}</span>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="session-footer">
-                <div className="session-controls">
-                  <div className="left-controls">
-                    <div className="icon-container" onClick={toggleSignalModal}>
-                      <img src={SIGNAL_ICON} alt="signal" />
-                    </div>
-                    <div className="icon-container" onClick={toggleMinimize}>
-                      <img src={MINIMIZE_ICON} alt="minimize" />
-                    </div>
-                  </div>
-                  <div className="center-controls">
-                    <div className="icon-container">
-                      <img src={CALL_ICON} alt="call" />
-                    </div>
-                    <div className="icon-container">
-                      <FontAwesomeIcon icon={isVideoOn ? faVideo : faVideoSlash} />
-                    </div>
-                    <div className="icon-container">
-                      <FontAwesomeIcon icon={isMicOn ? faMicrophone : faMicrophoneSlash} />
-                    </div>
-                    <div className="icon-container" onClick={startScreenSharing}>
-                      <img src={SCREENS_SHARE_ICON} alt="screenshare" />
-                    </div>
-                    <div className="icon-container">
-                      <img src={SMILEY_ICON} alt="smiley" />
-                    </div>
-                    <div className="icon-container">
-                      <img src={SETTING_ICON} alt="settings" />
-                    </div>
-                    <div className="icon-container" onClick={toggleAddPeopleModal}>
-                      <img src={ADD_PEOPLE_ICON} alt="add people" />
-                    </div>
-                  </div>
-                  <div className="right-controls">
-                    {isCanvasModalOpen && (
-                      <CanvasModal isOpen={isCanvasModalOpen} onClose={toggleCanvasModal} />
-                    )}
-                    <div className="icon-container" onClick={toggleCanvasModal}>
-                      <img src={CANVAS_ICON} alt="canvas" />
-                    </div>
-                    <div className="icon-container">
-                      <img src={CHAT_ICON} alt="chat" />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </>
           )}
+        </div>
+        <div className="control-bar">
+          <div className="left-controls">
+            <button className="icon-container" onClick={toggleSignalModal}>
+              <img src={SIGNAL_ICON} alt="signal" />
+            </button>
+            <button className="icon-container" onClick={toggleMinimize}>
+              <img src={MINIMIZE_ICON} alt="minimize" />
+            </button>
+          </div>
+          <div className="center-controls">
+            <button className="end-call" onClick={onClose}>
+              End
+            </button>
+            <button className="icon-container" onClick={toggleVideo}>
+              <FontAwesomeIcon icon={isVideoOn ? faVideo : faVideoSlash} />
+            </button>
+            <button className="icon-container" onClick={toggleVolume}>
+              <FontAwesomeIcon icon={isVolumeOn ? faVolumeUp : faVolumeMute} />
+            </button>
+            <button className="icon-container" onClick={toggleMic}>
+              <FontAwesomeIcon icon={isMicOn ? faMicrophone : faMicrophoneSlash} />
+            </button>
+            <button className="icon-container" onClick={startScreenSharing}>
+              <img src={SCREENS_SHARE_ICON} alt="screenshare" />
+            </button>
+            <button className="icon-container">
+              <img src={SMILEY_ICON} alt="smiley" />
+            </button>
+            <button className="icon-container">
+              <img src={SETTING_ICON} alt="settings" />
+            </button>
+            <button className="icon-container" onClick={toggleAddPeopleModal}>
+              <img src={ADD_PEOPLE_ICON} alt="add people" />
+            </button>
+          </div>
+          <div className="right-controls">
+            <button className="icon-container" onClick={toggleCanvasModal}>
+              <FontAwesomeIcon icon={faPencilAlt} />
+            </button>
+            <button className="icon-container">
+              <FontAwesomeIcon icon={faCommentDots} />
+            </button>
+          </div>
         </div>
         {isSharing && (
           <div className="screenshare-overlay">
@@ -232,6 +229,9 @@ const SessionModal = ({ isOpen, onClose }) => {
           </div>
         )}
       </div>
+      {isSignalModalOpen && <SignalIconModal isOpen={isSignalModalOpen} onClose={toggleSignalModal} />}
+      {isCanvasModalOpen && <CanvasModal isOpen={isCanvasModalOpen} onClose={toggleCanvasModal} />}
+      {isAddPeopleModalOpen && <AddPeopleModal isOpen={isAddPeopleModalOpen} onClose={toggleAddPeopleModal} />}
     </div>
   );
 };

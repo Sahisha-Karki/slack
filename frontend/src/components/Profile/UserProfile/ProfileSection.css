@@ -46,24 +46,6 @@
   margin-left: 0;
 }
 
-.profile-user-edit-buttons {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-}
-
-.edit-status-button, .edit-profile-button {
-  background-color: transparent;
-  border: 1px solid #000;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 6px 10px;
-  width: 120px;
-}
-
 .profile-user-actions {
   display: flex;
   justify-content: center;

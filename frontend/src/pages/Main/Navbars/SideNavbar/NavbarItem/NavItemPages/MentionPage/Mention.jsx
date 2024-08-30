@@ -31,8 +31,8 @@ const Mention = () => {
   const { mentions, reactions } = data;
   const hasContent = mentions.length > 0 || reactions.length > 0;
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading data: {error.message}</div>;
+  if (loading) return <div className="spinner"></div>;
+  if (error) return <div className="error-message">Error loading data: {error.message}</div>;
 
   if (!hasContent) {
     return (
@@ -48,9 +48,7 @@ const Mention = () => {
 
   return (
     <div className="mention-container">
-      {/* <div className="mention-header">
-        <h2>Mentions & Reactions</h2>
-      </div> */}
+      
       {mentions.length > 0 && (
         <div className="mentions-section">
           <div className="section-header">
@@ -148,13 +146,13 @@ const getMockData = () => {
     setTimeout(() => {
       resolve({
         mentions: [
-          { id: 1, user: 'Alice', message: 'Todays update', time: '8:55 AM', mentions: ['@johndoe'] },
-          { id: 2, user: 'John Doe', message: 'hi', time: '7:55 AM', mentions: ['@johndoe'] },
+          { id: 1, user: 'Alice', message: 'Today\'s update', time: '8:55 AM', mentions: ['@johndoe'] },
+          { id: 2, user: 'John Doe', message: 'Hi', time: '7:55 AM', mentions: ['@johndoe'] },
           { id: 3, user: 'general', message: 'Content of message.', time: '8:55 AM', mentions: ['@johndoe', '@alice'] },
         ],
         reactions: [
           { id: 1, user: 'Alice', message: 'Task completed', time: '9:16 AM', reactions: ['👍', '🎉'], reactors: ['You', '@Bob', '@Gaurav'] },
-          { id: 2, user: 'John Doe', message: 'Nice Work', time: '9:16 AM', reactions: ['👍', '🎉'], reactors: ['You', '@Bob', '10 others'] },
+          { id: 2, user: 'John Doe', message: 'Nice work', time: '9:16 AM', reactions: ['👍', '🎉'], reactors: ['You', '@Bob', '10 others'] },
         ],
       });
     }, 1000); // Simulate network delay

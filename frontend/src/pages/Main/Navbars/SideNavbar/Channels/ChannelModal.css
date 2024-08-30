@@ -32,19 +32,19 @@
   cursor: pointer;
 }
 
-.modal-title {
+.channel-modal-title {
   margin: 0;
   margin-bottom: 10px;
   font-size: 24px;
   color: #333;
 }
 
-.modal-label {
+.channel-modal-label {
   display: block;
   margin-bottom: 15px;
 }
 
-.input-text {
+.channel-input-text {
   width: calc(100% - 20px);
   padding: 8px;
   margin-top: 5px;
@@ -52,33 +52,43 @@
   border-radius: 4px;
 }
 
-.description {
+.channel-input-textarea {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  height: 80px; /* Adjust height as needed */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.channel-description {
   font-size: 12px;
   color: #666;
   margin-bottom: 20px;
 }
 
-.visibility-options {
+.channel-visibility-options {
   margin-top: 10px;
 }
 
-.visibility-option {
+.channel-visibility-option {
   display: block;
   margin-bottom: 18px;
   font-size: 14px;
   font-weight: 400;
 }
 
-.visibility-option input[type="radio"] {
+.channel-visibility-option input[type="radio"] {
   margin-right: 5px;
 }
 
-.visibility-option span {
+.channel-visibility-option span {
   color: #000;
   font-weight: bold;
 }
 
-.visibility-description {
+.channel-visibility-description {
   margin-left: 20px;
   margin-top: 8px;
   color: #545454;
@@ -90,7 +100,7 @@
   margin-top: 20px;
 }
 
-.create-button {
+.channel-create-button {
   background-color: #073458;
   color: white;
   border: none;
@@ -98,7 +108,6 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
 
 
 
@@ -113,22 +122,28 @@
 }
 
 .add-members-channel-modal-title {
-  margin: 0;
+  margin: 0 0 15px; /* Adjust spacing below the title */
   font-size: 24px; /* Adjust as needed */
   color: #333; /* Adjust color as needed */
 }
 
-.add-members-channel-modal-description {
-  margin: 4px 0 20px;
-  font-weight: normal; /* Adjust as needed */
-  color: #545454;
-  font-size: 14px; /* Adjust font size as needed */
+.channel-name-with-icon {
+  display: inline-flex; /* Keep icon and text together */
+  align-items: center;
+  white-space: nowrap; /* Prevent line break between icon and channel name */
+  margin-left: 8px; /* Space between "Add Members To" and the icon */
 }
 
-.add-members-channel-modal input[type="text"] {
+.locks {
+  margin-right: 8px; /* Space between icon and channel name */
+  font-size: 20px; /* Adjust icon size as needed */
+}
+
+
+.add-members-channel-modal-input {
   width: calc(100% - 20px);
   padding: 12px;
-  margin-top: 5px;
+  margin-bottom: 15px; /* Adjust space below the input */
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -147,22 +162,24 @@
   border-radius: 4px;
   cursor: pointer;
   margin-left: 10px; 
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
 }
 
-.channel-name-with-icon {
-  display: flex;
-  align-items: center;
+.add-members-channel-modal-skip-button:hover {
+  background-color: #06527a; /* Darker shade on hover */
 }
 
-.channel-name-with-icon i {
-  margin-right: 8px; /* Space between icon and channel name */
-  font-size: 20px; /* Adjust icon size as needed */
+.add-members-channel-modal-invite-button {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.channel-visibility-icon .fa-globe-americas {
-  color: #00aaff; /* Example color for public channels */
-}
-
-.channel-visibility-icon .fa-lock {
-  color: #ff6f6f; /* Example color for private channels */
+.add-members-channel-modal-invite-button:hover {
+  background-color: #f5f5f5; /* Light gray background on hover */
 }

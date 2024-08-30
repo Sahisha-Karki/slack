@@ -1,126 +1,64 @@
-/* Enhanced CSS */
-
-.toolbar-main-container {
-  margin: 0;
-  padding: 0;
+/* General Styles */
+.message-input-container {
   width: 100%;
+  margin-bottom: 10px;
 }
 
-.message-input-box {
-  width: 100%;
+.message-input-wrapper {
+  display: flex;
   margin-bottom: 0;
-  padding: 0;
 }
 
 .message-input {
-  width: 95%;
-  min-height: 50px;
-  max-height: 150px;
-  border: 1px solid #ddd; /* Slightly darker border for better visibility */
+  width: calc(100% - 90px);
+  height: 25px;
+  border: 1px solid #ddd;
+  border-bottom: none;
   outline: none;
   font-size: 16px;
-  background-color: #fafafa; /* Slightly lighter background for a modern look */
+  background-color: white;
   border-radius: 8px 8px 0 0;
-  margin: 0;
-  margin-left: 24px;
-  padding: 0;
-  padding-top: 20px;
-  padding-left: 20px;
-  overflow: auto;
+  margin: 0 24px;
+  padding: 20px;
   resize: none;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
 
 .message-input::placeholder {
-  color: #aaa; /* Slightly lighter placeholder color */
-  font-size: 16px;
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.message-input:focus::placeholder {
-  opacity: 0;
-}
-
-.message-input.left {
-  text-align: left;
-}
-
-.message-input.center {
-  text-align: center;
-}
-
-.message-input.right {
-  text-align: right;
-}
-
-.edit-buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 8px;
-  margin-right: 40px;
-}
-
-.edit-buttons button {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  margin-right: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transition for scaling effect */
-}
-
-.edit-buttons button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05); /* Slight scale effect on hover */
-}
-
-.edit-buttons button.cancel {
-  background-color: #6c757d;
-}
-
-.edit-buttons button.cancel:hover {
-  background-color: #5a6268;
+  color: #888;
 }
 
 .toolbar-icons {
   display: flex;
   align-items: center;
-  width: 94.4%;
-  margin: 0;
-  margin-left: 24px;
-  background-color: #0a2a4a; /* Darker background for better contrast */
-  padding: 16px; /* Reduced padding for a more compact look */
-  border-radius: 0 0 15px 15px;
+  background-color: #0a2a4a;
+  padding: 10px 24px;
+  border-radius: 0 0 8px 8px;
+  margin: 0 24px;
 }
 
 .toolbar-icons button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px; /* Slightly larger font size for better readability */
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 12px; /* Increased padding for better touch targets */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transition for scaling effect */
+  font-size: 18px;
+  padding: 5px;
+  margin: 0 5px;
 }
 
 .toolbar-icons button:hover {
-  transform: scale(1.1); /* Slight scale effect on hover */
+  opacity: 0.8;
 }
 
 .icon-section {
   display: flex;
   align-items: center;
-  padding: 0 12px; /* Increased padding for better spacing */
   position: relative;
 }
 
+.icon-section:not(:first-child) {
+  padding-left: 5px;
+}
 .second-icon-section::before,
 .third-icon-section::before {
   content: "";
@@ -128,7 +66,7 @@
   left: -15px; /* Adjusted for better separation */
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 2px;
   background-color: white;
 }
 
@@ -140,18 +78,175 @@
 .icon-section:not(:first-child)::before {
   content: "";
   position: absolute;
-  left: -15px; /* Adjusted for better separation */
+  left: -15px; 
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 2px;
   background-color: white;
+  
 }
 
 .forth-icon-section {
   margin-left: auto;
 }
 
-.toolbar-icons button.active {
-  background-color: rgba(255, 255, 255, 0.3); /* Slightly lighter active state */
+
+.send-button {
+  margin-left: auto; /* Align the send button to the right */
+  padding: 8px 10px !important;
 }
 
+@media (max-width: 768px) {
+  .forth-icon-section {
+    flex-grow: 0; /* Reset flex-grow on smaller screens */
+  }
+}
+
+/* Add Image Styles */
+.add-image-container {
+  display: flex;
+  align-items: center; /* Center the icon vertically */
+  padding: 0 10px;
+}
+
+.upload-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  cursor: pointer;
+  margin: 0; 
+}
+
+.image-icon {
+  font-size: 20px;
+  color: white;
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.image-icon:hover {
+  color: gray; /* Change icon color to gray on hover */
+}
+
+.image-preview img {
+  max-width: 100px; 
+  margin-top: 10px; 
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .message-input {
+    width: calc(100% - 40px);
+    margin: 0 10px;
+    padding: 15px;
+  }
+
+  .toolbar-icons {
+    flex-wrap: wrap; /* Allow icons to wrap if they don't fit */
+    padding: 10px;
+    margin: 0 10px;
+  }
+
+  .icon-section {
+    margin-left: 10px;
+    padding-left: 10px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .message-input {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .toolbar-icons {
+    padding: 8px;
+    margin: 0;
+    flex-direction: column; /* Stack icons vertically on small screens */
+  }
+
+  .icon-section {
+    margin: 5px 0;
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .add-image-container {
+    padding: 0 5px;
+  }
+
+  .image-icon {
+    font-size: 18px;
+  }
+}
+
+
+/* Add file */
+
+.file-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.file-dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+}
+
+.file-dropdown-menu {
+  position: absolute;
+  background-color: #ffffff; /* Light gray background color */
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.file-dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #000000; /* Darker text color for contrast */
+  border-radius: 4px;
+}
+
+.file-dropdown-item:hover {
+  background-color: #ddd; /* Slightly darker gray on hover */
+}
+
+.file-dropdown-icon {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.uploading-spinner {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  color: #a7a7a7;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

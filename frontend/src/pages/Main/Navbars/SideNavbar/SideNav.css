@@ -6,8 +6,10 @@
   color: #4B4B4B;
   padding: 20px;
   box-sizing: border-box;
-  height: 100vh;
+  max-height: 100%;
   overflow-y: auto; /* Enable vertical scrolling */
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .content {

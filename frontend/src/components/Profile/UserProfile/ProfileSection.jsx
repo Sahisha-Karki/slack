@@ -24,14 +24,6 @@ const ProfileSection = () => {
         <h3>{dummyProfile.name}</h3>
         <p>{dummyProfile.role}</p>
         <span className="profile-user-status">{dummyProfile.status}</span>
-        <div className="profile-user-edit-buttons">
-          <button className="edit-status-button">
-            <FontAwesomeIcon icon={faEdit} /> Edit Status
-          </button>
-          <button className="edit-profile-button">
-            <FontAwesomeIcon icon={faEdit} /> Edit Profile
-          </button>
-        </div>
       </div>
       <div className="profile-user-actions">
         <img src="./images/phone.png" alt="Phone" />

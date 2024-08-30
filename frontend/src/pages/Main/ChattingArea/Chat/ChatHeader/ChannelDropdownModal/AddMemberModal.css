@@ -1,0 +1,99 @@
+.channel-dropdown-add-member-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.channel-dropdown-add-member-modal-content {
+  background: #fff;
+  padding: 25px; /* Increased padding for better spacing */
+  border-radius: 12px; /* Softer border radius */
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: relative;
+}
+
+.channel-dropdown-add-member-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0; /* Divider for header */
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.channel-dropdown-add-member-modal-title {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.channel-dropdown-add-member-modal-close-button {
+  background: none;
+  border: none;
+  font-size:28px; /* Increased size for better visibility */
+  cursor: pointer;
+}
+
+.channel-dropdown-add-member-modal-body {
+  margin: 20px 0;
+  color: #4a4a4a; /* Slightly darker text color for better readability */
+  line-height: 1.6; /* Improve text spacing */
+}
+
+.channel-dropdown-add-member-modal-options label {
+  display: block;
+  margin: 15px 0; /* Increased spacing between options */
+  font-size: 16px; /* Ensure text is readable */
+  color: #000;
+}
+
+.channel-dropdown-add-member-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.channel-dropdown-add-member-modal-cancel-button,
+.channel-dropdown-add-member-modal-continue-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.channel-dropdown-add-member-modal-cancel-button {
+  background: none;
+  border: 1px solid #4a4a4a;
+  color: #333; /* Darker text color for contrast */
+}
+
+.channel-dropdown-add-member-modal-continue-button {
+  background: #073458; /* Apply the theme color */
+  color: #fff;
+  transition: background 0.3s ease; /* Smooth transition on hover */
+}
+
+.channel-dropdown-add-member-modal-continue-button:hover {
+  background: #052a44; /* Darker shade on hover */
+}
+
+
+.channel-dropdown-add-member-modal-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

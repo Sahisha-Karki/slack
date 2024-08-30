@@ -17,7 +17,7 @@ const fakeResults = [
 ];
 
 
-const resultsPerPage = 5; // Number of results per page
+const resultsPerPage = 4; // Number of results per page
 
 const SearchResults = ({ query }) => {
   const [sortBy, setSortBy] = useState('A-Z');

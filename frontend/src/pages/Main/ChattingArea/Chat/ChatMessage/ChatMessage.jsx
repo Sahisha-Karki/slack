@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format, toZonedTime } from 'date-fns-tz';
 import EmojiReactions from "../../../../../components/ReactionEmojies/ReactionEmojies";
@@ -9,18 +9,21 @@ const ChatMessage = ({
   handleAvatarClick,
   isHovered,
   onHover,
-  onEdit, // Add this prop
+  onEdit,
 }) => {
   const [reactions, setReactions] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [editContent, setEditContent] = useState(message.content);
+  const [editContent, setEditContent] = useState(message?.content || '');
+
+  useEffect(() => {
+  }, [message]);
 
   // Function to format the date
   const formatDate = (dateString) => {
-    if (!dateString) return ''; // Handle empty dateString
-    const timeZone = 'Asia/Kathmandu'; // Replace with your time zone
+    if (!dateString) return '';
+    const timeZone = 'Asia/Kathmandu';
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return ''; // Handle invalid date
+    if (isNaN(date.getTime())) return '';
     const zonedDate = toZonedTime(date, timeZone);
     return format(zonedDate, 'hh:mm a', { timeZone });
   };
@@ -28,14 +31,14 @@ const ChatMessage = ({
   // Function to handle reactions
   const handleReaction = (emoji) => {
     setReactions((prev) => {
-      if (prev[message.id] && prev[message.id].src === emoji.src) {
+      if (prev[message._id] && prev[message._id].src === emoji.src) {
         const updatedReactions = { ...prev };
-        delete updatedReactions[message.id];
+        delete updatedReactions[message._id];
         return updatedReactions;
       } else {
         return {
           ...prev,
-          [message.id]: emoji
+          [message._id]: emoji
         };
       }
     });
@@ -58,21 +61,29 @@ const ChatMessage = ({
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    setEditContent(message.content); // Reset edit content
+    setEditContent(message.content || '');
   };
 
   const handleSaveEdit = async () => {
     try {
-      if (onEdit) {
-        await axios.put(`http://localhost:5000/api/messages/edit/${message.id}`, { newContent: editContent });
-        onEdit(message.id, editContent); // Notify parent component
+      if (onEdit && message._id) {
+        await axios.put(`http://localhost:5000/api/messages/edit/${message._id}`, { newContent: editContent });
+        onEdit(message._id, editContent);
       }
       setIsEditing(false);
     } catch (error) {
       console.error('Error editing message:', error);
-      // Handle error (e.g., show a notification to the user)
     }
   };
+
+  // Function to show only the part before '@'
+  const sliceEmail = (email) => {
+    return email ? email.split('@')[0] : 'Unknown User';
+  };
+
+  if (!message) {
+    return null; // or some placeholder component
+  }
 
   return (
     <div
@@ -81,11 +92,16 @@ const ChatMessage = ({
       onMouseLeave={() => onHover(false)}
     >
       <div className="chat-message-avatar" onClick={handleAvatarClick}>
-        <img src="https://via.placeholder.com/40" alt={message.user} />
+        <img 
+          src={message.sender?.avatar || "https://via.placeholder.com/40"} 
+          alt={message.sender?.email || "Unknown User"} 
+        />
       </div>
       <div className="chat-message-text">
         <div className="chat-message-author-time">
-          <span className="chat-message-author">{message.user}</span>
+          <span className="chat-message-author">
+            {sliceEmail(message.sender?.email)}
+          </span>
           <span className="chat-message-time">{formatDate(message.createdAt)}</span>
         </div>
         {isEditing ? (
@@ -100,11 +116,11 @@ const ChatMessage = ({
         ) : (
           <>
             <p>{formatMessageContent(message.content)}</p>
-            {reactions[message.id] && (
+            {reactions[message._id] && (
               <div className="chat-reaction-display">
                 <img
-                  src={reactions[message.id].src}
-                  alt={reactions[message.id].alt}
+                  src={reactions[message._id].src}
+                  alt={reactions[message._id].alt}
                   className="chat-emoji"
                 />
               </div>
@@ -116,9 +132,9 @@ const ChatMessage = ({
         <EmojiReactions
           onReact={handleReaction}
           onReply={() => {}}
-          messageId={message.id}
+          messageId={message._id}
           messageContent={message.content}
-          onEdit={onEdit} // Pass the edit handler
+          onEdit={handleEditClick}
         />
       )}
     </div>

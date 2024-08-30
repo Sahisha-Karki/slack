@@ -4,12 +4,12 @@
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #E0E0E0; /* Light Gray Border */
   border-radius: 12px;
-  background-color: #ffffff; /* Background color white */
+  background-color: #FFFFFF; /* White Background */
   max-width: 100%;
-  height: 100vh; /* Full viewport height */
-  overflow-y: auto; /* Enables vertical scrolling */
+  height: 100vh; /* Full Viewport Height */
+  overflow-y: auto; /* Enables Vertical Scrolling */
 }
 
 /* Empty State */
@@ -19,36 +19,28 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 300px; /* Adjust height to match image */
-  color: #4a4a4a; /* Dark gray for text */
+  height: 300px; /* Adjust Height to Match Image */
+  color: #4A4A4A; /* Dark Gray for Text */
 }
 
 .mention-image {
-  width: 120px; /* Increase the size for better visibility */
+  width: 120px; /* Increase Size for Better Visibility */
   height: auto;
   margin-bottom: 20px;
 }
 
 .mention-header {
-  font-size: 20px; /* Slightly larger font size */
+  font-size: 20px; /* Slightly Larger Font Size */
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333; /* Dark gray for the header */
+  color: #004175; /* Dark Blue Header Color */
 }
 
 .mention-body p {
   font-size: 1em;
-  color: #666; /* Lighter gray for the paragraph */
-  max-width: 460px; /* Adjust max-width for better alignment */
+  color: #666666; /* Lighter Gray for Paragraph */
+  max-width: 460px; /* Adjust Max-Width for Better Alignment */
   line-height: 1.5;
-}
-
-/* Header */
-.mention-container h2 {
-  font-size: 26px; /* Larger font size for main title */
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333; /* Dark gray text */
 }
 
 /* Sections */
@@ -56,32 +48,32 @@
   margin-bottom: 30px;
 }
 
-.mentions-section h3, .reactions-section h3 {
+.section-header h3 {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #444; /* Slightly lighter gray */
+  color: #004175; /* Dark Blue Section Header */
 }
 
 /* Mention Items */
 .mention-item {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start; /* Align Items to the Top */
   margin-bottom: 15px;
-  background-color: #ffffff; /* White background for items */
-  border: 1px solid #e0e0e0; /* Light gray border */
+  background-color: #FFFFFF; /* White Background for Items */
+  border: 1px solid #E0E0E0; /* Light Gray Border */
   border-radius: 8px;
   padding: 15px;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .mention-item:hover {
-  background-color: #f5f5f5; /* Light gray on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+  background-color: #F5F5F5; /* Light Gray on Hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle Shadow on Hover */
 }
 
 .user-avatar {
-  width: 50px; /* Larger avatar size */
+  width: 50px; /* Larger Avatar Size */
   height: 50px;
   border-radius: 50%;
   margin-right: 15px;
@@ -93,25 +85,25 @@
 
 .user-name {
   font-weight: bold;
-  color: #333; /* Dark gray text */
+  color: #333333; /* Dark Gray Text */
   display: block;
 }
 
 .mention-message {
   margin-top: 5px;
-  color: #555; /* Mid-gray for message content */
+  color: #555555; /* Medium Gray for Message Content */
 }
 
 .mention-time {
   font-size: 0.85em;
-  color: #888; /* Lighter gray for time */
+  color: #888888; /* Light Gray for Time */
   display: block;
   margin-top: 5px;
 }
 
 .mention-tag {
-  background-color: #e0f7fa; /* Light cyan background for tags */
-  color: #00796b; /* Dark cyan text */
+  background-color: #DCE7F0; /* Light Blue Background for Tags */
+  color: #004175; /* Dark Blue Text */
   border-radius: 5px;
   padding: 2px 5px;
   margin-right: 5px;
@@ -120,8 +112,8 @@
 
 /* Reaction Items */
 .reaction-item {
-  background-color: #f9f9f9; /* Light gray background */
-  border: 1px solid #e0e0e0; /* Light gray border */
+  background-color: #F9F9F9; /* Light Gray Background */
+  border: 1px solid #E0E0E0; /* Light Gray Border */
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 20px;
@@ -129,13 +121,13 @@
 }
 
 .reaction-item:hover {
-  background-color: #f5f5f5; /* Light gray on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+  background-color: #F5F5F5; /* Light Gray on Hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle Shadow on Hover */
 }
 
 .reaction-header {
   font-size: 1em;
-  color: #333; /* Dark gray text */
+  color: #333333; /* Dark Gray Text */
   margin-bottom: 10px;
 }
 
@@ -147,7 +139,7 @@
 
 .reaction-left {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start; /* Align Items to the Top */
 }
 
 .reaction-message-content {
@@ -171,18 +163,18 @@
 }
 
 .reaction-emoji:hover {
-  transform: scale(1.2); /* Slightly enlarge on hover */
+  transform: scale(1.2); /* Slightly Enlarge on Hover */
 }
 
 .reaction-emoji:active {
-  transform: scale(1); /* Return to original size on click */
+  transform: scale(1); /* Return to Original Size on Click */
 }
 
 /* Loading Spinner */
 .spinner {
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
-  border-top: 4px solid #3498db;
+  border-top: 4px solid #004175; /* Dark Blue Spinner */
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
@@ -192,4 +184,11 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Error Message */
+.error-message {
+  color: #D9534F; /* Bootstrap Danger Color */
+  font-size: 1.2em;
+  text-align: center;
 }

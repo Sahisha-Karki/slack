@@ -37,11 +37,10 @@ const Notes = ({ onClose }) => {
         &times;
       </button>
       <h2>Notes</h2>
-
+  
       <div className="content-display">
         {activeContent === "getStarted" && (
           <div>
-            <textarea placeholder="Type here to get started..." className="start-textarea"></textarea>
             <h3>Getting Started</h3>
             <div className="options-bar">
               <button onClick={() => handleOptionClick("blankPage")}>
@@ -71,9 +70,10 @@ const Notes = ({ onClose }) => {
         {activeContent === "toDoList" && <div>To-do List Content</div>}
         {activeContent === "resources" && <div>Resources Content</div>}
       </div>
-      <IconBar />
+      <IconBar /> {/* Ensure IconBar is always rendered here */}
     </div>
   );
+  
 };
 
 export default Notes;

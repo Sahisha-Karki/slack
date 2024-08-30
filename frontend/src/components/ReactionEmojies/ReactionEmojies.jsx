@@ -74,9 +74,6 @@ const EmojiReactions = ({ onReact, onEdit, messageId, messageContent }) => {
                     <li onClick={() => handleDropdownAction('Copy text')}>Copy text</li>
                     <li onClick={() => handleDropdownAction('Reply')}>Reply</li>
                     <li onClick={() => handleDropdownAction('Edit message')}>Edit message</li>
-                    <li onClick={() => handleDropdownAction('Mentions')}>Mentions</li>
-                    <li onClick={() => handleDropdownAction('Copy Message Link')}>Copy Message Link</li>
-                    <li onClick={() => handleDropdownAction('Report')}>Report</li>
                     <li onClick={() => handleDropdownAction('Delete')}>Delete</li>
                   </ul>
                 </div>

@@ -1,0 +1,52 @@
+.vertical-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  background-color: #0f2748; /* Dark blue background */
+  position: relative;
+  height: 100vh; /* Ensure the navbar takes up the full height */
+}
+
+.vertical-nav-item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%; /* Fill the container */
+  height: 60px;
+  gap: 12px;
+  position: relative; /* Required for positioning dropdown */
+}
+
+.vertical-nav-icon {
+  width: 60px; /* Ensure consistent size */
+  height: 60px; /* Ensure consistent size */
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: rgb(255, 255, 255); /* Make the background white like the logo's circle */
+}
+
+.vertical-nav-item .open-switch {
+  height: 20px;
+  width: 5px;
+  border-radius: 40px;
+  background-color: white;
+}
+
+.vertical-nav-home {
+  margin-top: 600px; /* Pushes the home icon to the bottom */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px; /* Match the height of other nav items */
+}
+
+.home-icon {
+  font-size: 34px; /* Adjust size as needed */
+  color: #222; /* White icon color */
+  background-color: #fff; /* 50% white background */
+  border-radius: 50%; /* Circular background */
+  padding: 10px; /* Space around the icon */
+}

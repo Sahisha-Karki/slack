@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../../../src/Styles/Setting/ProfileSection.css';
 import { FaChevronUp } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+
+const authAxios = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+authAxios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 function ProfileSection() {
   const [isEditing, setIsEditing] = useState(false);
@@ -12,14 +33,36 @@ function ProfileSection() {
   const [audioChunks, setAudioChunks] = useState([]);
 
   const [profile, setProfile] = useState({
-    name: 'John Doe',
-    title: 'Developer',
-    username: 'John doe',
-    displayname:'John',
-    email: 'johndoe@gmail.com',
-    phoneNumber: '+977-9123456780',
-    profilePicture: 'path_to_profile_image.jpg'  // Add initial profile picture path
+    title: '',
+    fullname: '',
+    displayname: '',
+    email: '',
+    phoneNumber: '',
+    profilePicture: 'path_to_default_image.jpg'
   });
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+   const fetchUserData = async () => {
+    try {
+      // Instead of using userId, we'll use the /user/profile endpoint
+      const response = await authAxios.get('/users/profile');
+      const userData = response.data;
+      setProfile({
+        title: userData.title,
+        fullname: userData.fullName,
+        displayname: userData.displayName,
+        email: userData.email,
+        phoneNumber: userData.phone,
+        profilePicture: userData.profilePicture || 'path_to_default_image.jpg'
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error.response?.data || error.message);
+      alert('Failed to fetch user data. ' + (error.response?.data?.message || error.message));
+    }
+  };
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -36,10 +79,50 @@ function ProfileSection() {
       setProfile({ ...profile, profilePicture: imageUrl });
     }
   };
-
-  const handleSave = () => {
-    alert('Profile saved!');
-    setIsEditing(false);
+  
+  
+ 
+  const handleSave = async () => {
+    try {
+      console.log('Sending update with data:', {
+        fullName: profile.fullname,
+        displayName: profile.displayname,
+        title: profile.title,
+        phone: profile.phoneNumber,
+      });
+  
+      const response = await authAxios.put('/users/update', {
+        fullName: profile.fullname,
+        displayName: profile.displayname,
+        title: profile.title,
+        phone: profile.phoneNumber,
+      });
+      
+      console.log('Server response:', response.data);
+      
+      setProfile(prevProfile => ({
+        ...prevProfile,
+        fullname: response.data.fullName,
+        displayname: response.data.displayName,
+        title: response.data.title,
+        phoneNumber: response.data.phone,
+      }));
+      
+      alert('Profile updated successfully!');
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+        console.error('Error headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('Error request:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      alert('Failed to update profile. ' + (error.response?.data?.message || error.message));
+    }
   };
 
   const handleCancelEdit = () => {
@@ -135,8 +218,8 @@ function ProfileSection() {
             <div className="settings-profile-input-container">
               <input
                 type="text"
-                name="username"
-                value={profile.username}
+                name="fullname"
+                value={profile.fullname}
                 onChange={handleChange}
               />
               <span className="settings-profile-edit-icon">✎</span>
@@ -147,8 +230,9 @@ function ProfileSection() {
                 type="email"
                 name="email"
                 value={profile.email}
-                onChange={handleChange}
-              />
+                readOnly
+                className="readonly-input"
+                />
               <span className="settings-profile-edit-icon">✎</span>
             </div>
             <label>Display Name</label>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
+import '../Draft.css';
 
 // Header Component
 export const Header = ({ title, selectedTab, setSelectedTab, selectAll, unselectAll, deleteSelected, isEditMode, selectedMessages, showCheckboxes }) => {
@@ -48,7 +49,7 @@ export const Header = ({ title, selectedTab, setSelectedTab, selectAll, unselect
 };
 
 export const MessageItem = ({ message, isSelected, toggleSelect, isEditMode, showCheckboxes }) => (
-    <div className={`message-item ${isSelected ? 'selected' : ''}`}>
+    <div className={`draft-message-item ${isSelected ? 'selected' : ''}`}>
       {isEditMode && showCheckboxes && (
         <input 
           type="checkbox" 
@@ -57,7 +58,7 @@ export const MessageItem = ({ message, isSelected, toggleSelect, isEditMode, sho
           className="checkbox"
         />
       )}
-      <img src={message.avatar} alt="Avatar" className="avatar" />
+      <img src={message.avatar} alt="Avatar" className="draft-avatar" />
       <div className="draft-message-content">
         <p className="draft-message-channel">{message.channel ? message.channel.name : 'No Channel'}</p> {/* Channel Name */}
         <p className="draft-message-title">{message.name}</p>

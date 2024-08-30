@@ -13,8 +13,6 @@ const Files = () => {
   const [sortBy, setSortBy] = useState('name');
   const [viewMode, setViewMode] = useState('list');
   const [recentlyViewed, setRecentlyViewed] = useState('none');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -55,12 +53,14 @@ const Files = () => {
   }, [searchTerm, filterType, sortBy, files]);
 
   // Pagination logic
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastFile = currentPage * itemsPerPage;
   const indexOfFirstFile = indexOfLastFile - itemsPerPage;
   const currentFiles = filteredFiles.slice(indexOfFirstFile, indexOfLastFile);
   const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
-  if (loading) return <p>Loading files...</p>;
+  if (loading) return <div className="spinner"></div>;
   if (error) return <p>Error fetching files: {error.message}</p>;
 
   return (
@@ -174,18 +174,6 @@ const Files = () => {
               <div className="file-name">{file.filename}</div>
             </div>
           </div>
-        ))}
-      </div>
-
-      <div className="page-navigation">
-        {[...Array(totalPages)].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(index + 1)}
-            className={currentPage === index + 1 ? 'active' : ''}
-          >
-            {index + 1}
-          </button>
         ))}
       </div>
     </div>

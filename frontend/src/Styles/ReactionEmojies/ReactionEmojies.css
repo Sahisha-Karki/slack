@@ -1,16 +1,17 @@
-/* ReactionEmojies.css */
+Reaction Emojie
 
-/* Existing styles */
+/* Refined styles */
 .emoji-reactions {
   display: flex;
   gap: 2px;
   position: absolute;
   bottom: 0;
   right: 0;
+  align-items: center;
   background: rgba(255, 255, 255, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  padding: 6px;
+  padding: 5px 5px;
 }
 
 .emoji-wrapper {
@@ -35,20 +36,24 @@
   opacity: 0.8;
 }
 
-/* Dropdown menu styles */
-.dropdown-menu {
-  display: block; /* Ensure it's shown when needed */
+/* Refined Dropdown menu styles */
+.emoji-wrapper .dropdown-menu {
+  display: block; /* Initially hidden */
   position: absolute;
-  top: 100%; /* Position below the emoji-wrapper */
-  right: 10%; /* Align with the left edge of the emoji-wrapper */
+  bottom: 100%; /* Position above the emoji-wrapper */
+  left: 50%; /* Center horizontally relative to the emoji-wrapper */
+  transform: translateX(-100%); /* Center the dropdown by shifting it left by 50% of its own width */
   background: #ffffff;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  z-index: 1000; /* Ensure it appears above other elements */
-  min-width: 200px; /* Ensure the dropdown has a minimum width */
-  padding: 6px 0; /* Padding for the dropdown items */
+  z-index: 1050;
+  width: 200px; /* Ensure the dropdown has a minimum width */
+  white-space: nowrap; /* Prevent text wrapping */
+  transition: all 0.3s ease;
+  height: 180px;
 }
+
 
 .dropdown-menu ul {
   list-style: none;
@@ -60,9 +65,9 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  white-space: nowrap; /* Ensures text stays on one line */
 }
 
 .dropdown-menu li:hover {
   background-color: #f0f0f0;
 }
-

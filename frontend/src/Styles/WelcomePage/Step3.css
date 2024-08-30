@@ -33,3 +33,23 @@
   border-radius: 4px;
   resize: vertical;
 }
+
+.create-workspace-step3-container .options-container {
+  display: flex;
+}
+
+.copy-invite-link-button{
+  margin: 0;
+}
+
+.Step3-next-button{
+  padding: 10px 20px;
+  background-color: #00294b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  align-self: flex-end;
+  margin-left: 10px;
+}

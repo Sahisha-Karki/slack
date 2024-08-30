@@ -2,14 +2,15 @@
   position: fixed;
   right: 0;
   top: 70px;
-  width: 280px; /* Increased width for better content display */
+  width: 280px;
   height: 87.1%;
-  background: #ffffff; /* Changed background color for better contrast */
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
   z-index: 1000;
   overflow-y: auto;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease; 
+  transform: translateX(0);
 }
 
 .close-notes {
@@ -19,7 +20,7 @@
   background: none;
   border: none;
   font-size: 24px;
-  color: #333; /* Darker color for better visibility */
+  color: #333;
   cursor: pointer;
 }
 
@@ -36,12 +37,12 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #007bff; /* Added color for buttons */
-  transition: background 0.2s ease; /* Smooth transition */
+  color: #007bff;
+  transition: background 0.2s ease;
 }
 
 .options-bar button:hover {
-  background-color: #f0f0f0; /* Light background on hover */
+  background-color: #f0f0f0;
 }
 
 .options-bar button svg {
@@ -79,12 +80,12 @@
   outline: none;
 }
 
-.start-textarea {
-  width: 95%;
-  height: 400px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  background-color: #ffffff; 
-  resize: none; 
-  outline: none;
+/* IconBar should be fixed at the bottom of the notes-container */
+.icon-bar {
+  position: sticky;
+  top: 90%;
+  bottom: 0;
+  left: 0;
+  width: 93%;
 }
+

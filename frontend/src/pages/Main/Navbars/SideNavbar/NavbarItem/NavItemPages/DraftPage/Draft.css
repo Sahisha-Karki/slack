@@ -14,11 +14,6 @@
   overflow: hidden;
 }
 
-.message-list {
-  flex: 1;
-  overflow-y: auto; /* Allow scrolling if content overflows */
-}
-
 /* Header Styles */
 .header {
   display: flex;
@@ -59,11 +54,6 @@
   font-size: 14px;
 }
 
-.message-actions-header .action-button:hover {
-  background-color: #007bff;
-  color: white;
-}
-
 .message-actions-header .delete-button {
   display: flex;
   align-items: center;
@@ -71,9 +61,14 @@
   border: 1px solid transparent; /* Keep border consistent */
 }
 
+.message-actions-header .action-button:hover {
+  background-color: #0056b3; /* Change to a darker shade */
+  color: #ffffff;
+}
+
 .message-actions-header .delete-button:hover {
-  background-color: #ff4d4f;
-  color: white;
+  background-color: #e63946; /* Change to a darker red */
+  color: #ffffff;
 }
 
 .message-actions-header .delete-button svg {
@@ -102,14 +97,28 @@
   border-bottom: 2px solid #007bff;
 }
 
-  
-/* Message List */
-.message-list {
+/* Message List Container */
+.draft-page-message-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
   padding: 20px;
 }
 
-/* Message Item */
-.message-item {
+/* No Messages Container */
+.draft-page-no-messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Draft Message Item */
+.draft-message-item {
   display: flex;
   align-items: center;
   background-color: #ffffff;
@@ -123,173 +132,47 @@
   position: relative;
 }
 
-.message-item:hover {
+.draft-message-item:hover {
   background-color: #f1f3f5;
 }
 
-.message-item.selected {
-  border-color: #007bff;
+.draft-message-item.selected {
+  border-color: #293d03;
 }
 
-.message-item.edit-mode {
+.draft-message-item.edit-mode {
   padding-left: 50px;
 }
 
-/* Checkbox */
-.message-item input[type="checkbox"] {
+.draft-message-item input[type="checkbox"] {
   position: absolute;
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-/* Avatar */
-.avatar {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  margin-right: 15px;
-  object-fit: cover;
-}
-
-/* Message Content */
 .draft-message-content {
   flex-grow: 1;
 }
 
-/* Message Title */
 .draft-message-title {
   margin: 0;
   font-weight: bold;
   color: #333;
 }
 
-/* Message Text */
 .draft-message-text {
   margin: 5px 0 0 0;
   color: #555;
 }
 
-/* Channel Name */
 .draft-message-channel {
   margin: 5px 0 0 0;
   color: #777;
   font-size: 0.9rem;
 }
 
-/* Message Time */
 .draft-message-time {
   text-align: right;
   color: #999;
-}
-
-/* No Messages */
-.no-messages {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  text-align: center;
-  color: #555;
-  padding: 20px;
-  font-size: 16px;
-}
-
-.no-message-title {
-  margin: 0;
-  margin-bottom: 20px;
-  font-size: 1.25em;
-  font-weight: bold;
-}
-
-.no-message-body {
-  margin: 0;
-}
-
-/* Modal Styles */
-.delete-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Modal Content */
-.delete-modal-content {
-  background-color: white;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 550px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
-
-/* Modal Header */
-.delete-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 10px;
-}
-
-/* Close Button */
-.delete-close-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #333;
-}
-
-/* Modal Body */
-.delete-modal-body {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* Modal Footer */
-.delete-modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-/* Cancel Button */
-.delete-cancel-button {
-  border: 1px solid #c5c5c5;
-  color: #333;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-.delete-cancel-button:hover {
-  background-color: #f1f3f5;
-  border-color: #b0b0b0;
-}
-
-/* Confirm Delete Button */
-.delete-confirm-delete-button {
-  background-color: #dc3545;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  height: 35px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.delete-confirm-delete-button:hover {
-  background-color: #c82333;
 }

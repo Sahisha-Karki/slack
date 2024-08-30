@@ -51,10 +51,10 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
 
   const sendMessage = async () => {
     if (!message.trim()) return;
-
+  
     setIsLoading(true);
     setError('');
-
+  
     try {
       const messageData = { content: message };
       if (channelId) {
@@ -62,13 +62,13 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
         await axios.post('http://localhost:5000/api/messages/send', messageData, {
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         });
-        socket.emit('sendMessage', messageData);
+        socket.emit('sendMessage', messageData); // Make sure this message is sent only to the specific channel
       } else if (userId) {
         messageData.receiverId = userId;
         await axios.post('http://localhost:5000/api/directMessages/send', messageData, {
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         });
-        socket.emit('sendDirectMessage', messageData);
+        socket.emit('sendDirectMessage', messageData); // This should be specific to direct messages
       }
       setMessage('');
       if (editMessageId) {
@@ -81,6 +81,7 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
       setIsLoading(false);
     }
   };
+  
 
   const debouncedSaveDraft = useCallback(debounce(saveDraft, 300), [message, channelId]);
 
@@ -158,7 +159,7 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
               disabled={isLoading}
             />
             <div className="edit-buttons">
-              <button onClick={() => onCancelEdit()} disabled={isLoading}>Cancel</button>
+              <button onClick={onCancelEdit} disabled={isLoading}>Cancel</button>
               <button onClick={() => onSaveEdit(message)} disabled={isLoading}>Save</button>
             </div>
           </div>

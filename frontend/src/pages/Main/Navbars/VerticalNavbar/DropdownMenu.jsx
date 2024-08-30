@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './DropdownMenu.css';
-import AddNewWorkspaceModal from '../AddWorkspaceModal';
+import '../../../../Styles/Pages/VerticalNavbar/DropdownMenu.css';
+import AddNewWorkspaceModal from './AddWorkspaceModal';
 
 const DropdownMenu = () => {
   const [modalVisible, setModalVisible] = useState(false);

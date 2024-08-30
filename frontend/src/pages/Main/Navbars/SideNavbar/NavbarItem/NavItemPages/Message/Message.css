@@ -1,0 +1,195 @@
+/* Message Composer styles */
+.message-composer-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2d2d2d;
+}
+
+/* Ensure the message composer takes up the full area of its grid cell */
+.message-composer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Heading */
+.message-composer-heading {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.message-composer-heading h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #2d2d2d;
+}
+
+/* Header */
+.message-composer-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.message-composer-label {
+  font-weight: bold;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.message-composer-input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+/* Search Input */
+.message-composer-search {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+.message-composer-search::placeholder {
+  color: #929292; 
+  font-size: 16px; 
+  opacity: 1; 
+}
+
+.message-composer-selected {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 8px;
+}
+
+.message-composer-recipient {
+  background-color: #e8f2ff;
+  color: #0052cc;
+  border-radius: 16px;
+  padding: 4px 12px;
+  margin: 4px 4px 0 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.message-composer-recipient-remove {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Content */
+.message-composer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20%;
+}
+
+.message-composer-subtitle {
+  width: 800px;
+  font-size: 16px;
+  color: #929292;
+  line-height: 1.5;
+}
+
+.message-composer-link {
+  color: #4662EC;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Popup */
+.message-composer-popup {
+  position: absolute;
+  top: 126px;
+  left: 35px;
+  right: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+  border-radius: 4px;
+  width: 100%; /* Full width within grid cell */
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 8px 0;
+  z-index: 100;
+}
+
+.message-composer-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Unified hover and focus styles */
+.message-composer-item:hover,
+.message-composer-item.focused {
+  background-color: #f5f5f5;
+}
+
+/* Popup scrollbar styling */
+.message-composer-popup::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message-composer-popup::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.message-composer-popup::-webkit-scrollbar-thumb {
+  background-color: #2d2d2d;
+  border-radius: 3px;
+}
+
+.message-composer-item-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 14px;
+  color: #2d2d2d;
+}
+
+.user-icon {
+  background-color: #a3d5ff;
+}
+
+.channel-icon {
+  background-color: #ffe0a3;
+}
+
+.message-composer-item-name {
+  font-size: 16px;
+  color: #2d2d2d;
+}
+
+.message-composer-no-results {
+  padding: 16px;
+  text-align: center;
+  color: #9e9e9e;
+  font-size: 14px;
+}
+
+/* Message Input */
+.message-composer-input {
+  padding: 10px;
+}

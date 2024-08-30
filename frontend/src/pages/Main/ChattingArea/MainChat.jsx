@@ -1,173 +1,76 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import socket from '../../../socket';
+import React, { useState, useCallback } from 'react';
+import axios from 'axios';
 import ChatHeader from './Chat/ChatHeader/ChatHeader';
 import ChatContent from './Chat/ChatContent/ChatContent';
 import MessageInput from '../../../components/MessageInput/MessageInput';
-import GeneralModal from './Chat/ChatHeader/GeneralModal/GeneralModal';
+import GeneralModal from '../ChattingArea/Chat/ChatHeader/ChannelDropdownModal/GeneralModal';
 import Notes from './Chat/ChatHeader/CanvasModal/Notes';  
-import DirectMessageModal from './Chat/ChatHeader/DirectMessageModal/DirectMessageModal'; // Import DirectMessageModal
-import axios from 'axios';
+import DirectMessageModal from './Chat/ChatHeader/DirectMessageModal/DirectMessageModal'; 
+import useSocket from '../../../hooks/useSocket';
+import useMessages from '../../../hooks/useMessages';
 import './MainChat.css';
+import socket from '../../../socket';
 
-const MainChat = ({ channel, userId, showProfile }) => {
+const MainChat = ({ channel, userId, userEmail, receiverId }) => {
   const [isProfileVisible, setIsProfileVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isNotesVisible, setIsNotesVisible] = useState(false);  // State for Notes
-  const [isDirectMessageModalOpen, setIsDirectMessageModalOpen] = useState(false); // State for DirectMessageModal
+  const [isNotesVisible, setIsNotesVisible] = useState(false);
+  const [isDirectMessageModalOpen, setIsDirectMessageModalOpen] = useState(false);
   const [hoveredMessageId, setHoveredMessageId] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [noMessages, setNoMessages] = useState(false);
+  const [drafts, setDrafts] = useState({});
+  const [currentKey, setCurrentKey] = useState(null);
   const [editMessageId, setEditMessageId] = useState(null);
   const [editMessageContent, setEditMessageContent] = useState('');
 
-  // State to manage unsent messages for each channel or user
-  const [drafts, setDrafts] = useState({});
-  const [currentKey, setCurrentKey] = useState(null);
+  const token = localStorage.getItem('token');
+  const { messages, noMessages, setMessages } = useMessages(channel, userId, receiverId);
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) return console.error('No authentication token found.');
-
-      setLoading(true);
-
-      try {
-        let response;
-        if (channel?._id) {
-          response = await axios.get(`http://localhost:5000/api/messages/channel/${channel._id}`, {
-            headers: { 'Authorization': `Bearer ${token}` },
-          });
-        } else if (userId) {
-          if (userId === 'self') {
-            response = await axios.get('http://localhost:5000/api/directMessages/sender', {
-              headers: { 'Authorization': `Bearer ${token}` },
-            });
-          } else {
-            response = await axios.get(`http://localhost:5000/api/directMessages/receiver/${userId}`, {
-              headers: { 'Authorization': `Bearer ${token}` },
-            });
-          }
-        }
-        const fetchedMessages = response.data.messages || [];
-        setMessages(fetchedMessages);
-        setNoMessages(fetchedMessages.length === 0);
-
-        // Set current key for drafts
-        const draftKey = channel?._id || userId;
-        setCurrentKey(draftKey);
-        setEditMessageContent(drafts[draftKey] || '');
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMessages();
-  }, [channel, userId]);
-
-  useEffect(() => {
-    const handleReceiveMessage = (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    };
-
-    const handleReceiveDirectMessage = (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    };
-
-    const handleChannelCreated = (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    };
-
-    if (userId) {
-      socket.emit('joinUser', userId);
-    }
-    if (channel?._id) {
-      socket.emit('joinChannel', channel._id);
-    }
-
-    socket.on('receiveMessage', handleReceiveMessage);
-    socket.on('receiveDirectMessage', handleReceiveDirectMessage);
-    socket.on('channelCreated', handleChannelCreated);
-
-    return () => {
-      if (userId) {
-        socket.emit('leaveUser', userId);
-      }
-      if (channel?._id) {
-        socket.emit('leaveChannel', channel._id);
-      }
-      socket.off('receiveMessage', handleReceiveMessage);
-      socket.off('receiveDirectMessage', handleReceiveDirectMessage);
-      socket.off('channelCreated', handleChannelCreated);
-    };
-  }, [channel, userId]);
-
-  const handleAvatarClick = (e) => {
-    e.stopPropagation();
-    // Toggle profile visibility and close notes if open
-    setIsProfileVisible((prev) => {
-      if (!prev) {
-        setIsNotesVisible(false);  // Close notes if profile is opened
-      }
-      return !prev;
-    });
-  };
-
-  const handleCloseProfile = () => {
-    setIsProfileVisible(false);
-  };
-
-  const handleDropdownClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleDirectMessageModalClick = () => {
-    setIsDirectMessageModalOpen(true);
-  };
-
-  const handleCloseDirectMessageModal = () => {
-    setIsDirectMessageModalOpen(false);
-  };
-
-  const handleHover = (messageId, isHovered) => {
-    setHoveredMessageId(isHovered ? messageId : null);
-  };
-  
-  const handleCloseNotes = () => {
-    setIsNotesVisible(false);
-  };
+  useSocket(channel, userId, setMessages);
 
   const handleSendMessage = useCallback((messageContent) => {
-    const token = localStorage.getItem('token');
+    const isSelfMessage = !channel && userId === receiverId;
     const messageData = channel
-      ? { channelId: channel._id, content: messageContent }
-      : { receiverId: userId, content: messageContent };
+      ? { channelId: channel._id, content: messageContent, senderId: userId }
+      : { receiverId, content: messageContent, senderId: userId };
 
-    socket.emit('sendMessage', { ...messageData, senderId: userId });
+    if (isSelfMessage) {
+      handleSelfMessage(messageContent);
+    } else if (channel) {
+      socket.emit('sendMessage', messageData);
+    } else {
+      socket.emit('sendDirectMessage', messageData);
+      axios.post('http://localhost:5000/api/direct-message/send', messageData, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      }).catch(error => console.error('Error sending direct message:', error));
+    }
 
     setMessages((prevMessages) => [
       ...prevMessages,
-      { ...messageData, senderId: userId, content: messageContent },
+      { ...messageData, createdAt: new Date().toISOString() },
     ]);
 
-    if (!channel) {
-      axios.post('http://localhost:5000/api/messages/send', messageData, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      }).catch(error => console.error('Error sending message:', error));
-    }
-
-    // Clear draft for the current channel or user
     setDrafts((prevDrafts) => ({
       ...prevDrafts,
       [currentKey]: ''
     }));
-  }, [channel, userId, currentKey]);
+  }, [channel, userId, receiverId, currentKey, token, setMessages]);
+
+  const handleSelfMessage = (messageContent) => {
+    const selfMessage = {
+      _id: Date.now(),
+      sender: userId,
+      receiver: userId,
+      content: messageContent,
+      createdAt: new Date().toISOString(),
+      isSelfMessage: true
+    };
+
+    setMessages((prevMessages) => [...prevMessages, selfMessage]);
+
+    axios.post('http://localhost:5000/api/self-messages/send', selfMessage, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    }).catch(error => console.error('Error saving self-message:', error));
+  };
 
   const handleEditMessage = (messageId, messageContent) => {
     setEditMessageId(messageId);
@@ -180,7 +83,6 @@ const MainChat = ({ channel, userId, showProfile }) => {
   };
 
   const handleSaveEdit = (updatedContent) => {
-    console.log('Saving edited message:', updatedContent);
     setMessages((prevMessages) =>
       prevMessages.map((msg) =>
         msg._id === editMessageId ? { ...msg, content: updatedContent } : msg
@@ -189,12 +91,31 @@ const MainChat = ({ channel, userId, showProfile }) => {
     handleCancelEdit();
   };
 
+  const handleAvatarClick = (e) => {
+    e.stopPropagation();
+    setIsProfileVisible((prev) => {
+      if (!prev) setIsNotesVisible(false);
+      return !prev;
+    });
+  };
+
+  const handleCloseProfile = () => setIsProfileVisible(false);
+
+  const handleDropdownClick = () => setIsModalOpen(true);
+
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleDirectMessageModalClick = () => setIsDirectMessageModalOpen(true);
+
+  const handleCloseDirectMessageModal = () => setIsDirectMessageModalOpen(false);
+
+  const handleHover = (messageId, isHovered) => setHoveredMessageId(isHovered ? messageId : null);
+
+  const handleCloseNotes = () => setIsNotesVisible(false);
+
   const handleNotesClick = () => {
-    // Toggle notes visibility and close profile if open
     setIsNotesVisible((prev) => {
-      if (!prev) {
-        setIsProfileVisible(false);  // Close profile if notes is opened
-      }
+      if (!prev) setIsProfileVisible(false);
       return !prev;
     });
   };
@@ -208,8 +129,9 @@ const MainChat = ({ channel, userId, showProfile }) => {
         onDropdownClick={handleDropdownClick}
         channelType={channel ? channel.visibility : 'private'}
         userId={userId}
-        onCanvasClick={handleNotesClick} // Add prop for Notes toggle
-        onDirectMessageModalClick={handleDirectMessageModalClick} // Add prop for DirectMessageModal toggle
+        userEmail={userEmail}
+        onCanvasClick={handleNotesClick}
+        onDirectMessageModalClick={handleDirectMessageModalClick}
       />
       <div className="chat-content">
         <ChatContent
@@ -221,6 +143,7 @@ const MainChat = ({ channel, userId, showProfile }) => {
           onHover={handleHover}
           noMessages={noMessages}
           onEditMessage={handleEditMessage}
+          userEmail={userEmail}
         />
       </div>
       <div className="message-input-wrapper">
@@ -232,16 +155,23 @@ const MainChat = ({ channel, userId, showProfile }) => {
           editMessageContent={editMessageContent}
           onCancelEdit={handleCancelEdit}
           onSaveEdit={handleSaveEdit}
-          drafts={drafts}
-          setDrafts={setDrafts}
-          setCurrentKey={setCurrentKey}
         />
       </div>
-      <GeneralModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <GeneralModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        channelName={channel ? channel.name : ''}
+        channelType={channel ? channel.visibility : 'private'}
+      />
+      <DirectMessageModal
+        isOpen={isDirectMessageModalOpen}
+        onClose={handleCloseDirectMessageModal}
+        userEmail={userEmail}
+      />
       {isNotesVisible && <Notes onClose={handleCloseNotes} />}
-      {isDirectMessageModalOpen && <DirectMessageModal onClose={handleCloseDirectMessageModal} />} {/* Add DirectMessageModal */}
     </div>
   );
 };
+
 
 export default MainChat;

@@ -1,6 +1,8 @@
+// CompanyHeading.js
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import SignOutConfirmationModal from "./SignOutConfirmationModal";
 import "./Company.css";
 
 const CompanyHeading = () => {
@@ -9,6 +11,7 @@ const CompanyHeading = () => {
   const [isSubOpen, setIsSubOpen] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
@@ -56,9 +59,19 @@ const CompanyHeading = () => {
     }
   }, [location.state]);
 
-  const handleNavigate = () => {
-    if (workspace) {
-      navigate("/main", { state: { workspace } });
+  const handleSignOut = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/auth/signout-from-workspace', {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      navigate('/welcome'); // Redirect to the welcome page
+    } catch (error) {
+      setError(error.message || 'Failed to sign out');
+      console.error("Sign out error:", error.response ? error.response.data : error.message);
+    } finally {
+      setIsSignOutModalOpen(false); // Close the modal
     }
   };
 
@@ -131,7 +144,7 @@ const CompanyHeading = () => {
               </div>
             )}
           </div>
-          <div className="company-heading-dropdown-item">
+          <div className="company-heading-dropdown-item" onClick={() => setIsSignOutModalOpen(true)}>
             <img
               src="./images/signout.png"
               alt="Sign Out"
@@ -142,6 +155,11 @@ const CompanyHeading = () => {
           {error && <div className="company-heading-error">{error}</div>}
         </div>
       )}
+      <SignOutConfirmationModal
+        isOpen={isSignOutModalOpen}
+        onClose={() => setIsSignOutModalOpen(false)}
+        onConfirm={handleSignOut}
+      />
     </div>
   );
 };

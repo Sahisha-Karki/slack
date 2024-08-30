@@ -1,0 +1,85 @@
+.edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.edit-modal-content {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  position: relative;
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.edit-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.edit-modal-close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.edit-modal-body {
+  margin: 20px 0;
+}
+
+.edit-modal-textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.edit-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.edit-modal-save-button,
+.edit-modal-confirm-button {
+  background-color: #A71010;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.edit-modal-save-button:hover,
+.edit-modal-confirm-button:hover {
+  background-color: #A91010;
+}
+
+.edit-modal-cancel-button {
+  background-color: #ffffff;
+  color: #000;
+  border: 1px solid #5a6268;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}

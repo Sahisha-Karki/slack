@@ -1,0 +1,121 @@
+.tic-tac-toe-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px; /* Added space from retry connection button */
+}
+
+.tic-tac-toe {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.status {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4a90e2;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-gap: 15px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
+    border: 3px solid #4a90e2;
+    border-radius: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #4a90e2;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.square:hover {
+    background-color: #d9e4f1;
+    transform: scale(1.05);
+}
+
+.winner-popup {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    width: 300px; /* Equal width */
+    height: 300px; /* Equal height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative; /* For positioning close icon */
+}
+
+.popup-content h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #4a90e2;
+}
+
+.popup-content p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.popup-restart-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.popup-restart-button:hover {
+    background-color: #357ABD;
+    transform: scale(1.05);
+}
+
+.popup-close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #e04e4e;
+    cursor: pointer;
+}
+
+.popup-close-icon:hover {
+    color: #c0392b;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

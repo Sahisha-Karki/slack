@@ -8,12 +8,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1001; /* Ensure it is above other content */
+  z-index: 1105; /* Ensure it is above other content */
 }
 
 .workspace-modal-content {
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px; /* Ensure the modal does not exceed 400px in width */
@@ -37,7 +37,7 @@
 .workspace-modal-header {
   font-weight: bold;
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .workspace-modal-body {

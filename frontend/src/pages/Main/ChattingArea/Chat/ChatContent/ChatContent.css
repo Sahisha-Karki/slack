@@ -1,21 +1,36 @@
+.chat-contenttttttttt {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative; /* Ensures that child elements are positioned relative to this container */
+}
+
 .chat-content {
   flex-grow: 1;
   overflow-y: auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   position: relative;
 }
 
-.chat-content::-webkit-scrollbar {
-  width: 12px;
+.no-messages {
+  text-align: center;
+  padding: 20px;
 }
-
-.chat-content::-webkit-scrollbar-track {
-  background: #f4f4f4;
+.profile-section {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure profile section is on top of chat content */
 }
-
-.chat-content::-webkit-scrollbar-thumb {
-  background-color: #77864F;
-  border-radius: 10px;
-  border: 3px solid #f4f4f4;
+.close-profile {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }

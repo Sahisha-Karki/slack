@@ -14,11 +14,11 @@
 .custom-status-modal {
   background-color: white;
   border-radius: 8px;
-  width: 380px; 
+  width: 400px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   color: #000;
-  position: relative; 
+  position: absolute;
 }
 
 .custom-status-modal-header {
@@ -26,39 +26,27 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  position: relative; 
 }
 
 .custom-status-modal-header h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #000;
 }
 
 .custom-status-close-button {
-  position: absolute; 
-  top: -5px;
-  right: 0;
   background: none;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
   color: #555;
   cursor: pointer;
-  transition: color 0.3s ease;
 }
 
-.custom-status-input {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 8px;
-  margin-bottom: 15px;
-}
 
 .custom-status-input span {
   margin-right: 10px;
+  font-size: 1.5rem;
 }
 
 .custom-status-input input {
@@ -69,7 +57,7 @@
 }
 
 .workspace-name {
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
   color: #666;
   margin-bottom: 15px;
 }
@@ -80,9 +68,10 @@
   margin: 0;
 }
 
-.preset-statuses img{
+.preset-statuses img {
   margin-right: 10px;
 }
+
 .preset-statuses li {
   display: flex;
   align-items: center;
@@ -95,48 +84,6 @@
   background-color: #f5f5f5;
 }
 
-.preset-statuses li span {
-  margin-right: 10px;
-}
-
-.custom-status-modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.custom-status-cancel-button,
-.custom-status-save-button,
-.status-icon-cancel-button,
-.status-icon-save-button {
-  padding: 10px 20px;
-  border-radius: 6px; 
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.custom-status-cancel-button,
-.status-icon-cancel-button {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  color: #000;
-  margin-right: 15px;
-}
-
-.custom-status-cancel-button:hover,
-.status-icon-cancel-button:hover {
-  background-color: #f5f5f5;
-}
-
-.custom-status-save-button,
-.status-icon-save-button {
-  background-color: #073458; 
-  color: #fff;
-  border: none;
-}
-
 .status-icon-modal-body {
   display: flex;
   flex-direction: column;
@@ -147,23 +94,31 @@
   margin-bottom: 15px;
 }
 
-.input-container input {
-  width: 85%;
-  padding: 10px 10px 10px 40px;
+.input-icon-wrapper {
+  display: flex;
+  align-items: center;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 1rem;
-  color: #333;
-  outline: none;
+  padding: 8px;
 }
 
-.input-icon {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
+.input-icon-wrapper .input-icon {
+  margin-right: 10px;
+}
+
+.input-container input {
+  border: none;
+  flex-grow: 1;
+  font-size: 1rem;
   color: #333;
+}
+
+.clear-icon-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
 }
 
 .clear-option,
@@ -186,7 +141,63 @@
   border-radius: 4px;
   font-size: 1rem;
   color: #333;
-  appearance: none;
   background-color: transparent;
-  outline: none;
+}
+
+.custom-status-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.custom-status-cancel-button,
+.custom-status-save-button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.custom-status-cancel-button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #000;
+  margin-right: 10px;
+}
+
+.custom-status-cancel-button:hover {
+  background-color: #f5f5f5;
+}
+
+.custom-status-save-button {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+}
+
+.custom-status-save-button:hover {
+  background-color: #0069d9;
+}
+
+.custom-status-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 15px;
+  background-color: white;
+  z-index: 1000;
+}
+
+.emoji-picker-container2{
+  position: absolute; /* Ensures the picker does not shift the layout */
+  right: 50%;
+  z-index: 1001; /* Ensure it appears above other elements */
+  background-color: white; /* To match the modal background */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 }

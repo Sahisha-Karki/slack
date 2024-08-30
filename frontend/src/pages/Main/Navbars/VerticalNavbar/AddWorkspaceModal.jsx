@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './AddWorkspaceModal.css';
+import '../../../../Styles/Pages/VerticalNavbar/AddWorkspaceModal.css';
 
 const AddWorkspaceModal = ({ onClose }) => {
   const navigate = useNavigate(); // Initialize useNavigate

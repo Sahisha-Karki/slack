@@ -47,7 +47,8 @@
   
   .skip-modal-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
+    gap: 10px;
   }
   
   .cancel-button, .skip-button {

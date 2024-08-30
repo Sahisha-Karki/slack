@@ -16,11 +16,21 @@
 
 .top-nav-header-logo {
   margin-left: 10px;
-  margin-right: 200px;
+  margin-right: 100px;
+  display: flex;
+  text-align:center;
+  gap:10px;
 }
 
+.top-nav-header-logo label{
+  font-size: 20px;
+  color: white;
+  align-self: center;
+  max-width: fit-content;
+  font-weight: 600;
+}
 .top-nav-header-logo img {
-  height: 45px;
+  height: 35px;
 }
 
 .top-nav-header-buttons {
@@ -35,7 +45,7 @@
   border-radius: 5px;
   padding: 8px 12px;
   color: #ffffff; 
-  font-size: 18px; 
+  font-size: 24px; 
   cursor: pointer;
   margin: 0 5px; 
   transition: background 0.3s ease, transform 0.3s ease;
@@ -58,14 +68,14 @@
   display: flex;
   align-items: center;
   width: 100%; 
-  max-width: 400px; 
+  max-width: 700px; 
 }
 
 .top-nav-search-container input {
   width: 100%; 
   padding: 10px; 
   border: 1px solid #ccc;
-  border-radius: 20px; 
+  border-radius: 5px; 
   outline: none;
 }
 
@@ -73,19 +83,20 @@
   position: absolute;
   right: 15px;
   color: #000;
-  font-size: 18px; 
+  font-size: 20px; 
 }
 
 .top-nav-header-actions {
   display: flex;
   align-items: center;
+  margin-right: 10px;
 }
 
 .top-nav-header-actions button {
   background: none;
   border: none;
   cursor: pointer;
-  margin-right: 15px; 
+  margin-right: 32px; 
   color: #ffffff; 
   font-size: 20px; 
 }
@@ -104,18 +115,44 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #ffffff; 
+  border: 1px solid #b3b3b3; 
   cursor: pointer;
 }
 
+.profile-pic-container {
+  position: relative;
+  width: 40px; /* Same as your profile image width */
+  height: 40px; /* Same as your profile image height */
+}
 
+.status-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #00294B; /* Border color to match the background or profile image */
+}
 
+/* Different status colors */
+.status-indicator.online {
+  background-color: #4CAF50; /* Green for online */
+}
+
+.status-indicator.away {
+  background-color: #FFC107; /* Yellow for away */
+}
+
+.status-indicator.invisible {
+  background-color: #757575; /* Gray for invisible */
+}
 
 
 .top-nav-profile-dropdown {
   position: absolute;
-  top: 50px;
-  right: 0;
+  top: 40px;
+  right: 0px;
   background-color: #F8F8F8;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -139,22 +176,33 @@
   display: flex; 
   align-items: center; 
   padding: 10px; 
+  gap: 10px;
   border-bottom: 1px solid #ddd; 
 }
 
 .top-nav-dropdown-header img {
   margin-right: 15px; /* Space between image and text */
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 
 .user-info {
   display: flex; /* Use flexbox for text layout */
   flex-direction: column; /* Stack text vertically */
-  color: #000; 
+  color: #666666; 
+ 
 }
 
-.user-name,
 .user-status {
-  margin: 0; /* Remove default margin */
+  margin: 0; 
+  border: 1px solid rgb(134, 134, 134);
+  border-radius: 3px;
+  padding: 0px 20px;
+  font-size: 12px;
+  align-self: center;
+  max-width: 100%;
+  font-weight: 600;
 }
 
 .top-nav-profile-dropdown button {

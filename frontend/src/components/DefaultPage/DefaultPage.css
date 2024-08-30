@@ -1,0 +1,83 @@
+.default-page {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+.default-page-header {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.default-page-header h1 {
+    color: #333;
+}
+
+.default-page-header p {
+    color: #666;
+}
+
+.default-page-guide-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.default-page-guide-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.default-page-guide-item h2 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.default-page-guide-item p {
+    color: #444;
+}
+
+.default-page-guide-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.default-page-guide-item a:hover {
+    text-decoration: underline;
+}
+
+.default-page-footer {
+    margin-top: auto;
+    padding: 10px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.default-page-footer p {
+    margin: 0;
+    color: #666;
+}
+
+.default-page-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.default-page-footer a:hover {
+    text-decoration: underline;
+}

@@ -74,30 +74,28 @@ const CreateWorkspaceStep3 = ({ onNext, onSkip }) => {
 
   return (
     <div className="create-workspace-step3-container">
-      <h2>Add members to your team</h2>
-      <p>Step 3 of 5</p>
-      <h2>Who else is on the Your Company Team?</h2>
-      <button className="google-contacts-button">
-        Add from Google Contacts
-      </button>
-      <textarea
-        id="email-input"
-        value={email}
-        onChange={handleEmailChange}
-        placeholder="E.g. johndoe@gmail.com"
-        rows="4"
-      />
-      <div className="options-container">
-        <button className="skip-button" onClick={handleSkipClick}>
-          Skip for now
-        </button>
-        <button className="copy-invite-link-button" onClick={handleCopyInviteLink}>
-          <FontAwesomeIcon icon={faCopy} /> Copy Invite Link
-        </button>
-        <button className="next-button" onClick={handleNext}>Next</button>
-        <SkipModal isOpen={isModalOpen} onClose={handleCloseModal} onSkip={handleSkipConfirm} />
-      </div>
-    </div>
+  <h2>Add members to your team</h2>
+  <p>Step 3 of 5</p>
+  <h2>Who else is on the Your Company Team?</h2>
+  <textarea
+    id="email-input"
+    value={email}
+    onChange={handleEmailChange}
+    placeholder="E.g. johndoe@gmail.com"
+    rows="4"
+  />
+  <div className="options-container">
+    <button className="skip-button" onClick={handleSkipClick}>
+      Skip for now
+    </button>
+    <button className="copy-invite-link-button" onClick={handleCopyInviteLink}>
+      <FontAwesomeIcon icon={faCopy} /> Copy Invite Link
+    </button>
+    <button className="Step3-next-button" onClick={handleNext}>Next</button>
+    <SkipModal isOpen={isModalOpen} onClose={handleCloseModal} onSkip={handleSkipConfirm} />
+  </div>
+</div>
+
   );
 };
 

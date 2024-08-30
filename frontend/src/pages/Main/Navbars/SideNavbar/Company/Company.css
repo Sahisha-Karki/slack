@@ -10,7 +10,7 @@
   color: black;
   padding: 8px 20px;
   border-radius: 10px;
-  width: 165px;
+  width: auto;
   margin-bottom: 16px;
   cursor: pointer;
   display: flex;

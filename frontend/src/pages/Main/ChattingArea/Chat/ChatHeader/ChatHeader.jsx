@@ -1,40 +1,58 @@
-// ChatHeader.js
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faLock, faHashtag } from "@fortawesome/free-solid-svg-icons";
 import SessionModal from "./SessionModal/SessionModal";
 import './ChatHeader.css';
-import DirectMessageModal from "./DirectMessageModal/DirectMessageModal"; // Import DirectMessageModal
+import DirectMessageModal from "./DirectMessageModal/DirectMessageModal";
 
-const ChannelHeader = ({ channelName, onDropdownClick }) => (
+
+
+const ChannelHeader = ({ channelName, description, onDropdownClick, channelType }) => (
   <div className="chat-header-brand" onClick={onDropdownClick}>
-    <span className="chat-header-channel-name">
-      <FontAwesomeIcon icon={faHashtag} /> {channelName}
-    </span>
-    <FontAwesomeIcon icon={faChevronDown} className="chat-header-dropdown-icon" />
+    <div className="chat-header-channel-info">
+      <span className="chat-header-channel-name">
+        <FontAwesomeIcon icon={channelType === 'private' ? faLock : faHashtag} />
+        {channelName}
+        <FontAwesomeIcon icon={faChevronDown} className="chat-header-dropdown-icon" />
+      </span>
+      {description && <p className="chat-header-channel-description">{description}</p>}
+    </div>
   </div>
 );
 
-const DirectMessageHeader = ({ userId, onDropdownClick }) => (
-  <div className="chat-header-brand" onClick={onDropdownClick}>
-    <span className="chat-header-channel-name">
-      {userId}
-    </span>
-    <FontAwesomeIcon icon={faChevronDown} className="chat-header-dropdown-icon" />
-  </div>
-);
 
-const ChatHeader = ({ onDropdownClick, channelName, channelType, userId, onCanvasClick }) => {
+const DirectMessageHeader = ({ userEmail, onDropdownClick }) => {
+  const userName = userEmail ? userEmail.split('@')[0] : 'Unknown User';
+
+  return (
+    <div className="chat-header-brand" onClick={onDropdownClick}>
+      <span className="chat-header-channel-name">
+        {userName}
+      </span>
+      <FontAwesomeIcon icon={faChevronDown} className="chat-header-dropdown-icon" />
+    </div>
+  );
+};
+
+const ChatHeader = ({
+  onDropdownClick,
+  channelName,
+  description,
+  channelType,
+  userEmail,
+  onCanvasClick,
+  onDirectMessageModalClick,
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isDirectMessageModalOpen, setDirectMessageModalOpen] = useState(false); // State for Direct Message Modal
+  const [isDirectMessageModalOpen, setDirectMessageModalOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
-  const openDirectMessageModal = () => setDirectMessageModalOpen(true); // Open Direct Message Modal
-  const closeDirectMessageModal = () => setDirectMessageModalOpen(false); // Close Direct Message Modal
+  const openDirectMessageModal = () => setDirectMessageModalOpen(true);
+  const closeDirectMessageModal = () => setDirectMessageModalOpen(false);
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -43,9 +61,9 @@ const ChatHeader = ({ onDropdownClick, channelName, channelType, userId, onCanva
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -53,10 +71,18 @@ const ChatHeader = ({ onDropdownClick, channelName, channelType, userId, onCanva
     <>
       <header className="chat-header">
         <nav className="chat-header-nav">
-          {channelType === "private" ? (
-            <DirectMessageHeader userId={userId} onDropdownClick={openDirectMessageModal} />
+          {userEmail ? (
+            <DirectMessageHeader 
+              userEmail={userEmail} 
+              onDropdownClick={openDirectMessageModal} 
+            />
           ) : (
-            <ChannelHeader channelName={channelName} onDropdownClick={onDropdownClick} />
+            <ChannelHeader 
+              channelName={channelName} 
+              description={description} 
+              onDropdownClick={onDropdownClick} 
+              channelType={channelType}
+            />
           )}
           <div className="chat-header-nav-menu" ref={dropdownRef}>
             <div className="chat-header-nav-item">
@@ -84,9 +110,10 @@ const ChatHeader = ({ onDropdownClick, channelName, channelType, userId, onCanva
         </nav>
       </header>
       <SessionModal isOpen={isModalOpen} onClose={closeModal} />
-      <DirectMessageModal isOpen={isDirectMessageModalOpen} onClose={closeDirectMessageModal} /> {/* Include DirectMessageModal */}
+      <DirectMessageModal isOpen={isDirectMessageModalOpen} onClose={closeDirectMessageModal} userEmail={userEmail} />
     </>
   );
 };
+
 
 export default ChatHeader;

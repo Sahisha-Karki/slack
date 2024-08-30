@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import EmojiPicker from 'emoji-picker-react';
 import "./CustomStatusModal.css";
 
 import calendarIcon from "../../../../../asset/i1.png";
@@ -7,32 +8,38 @@ import commutingIcon from "../../../../../asset/i3.png";
 import vacationIcon from "../../../../../asset/i4.png";
 import remoteIcon from "../../../../../asset/i5.png";
 
-const CustomStatusModal = ({ isOpen, onClose }) => {
-  const [status, setStatus] = useState("");
-  const [isIconSelection, setIsIconSelection] = useState(true);
-  const [selectedIcon, setSelectedIcon] = useState("😊");
-  const [iconLabel, setIconLabel] = useState("Smiley");
-  const [statusText, setStatusText] = useState(status);
-  const [clearInput, setClearInput] = useState("Don’t Clear");
+const CustomStatusModal = ({ isOpen, onClose, onSave }) => {
+  const [statusText, setStatusText] = useState("");
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [clearInput, setClearInput] = useState("Don't Clear");
   const [notification, setNotification] = useState("Off");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSave = () => {
-    console.log("Custom status:", status);
-    onClose();
+    if (currentPage === 1) {
+      setCurrentPage(2);
+    } else {
+      onSave(statusText, selectedIcon);
+      onClose();
+    }
   };
 
   const handleIconClick = (icon, label) => {
-    setSelectedIcon(icon);
-    setIconLabel(label);
-    setIsIconSelection(false);
+    setSelectedIcon({ icon, label });
+    setStatusText(label);
+    setCurrentPage(2);
   };
 
-  const handleIconModalSave = () => {
-    console.log("Icon modal status:", statusText);
-    console.log("Clear option:", clearInput);
-    console.log("Notification:", notification);
-    setStatus(statusText);
-    setIsIconSelection(true);
+  const handleClearIcon = () => {
+    setSelectedIcon(null);
+    setStatusText("");
+    setCurrentPage(1);
+  };
+
+  const handleEmojiSelect = (emoji) => {
+    setSelectedIcon({ icon: emoji.emoji, label: statusText || "Custom Status" });
+    setShowEmojiPicker(false);
   };
 
   if (!isOpen) return null;
@@ -41,24 +48,34 @@ const CustomStatusModal = ({ isOpen, onClose }) => {
     <div className="custom-status-modal-overlay">
       <div className="custom-status-modal">
         <div className="custom-status-modal-header">
-          <h2>{isIconSelection ? "Set a Status" : "Edit Status"}</h2>
+          <h2>Set a Status</h2>
           <button className="custom-status-close-button" onClick={onClose}>
             ×
           </button>
         </div>
-        {isIconSelection ? (
+
+        {currentPage === 1 && (
           <div>
             <div className="custom-status-input">
-              <span role="img" aria-label={iconLabel}>
-                <img src="./images/smiley.png" alt="Smiley" />
+              <span
+                role="img"
+                aria-label="Smiley"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              >
+                {selectedIcon ? selectedIcon.icon : "😊"}
               </span>
               <input
                 type="text"
-                placeholder={`Set custom status here, what’s cooking?`}
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                placeholder="Set custom status here, what's cooking?"
+                value={statusText}
+                onChange={(e) => setStatusText(e.target.value)}
               />
             </div>
+            {showEmojiPicker && (
+              <div className="emoji-picker-container2">
+                <EmojiPicker onEmojiClick={handleEmojiSelect} />
+              </div>
+            )}
             <p className="workspace-name">For Workspace name</p>
             <ul className="preset-statuses">
               <li onClick={() => handleIconClick(calendarIcon, "In a meeting")}>
@@ -73,39 +90,54 @@ const CustomStatusModal = ({ isOpen, onClose }) => {
               <li onClick={() => handleIconClick(vacationIcon, "On Vacation")}>
                 <img src={vacationIcon} alt="On Vacation" /> On Vacation
               </li>
-              <li
-                onClick={() => handleIconClick(remoteIcon, "Remotely Working")}
-              >
-                <img src={remoteIcon} alt="Remotely Working" /> Remotely working
+              <li onClick={() => handleIconClick(remoteIcon, "Remotely Working")}>
+                <img src={remoteIcon} alt="Remotely Working" /> Remotely Working
               </li>
             </ul>
           </div>
-        ) : (
+        )}
+
+        {currentPage === 2 && (
           <div className="status-icon-modal-body">
             <div className="input-container">
               <div className="input-icon-wrapper">
                 <span className="input-icon" role="img" aria-label="Icon">
-                  <img src={selectedIcon} alt="Icon" />
+                  {selectedIcon?.icon ? (
+                    selectedIcon.icon.startsWith("data:image/") ? (
+                      <img src={selectedIcon.icon} alt={selectedIcon.label} />
+                    ) : (
+                      <span>{selectedIcon.icon}</span>
+                    )
+                  ) : (
+                    "😊"
+                  )}
                 </span>
-
                 <input
                   type="text"
                   placeholder="Set custom status"
                   value={statusText}
                   onChange={(e) => setStatusText(e.target.value)}
                 />
+                <button className="clear-icon-button" onClick={handleClearIcon}>
+                  ×
+                </button>
               </div>
             </div>
 
             <div className="clear-option">
-              <label htmlFor="clear-input">Clear:</label>
+              <label htmlFor="clear-input">Clear after:</label>
               <select
                 id="clear-input"
                 value={clearInput}
                 onChange={(e) => setClearInput(e.target.value)}
               >
-                <option>Don’t Clear</option>
-                <option>Clear</option>
+                <option>Don't Clear</option>
+                <option>In 30 minutes</option>
+                <option>In 1 hour</option>
+                <option>In 4 hours</option>
+                <option>Today</option>
+                <option>This week</option>
+                <option>Custom</option>
               </select>
             </div>
             <div className="notification-option">
@@ -121,35 +153,17 @@ const CustomStatusModal = ({ isOpen, onClose }) => {
             </div>
           </div>
         )}
+
         <div className="custom-status-modal-footer">
-          {isIconSelection ? (
-            <>
-              <button className="custom-status-cancel-button" onClick={onClose}>
-                Cancel
-              </button>
-              <button
-                className="custom-status-save-button"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className="status-icon-cancel-button"
-                onClick={() => setIsIconSelection(true)}
-              >
-                Back
-              </button>
-              <button
-                className="status-icon-save-button"
-                onClick={handleIconModalSave}
-              >
-                Save
-              </button>
-            </>
-          )}
+          <button
+            className="custom-status-cancel-button"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          <button className="custom-status-save-button" onClick={handleSave}>
+            {currentPage === 1 ? "Next" : "Save"}
+          </button>
         </div>
       </div>
     </div>

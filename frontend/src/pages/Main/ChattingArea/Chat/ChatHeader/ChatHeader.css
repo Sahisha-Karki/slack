@@ -16,7 +16,6 @@
 }
 
 .chat-header-brand {
-  background-color: #F7F8F9;
   padding: 12px 18px;
   border-radius: 20px;
   color: black;
@@ -24,12 +23,34 @@
   font-weight: 700;
   display: flex;
   align-items: center;
-  cursor: pointer; 
+  cursor: pointer;
+}
+
+.chat-header-channel-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Ensure this takes up available space */
+}
+
+.chat-header-channel-name {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Add space between the channel type icon and channel name */
+}
+
+.chat-header-channel-name .chat-header-dropdown-icon {
+  margin-left: 8px; /* Space between the channel name and the dropdown icon */
 }
 
 .chat-header-dropdown-icon {
   color: #4B4B4B;
-  margin: 0;
+  margin-left: 8px; /* Space between the hashtag and channel name */
+}
+
+.chat-header-channel-description {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
 }
 
 .chat-header-nav-icons,

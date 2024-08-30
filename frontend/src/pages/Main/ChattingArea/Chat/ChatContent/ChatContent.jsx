@@ -12,19 +12,21 @@ const ChatContent = ({
   messages,
   hoveredMessageId,
   onHover,
-  onEditMessage // Added prop
+  onEditMessage,
+  userEmail // Add userEmail prop
 }) => {
   return (
-    <div className={`chat-content ${showProfile ? 'user-active' : ''}`}>
+    <div className={`chat-contenttttttttt ${showProfile ? 'user-active' : ''}`}>
       {messages.length > 0 ? (
         messages.map((message) => (
           <ChatMessage
-            key={message._id}  // Ensure unique key for each message
+            key={message._id} 
             message={message}
             handleAvatarClick={handleAvatarClick}
             isHovered={hoveredMessageId === message._id}
             onHover={(isHovered) => onHover(message._id, isHovered)}
-            onEdit={() => onEditMessage(message._id, message.content)} // Pass edit handler
+            onEdit={() => onEditMessage(message._id, message.content)} 
+            userEmail={userEmail} // Pass userEmail prop
           />
         ))
       ) : (
