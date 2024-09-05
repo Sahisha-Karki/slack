@@ -1,0 +1,78 @@
+.Confirmation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.Confirmation-modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  position: relative; /* Ensure modal is positioned relative */
+}
+
+.Confirmation-modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  font-size: 24px; 
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.Confirmation-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: #000000;
+}
+
+.Confirmation-modal-message {
+  font-size: 14px;
+  color: #666666;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+.Confirmation-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.Confirmation-modal-actions button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.Confirmation-modal-actions button:first-child {
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  color: #000000;
+}
+
+.Confirmation-modal-actions button:last-child {
+  background-color: #A71010;
+  border: none;
+  color: #ffffff;
+}
+
+.Confirmation-modal-actions button:hover {
+  opacity: 0.9;
+}

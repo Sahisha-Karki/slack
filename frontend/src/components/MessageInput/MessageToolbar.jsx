@@ -15,20 +15,23 @@ import {
   faAlignCenter,
   faAlignRight,
   faListOl,
+  faStop // Import the stop icon
 } from '@fortawesome/free-solid-svg-icons';
 import '../../Styles/MessageInput/MessageInput.css';
 import Tooltip from '@mui/material/Tooltip';
 import AddFile from './Icons/AddFile';
 import AddImage from './Icons/AddImage';
 import EmojiPickerComponent from './Icons/EmojiPicker';
-import RecordingPreviewModal from './RecordingPreviewModal'; // Import the modal component
 
-const MessageInputToolbar = ({ 
+const MessageToolbar = ({ 
   handleEmojiSelect, 
   handleLinkInsert, 
   handleSend, 
-  message = '', 
-  isLoading 
+  setMessage,
+  message, 
+  isLoading,
+  setAudioBlob,
+  setVideoBlob
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedBlob, setRecordedBlob] = useState(null);
@@ -36,12 +39,11 @@ const MessageInputToolbar = ({
   const [openModal, setOpenModal] = useState(false);
   const mediaRecorderRef = useRef(null);
   const [stream, setStream] = useState(null);
-
+  
+  // Function to start screen recording
   const startScreenRecording = async () => {
     try {
-      const screenStream = await navigator.mediaDevices.getDisplayMedia({
-        video: true
-      });
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
       setStream(screenStream);
       const mediaRecorder = new MediaRecorder(screenStream);
       mediaRecorderRef.current = mediaRecorder;
@@ -55,9 +57,9 @@ const MessageInputToolbar = ({
 
       mediaRecorder.onstop = () => {
         const blob = new Blob(chunks, { type: 'video/webm' });
-        setRecordedBlob(blob);
+        setVideoBlob(blob);
         setPreviewUrl(URL.createObjectURL(blob));
-        setOpenModal(true); // Open modal after recording
+        setOpenModal(true);
       };
 
       mediaRecorder.start();
@@ -67,6 +69,7 @@ const MessageInputToolbar = ({
     }
   };
 
+  // Function to stop screen recording
   const stopScreenRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
@@ -75,6 +78,41 @@ const MessageInputToolbar = ({
     }
   };
 
+  // Function to start audio recording
+  const startRecording = async () => {
+    try {
+      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(audioStream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      const chunks = [];
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/wav' });
+        setAudioBlob(blob);
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (err) {
+      console.error('Error accessing audio:', err);
+    }
+  };
+
+  // Function to stop audio recording
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  // Close the modal
   const handleCloseModal = () => setOpenModal(false);
 
   return (
@@ -82,11 +120,15 @@ const MessageInputToolbar = ({
       <div className="icon-section first-icon-section">
         <AddFile />
         <AddImage />
-        <button title="Record Audio" aria-label="Record Audio">
-          <FontAwesomeIcon icon={faMicrophone} />
+        <button
+          title={isRecording ? 'Stop Recording' : 'Start Recording'}
+          aria-label={isRecording ? 'Stop Recording' : 'Start Recording'}
+          onClick={isRecording ? stopRecording : startRecording}
+        >
+          <FontAwesomeIcon icon={isRecording ? faStop : faMicrophone} />
         </button>
         <button 
-          title={isRecording ? "Stop Recording" : "Start Screen Recording"} 
+          title={isRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
           aria-label={isRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
           onClick={isRecording ? stopScreenRecording : startScreenRecording}
         >
@@ -146,15 +188,8 @@ const MessageInputToolbar = ({
           </button>
         </Tooltip>
       </div>
-
-      {/* Use the modal component */}
-      <RecordingPreviewModal 
-        open={openModal} 
-        onClose={handleCloseModal} 
-        previewUrl={previewUrl} 
-      />
     </div>
   );
 };
 
-export default MessageInputToolbar;
+export default MessageToolbar;

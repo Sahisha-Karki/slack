@@ -27,7 +27,7 @@ function LanguageSelection() {
 
   return (
     <div className="language-selection-container">
-      <div className="auth-header">
+      <div className="language-auth-header">
         <h2>Language</h2>
         <button
           className={`password-toggle-button ${isExpanded ? 'toggle-button-expanded' : ''}`}

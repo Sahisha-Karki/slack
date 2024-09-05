@@ -8,19 +8,32 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // Clear previous errors
+    setEmailError('');
+    setPasswordError('');
+
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       console.log('Login successful:', response.data);
-      
+
       // Save token and userId to localStorage
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.userId);
-      
+
       navigate('/welcome');
     } catch (error) {
-      console.error('Login error:', error.response?.data?.message || 'An error occurred');
+      if (error.response?.status === 404) {
+        setEmailError('Email not registered');
+      } else if (error.response?.status === 401) {
+        setPasswordError('Incorrect password');
+      } else {
+        console.error('Login error:', error.response?.data?.message || 'An error occurred');
+      }
     }
   };
 
@@ -34,6 +47,8 @@ function Login() {
       showPassword={showPassword}
       setShowPassword={setShowPassword}
       formType="login"
+      emailError={emailError}
+      passwordError={passwordError}
     />
   );
 }

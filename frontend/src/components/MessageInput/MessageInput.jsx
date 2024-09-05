@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import socket from '../../socket'; 
+import io from 'socket.io-client';
 import MessageInputToolbar from './MessageToolbar';
 import '../../Styles/MessageInput/MessageInput.css';
 import debounce from 'lodash/debounce';
 
-const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, onCancelEdit, onSaveEdit }) => {
+// Initialize socket connection
+const socket = io('http://localhost:5000'); // Adjust the URL as needed
+
+const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, onCancelEdit, onSaveEdit, setMessages }) => {
   const [message, setMessage] = useState(editMessageContent || '');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isShiftPressed, setIsShiftPressed] = useState(false);
+  const senderId = localStorage.getItem('userId');
 
   useEffect(() => {
     setMessage(editMessageContent || '');
@@ -52,35 +56,52 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
   const sendMessage = async () => {
     if (!message.trim()) return;
   
-    setIsLoading(true);
-    setError('');
+    const messageData = {
+      content: message,
+      senderId: senderId,
+      tempId: Date.now(), // Temporary ID for immediate update
+    };
+  
+    let endpoint = ''; // Determine the correct endpoint
+    if (channelId) {
+      messageData.channelId = channelId;
+      endpoint = 'http://localhost:5000/api/channel-message/send'; // Adjust this URL based on your backend route
+    } else {
+      messageData.receiverId = userId;
+      endpoint = 'http://localhost:5000/api/direct-message/send';
+    }
   
     try {
-      const messageData = { content: message };
-      if (channelId) {
-        messageData.channelId = channelId;
-        await axios.post('http://localhost:5000/api/messages/send', messageData, {
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-        });
-        socket.emit('sendMessage', messageData); // Make sure this message is sent only to the specific channel
-      } else if (userId) {
-        messageData.receiverId = userId;
-        await axios.post('http://localhost:5000/api/directMessages/send', messageData, {
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-        });
-        socket.emit('sendDirectMessage', messageData); // This should be specific to direct messages
-      }
+      setIsLoading(true);
+  
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { ...messageData, createdAt: new Date().toISOString() },
+      ]);
+  
+      const response = await axios.post(endpoint, messageData, {
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+      });
+  
+      socket.emit(channelId ? 'sendMessage' : 'sendDirectMessage', response.data.messageData);
+  
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) =>
+          msg.tempId === messageData.tempId ? { ...response.data.messageData } : msg
+        )
+      );
+  
       setMessage('');
-      if (editMessageId) {
-        onCancelEdit(); // Cancel editing mode if any
-      }
+      setError('');
     } catch (error) {
       console.error('Error sending message:', error);
       setError('Failed to send message. Please try again.');
+      setMessages((prevMessages) => prevMessages.filter((msg) => msg.tempId !== messageData.tempId));
     } finally {
       setIsLoading(false);
     }
   };
+  
   
 
   const debouncedSaveDraft = useCallback(debounce(saveDraft, 300), [message, channelId]);
@@ -144,8 +165,23 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
       setMessage(prevMessage => prevMessage + emojiObject.emoji);
     }
   };
+  
 
-  return (
+  useEffect(() => {
+    const handleReceiveDirectMessage = (message) => {
+      if (message.receiverId === userId || message.senderId === userId) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      }
+    };
+
+    socket.on('receiveDirectMessage', handleReceiveDirectMessage);
+
+    return () => {
+      socket.off('receiveDirectMessage', handleReceiveDirectMessage);
+    };
+  }, [userId]);
+
+  return (  
     <div className="message-input-container">
       <div className="message-input-wrapper">
         {editMessageId ? (
@@ -159,7 +195,7 @@ const MessageInput = ({ channelId, userId, editMessageId, editMessageContent, on
               disabled={isLoading}
             />
             <div className="edit-buttons">
-              <button onClick={onCancelEdit} disabled={isLoading}>Cancel</button>
+              <button onClick={() => onCancelEdit()} disabled={isLoading}>Cancel</button>
               <button onClick={() => onSaveEdit(message)} disabled={isLoading}>Save</button>
             </div>
           </div>

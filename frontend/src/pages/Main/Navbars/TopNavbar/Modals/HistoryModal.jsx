@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import './HistoryModal.css';
-import DeleteConfirmationModal from './DeleteConfirmationModal'; // Import the new component
+import ConfirmationModal from './ConfirmationModal';
 
-const HistoryModal = ({ onClose, onClearAll }) => {
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+const HistoryModal = ({ isOpen, onClose }) => {
+  const [isClearAllModalVisible, setClearAllModalVisible] = useState(false);
+  const [isClearItemModalVisible, setClearItemModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleClearAll = () => {
-    setShowDeleteConfirmation(true);
-  };
-
-  const confirmDelete = () => {
-    onClearAll();
-    setShowDeleteConfirmation(false);
-  };
+  if (!isOpen) return null;
 
   const historyItems = [
     { icon: '#', text: 'general' },
@@ -23,15 +18,32 @@ const HistoryModal = ({ onClose, onClearAll }) => {
     { icon: '@', text: 'Mentions & Reactions' },
   ];
 
+  const handleClearAll = () => {
+    setClearAllModalVisible(false);
+  };
+
+  const handleClearItem = () => {
+    console.log(`Cleared item: ${selectedItem.text}`);
+    setClearItemModalVisible(false);
+  };
+
+  const showClearItemModal = (item) => {
+    setSelectedItem(item);
+    setClearItemModalVisible(true);
+  };
+
   return (
     <div className="history-modal-overlay">
       <div className="history-modal">
         <div className="history-modal-header">
           <h2>History</h2>
-          <button className="clear-all" onClick={handleClearAll}>
-            <i className="fas fa-broom"></i> Clear all
-          </button>
-          <button className="close" onClick={onClose}>×</button>
+          <div className="header-buttons">
+            <button className="clear-all" onClick={() => setClearAllModalVisible(true)}>
+              <img src="./images/HistoryModal/carbon_clean.png" alt="ClearIcon" />
+              Clear all
+            </button>
+            <button className="history-modal-close" onClick={onClose}>×</button>
+          </div>
         </div>
         <div className="history-modal-content">
           <h3>Recent</h3>
@@ -42,8 +54,8 @@ const HistoryModal = ({ onClose, onClearAll }) => {
                   {item.icon}
                 </span>
                 <span className="history-text">{item.text}</span>
-                <button className="delete-button">
-                  <i className="fas fa-trash"></i>
+                <button className="history-delete-button" onClick={() => showClearItemModal(item)}>
+                  <img src="./images/HistoryModal/delete-outline.png" alt="DeleteIcon" />
                 </button>
               </li>
             ))}
@@ -51,11 +63,24 @@ const HistoryModal = ({ onClose, onClearAll }) => {
         </div>
       </div>
 
-      <DeleteConfirmationModal
-        isOpen={showDeleteConfirmation}
-        onClose={() => setShowDeleteConfirmation(false)}
-        onConfirm={confirmDelete}
-      />
+      <ConfirmationModal
+  isVisible={isClearAllModalVisible}
+  title="Clear all History?"
+  message="Are you sure you want to clear all History? Once, it’s done it cannot be undone."
+  onClose={() => setClearAllModalVisible(false)}
+  onConfirm={handleClearAll}
+  confirmButtonText="Clear All"
+/>
+
+<ConfirmationModal
+  isVisible={isClearItemModalVisible}
+  title="Clear History?"
+  message="Are you sure you want to clear this from History? Once, it’s done it cannot be undone."
+  onClose={() => setClearItemModalVisible(false)}
+  onConfirm={handleClearItem}
+  confirmButtonText="Clear"
+/>
+
     </div>
   );
 };

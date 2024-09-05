@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './ProfileModal.css';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faClock, faPhone, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 const authAxios = axios.create({
@@ -23,7 +26,7 @@ authAxios.interceptors.request.use(
   }
 );
 
-const ProfileModal = ({ isOpen, onClose, status = "active" }) => {
+const ProfileModal = ({ isOpen, onClose, status = "active", customStatus }) => {
   const [profile, setProfile] = useState({
     fullName: '',
     title: '',
@@ -31,15 +34,16 @@ const ProfileModal = ({ isOpen, onClose, status = "active" }) => {
     phone: '',
     timeZone: '',
     joinedDate: '',
+    profilePicture: '',
+    nameRecordingUrl: '',
   });
 
   useEffect(() => {
     const fetchProfile = async () => {
       if (isOpen) {
         try {
-          const response = await authAxios.get('/users/profile');
-          console.log(response.data);  // Debugging: Log the entire profile data
- 
+          const response = await authAxios.get('http://localhost:5000/api/users/profile');
+          console.log('Profile fetcheed:', 'response.data');
           setProfile(response.data);
         } catch (error) {
           console.error('Error fetching profile data:', error.response?.data || error.message);
@@ -53,26 +57,54 @@ const ProfileModal = ({ isOpen, onClose, status = "active" }) => {
 
   if (!isOpen) return null;
 
-  const statusClass = status ? status.toLowerCase() : "default";
+  const statusClass = status ? status.toUpperCase() : "default";
+
+  const renderStatus = () => {
+    if (customStatus && customStatus.text && customStatus.emoji) {
+      return (
+        <div className="custom-status">
+          <span className="status-emoji" role="img" aria-label="Custom Status Emoji">
+            {customStatus.emoji}
+          </span>
+          <span className="status-text">{customStatus.text}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="profile-status">
+          <span className={`status-dot ${statusClass}`}></span>
+          <span className="status-text">{status}</span>
+        </div>
+      );
+    }
+  };
+
+  const renderProfilePicture = () => {
+    if (profile.profilePicture) {
+      return <img src={profile.profilePicture} alt="Profile" />;
+    } else {
+      const emailInitial = profile.email ? profile.email.charAt(0).toUpperCase() : "?";
+      return <div className="profile-initial">{emailInitial}</div>;
+    }
+  };
 
   return (
     <div className="profile-modal-overlay" onClick={onClose}>
       <div className="profile-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="profile-container">
           <div className="profile-header">
-            <span className="close-icon" onClick={onClose}>×</span>
+            <span className="close-icon" onClick={onClose}>
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </span>
             <h2>Profile</h2>
           </div>
           <div className="profile-content">
             <div className="profile-image">
-              <img src={profile.profilePicture || "./images/profile.png"} alt="Profile" />
+              {renderProfilePicture()}
             </div>
-            <h3 className="profile-name">{profile.fullName}</h3>
+            <h3 className="profile-name">{profile.fullName}</h3>      
             <p className="profile-title">{profile.title}</p>
-            <div className="profile-status">
-              <span className={`status-dot ${statusClass}`}></span>
-              <span className="status-text">{status}</span>
-            </div>
+            {renderStatus()}
             <div className="profile-actions">
               <button className="action-button">Edit Status</button>
               <button className="action-button">Edit Profile</button>
@@ -80,34 +112,32 @@ const ProfileModal = ({ isOpen, onClose, status = "active" }) => {
             <div className="contact-info">
               <p>Contact Information</p>
               <div className="contact-item">
-                <span className="icon">✉️</span>
+                <FontAwesomeIcon icon={faEnvelope} className="icon" />
                 <span className="value">{profile.email}</span>
               </div>
               <div className="contact-item">
-                <span className="icon">📞</span>
+                <FontAwesomeIcon icon={faPhone} className="icon" />
                 <span className="value">{profile.phone}</span>
               </div>
               <div className="contact-item">
-  <span className="icon">⏰</span>
-  <span className="value">
-  {new Intl.DateTimeFormat('en-US', {
-    timeZone: userTimeZone,
-    hour: '2-digit',
-    minute: '2-digit',
-     hour12: true
-  }).format(new Date())}
-</span>
-
-
-
-</div>
-
+                <FontAwesomeIcon icon={faClock} className="icon" />
+                <span className="value">
+                  {new Intl.DateTimeFormat('en-US', {
+                    timeZone: userTimeZone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                  }).format(new Date())}
+                </span>
+              </div>
             </div>
             <div className="about-me">
               <p>About Me</p>
               <div className="about-item">
                 <span className="label">Start Date:</span>
-                <span className="value">{new Date(profile.joinedDate).toLocaleDateString()}</span>
+                <span className="value">
+                  {new Date(profile.joinedDate).toLocaleDateString()}
+                </span>
               </div>
             </div>
             <div className="name-recording">

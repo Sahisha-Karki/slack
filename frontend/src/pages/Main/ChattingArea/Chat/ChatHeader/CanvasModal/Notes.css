@@ -1,32 +1,128 @@
+/* Container for text fields and controls */
+.text-field-container {
+  position: relative;
+  margin-bottom: 20px; /* Space between text fields */
+}
+
+/* Add text field button */
+.add-text-field-button {
+  position: relative;
+  bottom: -10px; /* Position it below the last text field */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.add-text-field-button:hover {
+  background-color: #0056b3;
+}
+
+/* Remove text field button */
+.delete-text-field-button {
+  position: relative;
+  top:-60px;
+  left: 250px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.delete-text-field-button {
+  background-color: #c82333;
+}
+
+/* React Quill toolbar styling */
+.ql-toolbar {
+  display: flex;
+  flex-wrap: 1;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ql-toolbar button {
+  font-size: 10px; /* Smaller font size */
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  background: none;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.ql-toolbar button:hover {
+  background-color: #e6f1ff;
+  color: #0056b3;
+}
+
+/* Specific styles for toolbar icons */
+.ql-toolbar button .ql-icon {
+  font-size: 18px; /* Adjust icon size */
+}
+
+/* Notes container */
 .notes-container {
   position: fixed;
   right: 0;
   top: 70px;
   width: 280px;
-  height: 87.1%;
+  height: 87.3%;
   background-color: #ffffff;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
   z-index: 1000;
   overflow-y: auto;
-  transition: transform 0.3s ease; 
+  transition: transform 0.3s ease;
   transform: translateX(0);
 }
 
+/* Close button styling */
 .close-notes {
   position: absolute;
   top: 10px;
   right: 10px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 20px; /* Adjusted size */
   color: #333;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
+.close-notes:hover {
+  color: #007bff; /* Highlight on hover */
+}
+
+/* Options bar styling */
 .options-bar {
   display: flex;
   flex-direction: column;
+  gap: 10px; /* Space between buttons */
 }
 
 .options-bar button {
@@ -38,21 +134,24 @@
   display: flex;
   align-items: center;
   color: #007bff;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .options-bar button:hover {
-  background-color: #f0f0f0;
+  background-color: #e6f1ff; /* Light blue background on hover */
+  color: #0056b3; /* Darker text color on hover */
 }
 
 .options-bar button svg {
   margin-right: 8px;
 }
 
+/* Content display styling */
 .content-display {
   margin-top: 20px;
 }
 
+/* File upload styling */
 .file-upload {
   margin-top: 20px;
 }
@@ -62,25 +161,21 @@
   border: 1px solid #ddd;
   padding: 5px;
   border-radius: 4px;
+  height: auto;
   margin-bottom: 10px;
 }
 
-.file-preview {
-  color: #333;
-  font-size: 14px;
-}
-
+/* Canvas styling */
 .blank-canvas {
-  width: 95%;
-  height: 500px; 
-  border: 1px solid #ddd;
-  padding: 10px;
+  width: 100%; /* Adjusted width to account for padding */
+  overflow-y: auto;
+  border: none;
   background-color: #ffffff;
-  resize: vertical; 
+  resize: vertical;
   outline: none;
 }
 
-/* IconBar should be fixed at the bottom of the notes-container */
+/* Icon bar styling */
 .icon-bar {
   position: sticky;
   top: 90%;
@@ -89,3 +184,197 @@
   width: 93%;
 }
 
+/* Table container styling */
+.table-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Table styling */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container td {
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+  position: relative;
+}
+
+.table-container td textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.table-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-table-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+}
+
+.delete-table-button:hover {
+  color: darkred;
+}
+
+/* Insert column and row controls, hidden by default */
+.insert-control,
+.remove-control {
+  position: absolute;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.2s ease;
+}
+
+.remove-control {
+  background-color: #dc3545;
+}
+
+.insert-column {
+  top: 50%;
+  right: -10px;
+  transform: translateY(-50%);
+}
+
+.insert-row {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Show controls on hover */
+.table-container td:hover .insert-control,
+.table-container td:hover .remove-control {
+  opacity: 1; /* Make controls visible on hover */
+}
+
+/* Hover state styling for controls */
+.insert-control:hover,
+.remove-control:hover {
+  background-color: #0056b3;
+}
+
+.remove-control:hover {
+  background-color: #c82333;
+}
+
+/* Checklist container styling */
+.checklist-container {
+  margin: 20px 0;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checklist-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.checklist-item input[type="text"] {
+  flex-grow: 1;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+}
+
+.checklist-item button {
+  margin-left: 10px;
+}
+
+/* Delete button styling */
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #dc3545;
+}
+
+.delete-button svg {
+  font-size: 16px;
+}
+
+/* Emoji picker styling */
+.emoji-picker {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+}
+
+/* Emoji preview styling */
+.emoji-preview {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+/* Image preview styling */
+.image-preview {
+  max-width: 100%;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .notes-container {
+    width: 100%;
+    height: 100vh; /* Full height on smaller screens */
+    top: 0;
+  }
+
+  .blank-canvas {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .table-container {
+    margin: 10px 0;
+    padding: 5px;
+  }
+
+  .table-controls button {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-left: 5px;
+  }
+
+  /* Adjust text field button sizes for mobile */
+  .add-text-field-button {
+    height: 35px;
+    width: 35px;
+    font-size: 20px;
+  }
+
+  .remove-text-field-button {
+    height: 25px;
+    width: 25px;
+    font-size: 14px;
+  }
+}

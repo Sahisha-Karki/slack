@@ -24,8 +24,6 @@
 
   }
   
-
-  
  .themes-content p{
   font-size: 13px;
   font-weight: 500;
@@ -33,7 +31,6 @@
   color: #747474;
 
  }
-
 
   .color-mode-buttons {
     display: flex;

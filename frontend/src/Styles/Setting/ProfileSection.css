@@ -6,9 +6,7 @@
   position: relative; /* Ensure positioning for buttons */
   flex: 1;
   padding: 10px 20px;
-  max-height: calc(100vh - 80px); /* Adjust for modal size */
-  overflow-y: auto;
-  background-color: #ffffff;
+  max-height: calc(100vh - 30px); /* Adjust for modal size */
 }
 
 .settings-profile-section:hover {
@@ -70,14 +68,15 @@
   align-items: center;
   margin-bottom: 20px;
   margin-top: 40px;
+  gap: 25px;
 }
 
 .settings-profile-image {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  border: 2px solid rgb(136, 136, 136);
   object-fit: cover;
-  margin-right: 20px;
   cursor: pointer; /* Added for better user experience */
 }
 
@@ -155,38 +154,175 @@
   cursor: pointer;
 }
 
-.settings-profile-save-button,
-.settings-profile-cancel-button {
-  background-color: #0a7148;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.settings-profile-image-actions {
+  display: flex;
+  justify-content: space-between;
   width: 100px;
-  height: 40px;
-  position: absolute;
-  bottom: 20px;
+  margin-top: 10px;
+}
+
+.settings-profile-image-actions button {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  margin-right: -18px;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
 }
 
-.settings-profile-save-button {
-  right: 20px; /* Adjust position */
-  bottom: -10px;
+.settings-profile-image-actions button:hover {
+  background-color: #0056b3;
 }
 
-.settings-profile-cancel-button {
-  right: 130px; /* Adjust position */
-  background-color: #cf3014;
-  bottom: -10px;
+.act-img-btn {
+  display: flex;
+  border: 2px solid rgb(190, 186, 186);
+  padding: 5px;
+  border-radius: 25px;
+  align-items: center; /* Aligns icons and divider */
 }
 
+.add-btn,
+.delete-btn {
+  border: none;
+  padding: 10px;
+  border-radius: 50%; /* Ensures the background is round */
+  cursor: pointer;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-btn {
+  background-color: #159749;
+}
+
+.add-btn:hover {
+  background-color: #0fb451;
+}
+
+.delete-btn {
+  background-color: #e32929;
+}
+
+.delete-btn:hover {
+  background-color: #d16262;
+}
+
+.add-btn svg,
+.delete-btn svg {
+  font-size: 20px; /* Adjusts the icon size */
+}
+
+.divider {
+  width: 1px;
+  height: 30px; /* Adjust this value as needed */
+  background-color: rgb(190, 186, 186); /* Same color as border */
+}
+
+/* Tooltip styles */
+.tooltip {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.add-btn .tooltip {
+  /* Positioning */
+  position: absolute;
+  z-index: 1;
+  top: 80px;
+  left: 140px;
+  transform: translateX(50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.delete-btn .tooltip {
+  /* Positioning */
+  position: absolute;
+  z-index: 1;
+  top: 80px;
+  left: 295px;
+  transform: translateX(50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.add-btn:hover .tooltip,
+.delete-btn:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Disabled State */
+.settings-profile-save-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6; /* Optional: makes disabled button appear less prominent */
+}
+
+/* Active and Hover State */
+.settings-profile-save-button:active,
 .settings-profile-save-button:hover,
+.settings-profile-cancel-button:active,
 .settings-profile-cancel-button:hover {
   opacity: 0.9;
 }
 
+/* Save Button */
+.settings-profile-save-button {
+  background-color: #0a7148;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 130px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+
+/* Cancel Button */
+.settings-profile-cancel-button {
+  background-color: #cf3014;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 130px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Ensure space between Save and Cancel buttons */
 .settings-profile-save-button + .settings-profile-cancel-button {
-  margin-right: 10px; /* Add space between buttons */
+  margin-right: 10px;
+}
+
+/* Placeholder styles for profile image */
+.settings-profile-image-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  border-radius: 50%;
+  background-color: #ccc; /* Placeholder background color */
+  color: #fff; /* Placeholder text color */
+  font-size: 36px; /* Adjust as needed */
+  font-weight: bold;
+  border: 2px solid rgb(133, 133, 133);
 }

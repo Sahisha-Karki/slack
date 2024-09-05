@@ -66,21 +66,11 @@
   margin-left: 8px;
 }
 
-.landing-contact-button:hover {
-  background-color: #164074;
-  transform: scale(1.1);
-}
-
 .landing-email-button {
   background-color: #ffffff;
   color: #000;
   font-weight: bold;
   border: 1.5px solid black;
-}
-
-.landing-email-button:hover {
-  background-color: #f0f0f0;
-  transform: scale(1.1);
 }
 
 .landing-button-text {

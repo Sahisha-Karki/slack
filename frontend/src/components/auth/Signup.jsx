@@ -20,7 +20,10 @@ function Signup() {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', { email, password, confirmPassword });
       console.log('Signup successful:', response.data);
-
+  
+      // Store email in localStorage
+      localStorage.setItem('email', email);
+  
       // Navigate to OTP verification page with verificationType state
       console.log('Navigating to /otp');
       navigate('/otp', { state: { verificationType: 'user' } });
@@ -28,7 +31,7 @@ function Signup() {
       console.error('Signup error:', error.response?.data?.message || 'An error occurred');
     }
   };
-
+  
   return (
     <AuthForm
       onSubmit={handleSignup}

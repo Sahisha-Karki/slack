@@ -250,3 +250,25 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Styles for video preview in MessageInput */
+.media-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.media-preview video {
+  max-width: 100px; /* Maximum width */
+  max-height: 100px; /* Maximum height */
+  width: auto; /* Scale to fit container width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.remove-media {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 16px
+}

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './NavItem.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserFriends, faPeopleGroup, faChevronDown, faChevronUp, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 const NavItems = ({ onNavItemClick }) => {
+  const [isMoreVisible, setIsMoreVisible] = useState(false);
+
+  const handleMoreClick = () => {
+    setIsMoreVisible(!isMoreVisible);
+  };
+
   return (
     <ul className="nav-list">
       <li className="nav-item" onClick={() => onNavItemClick('threads')}>
@@ -24,9 +32,24 @@ const NavItems = ({ onNavItemClick }) => {
         <img src="./images/file.png" alt="Files Icon" className="nav-icon" />
         <span>Files</span>
       </li>
-      <li className="nav-item" onClick={() => onNavItemClick('more')}>
-        <img src="./images/more.png" alt="More Icon" className="nav-icon" />
-        <span>More</span>
+      {isMoreVisible && (
+        <>
+          <li className="nav-item" onClick={() => onNavItemClick('huddles')}>
+            <FontAwesomeIcon icon={faUserFriends} className="nav-icon" />
+            <span>Huddles</span>
+          </li>
+          <li className="nav-item" onClick={() => onNavItemClick('people')}>
+            <FontAwesomeIcon icon={faPeopleGroup} className="nav-icon" />
+            <span>People</span>
+          </li>
+        </>
+      )}
+      <li className="nav-item" onClick={handleMoreClick}>
+        <FontAwesomeIcon
+          icon={isMoreVisible ? faChevronUp : faEllipsisH}
+          className="nav-icon"
+        />
+        <span>{isMoreVisible ? "Less" : "More"}</span>
       </li>
     </ul>
   );

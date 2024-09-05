@@ -24,7 +24,7 @@ const SMILEY_ICON = "./images/videocallIcon/smiley.png";
 const SETTING_ICON = "./images/videocallIcon/setting.png";
 const ADD_PEOPLE_ICON = "./images/videocallIcon/addpeople.png";
 
-const SessionModal = ({ isOpen, onClose }) => {
+const SessionModal = ({ isOpen, onClose, userId }) => {  // Receive userId as a prop
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [isMicOn, setIsMicOn] = useState(true);
   const [isVolumeOn, setIsVolumeOn] = useState(true);
@@ -46,8 +46,10 @@ const SessionModal = ({ isOpen, onClose }) => {
     if (isOpen) {
       // Reset to minimized state every time the modal is opened
       setIsMinimized(true);
+      console.log(`Session opened for user ID: ${userId}`); // Log the user ID when session is opened
     }
-  }, [isOpen]);
+  }, [isOpen, userId]);
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {

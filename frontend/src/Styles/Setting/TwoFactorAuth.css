@@ -1,9 +1,10 @@
 .two-factor-auth-container {
-  background-color: white;
-  border: 1px solid #ddd;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 10px 20px ;
   margin-bottom: 10px;
+  transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 }
@@ -12,20 +13,21 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.auth-header {
+.two-factor-auth-container .two-factor-auth-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom:0px;
   }
 
-.auth-header h2 {
+  .two-factor-auth-container .two-factor-auth-header h2 {
   margin: 0;
   color: #3A3A3A;
   font-size: 18px;
   font-weight: 600;
 }
 
-.toggle-expand-button {
+.two-factor-auth-container .toggle-expand-button {
   background: none;
   border: none;
   font-size: 18px;
@@ -34,12 +36,12 @@
   outline: none;
  }
 
-.auth-content {
+ .two-factor-auth-container .auth-content {
   margin-top: 25px;
   
 }
 
-.auth-content p {
+.two-factor-auth-container .auth-content p {
   font-size: 15px;
   font-weight: 400;
   color: #747474;
@@ -63,11 +65,10 @@
 }
 
  
-.auth-note {
+.two-factor-auth-container .auth-note {
   margin-top: 10px;
-  font-size: 10px;
+  font-size: 5px;
   color: #747474;
-  font-weight: 500;
   width: 700px;
   height: 18px;
 }

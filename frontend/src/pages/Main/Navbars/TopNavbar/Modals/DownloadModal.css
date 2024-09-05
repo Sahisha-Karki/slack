@@ -12,14 +12,15 @@
   z-index: 1000;
 }
 
+/* Modal */
 .download-modal {
-  background-color: #ffffff; /* White background */
+  background-color: #ffffff;
   border-radius: 8px;
+  width: 600px; /* Adjust width to match HistoryModal */
+  max-width: 90%;
+  position: relative;
   padding: 20px;
-  width: 480px;
-  max-width: 100%;
-  position: relative; /* Ensure positioning for header buttons */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Match shadow with HistoryModal */
 }
 
 /* Header Styling */
@@ -27,23 +28,29 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #ddd; /* Line separator */
+  padding-bottom: 15px; /* Adjust padding for consistency */
+  margin-bottom: 15px; /* Adjust margin for consistency */
+  border-bottom: 1px solid #ddd;
 }
 
 .download-modal-header h2 {
-  font-size: 18px;
+  font-size: 20px; /* Increase font size for consistency */
   font-weight: 600;
   margin: 0;
-  color: #000; /* Black text color */
+  color: #000;
   font-family: Arial, sans-serif;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between buttons */
 }
 
 .clear-all {
   background-color: #ffffff;
-  border: 1px solid #ccc; /* Gray border */
-  color: #333; /* Dark gray text color */
+  border: 1px solid #ccc;
+  color: #333;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -51,11 +58,12 @@
   font-weight: 600;
   border-radius: 5px;
   padding: 5px 10px;
-  margin-right: 10px;
+  gap: 5px; /* Space between icon and text */
 }
 
-.clear-all i {
-  margin-right: 5px;
+.clear-all img {
+  width: 16px; /* Set appropriate width for the icon */
+  height: 16px; /* Set appropriate height for the icon */
 }
 
 .dld_close {
@@ -64,12 +72,15 @@
   font-size: 24px;
   cursor: pointer;
   background: none;
+  padding: 0; /* Remove default padding */
 }
 
 /* File List Styling */
 .download-list {
   list-style: none;
   padding: 0;
+  max-height: 400px; /* Set a max-height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
 }
 
 .download-modal-download-item {
@@ -78,16 +89,15 @@
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
-  margin-bottom: 10px; /* Margin between items */
+  margin-bottom: 10px;
   background-color: #f9f9f9;
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 .download-modal-file-icon {
   width: 24px;
   height: 24px;
   margin-right: 10px;
-  flex-shrink: 0; /* Prevent the icon from shrinking */
+  flex-shrink: 0;
 }
 
 .download-modal-file-name {
@@ -95,48 +105,44 @@
   flex: 1;
   color: #000;
   font-family: Arial, sans-serif;
-  overflow: hidden; /* Prevent text overflow */
-  text-overflow: ellipsis; /* Show ellipsis for overflow text */
-  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* Action Buttons Styling */
-.action-buttons {
+/* Action Buttons Container */
+.download-modal-action-buttons {
   display: flex;
   align-items: center;
-  margin-left: auto;
+  background-color: #ffffff; /* White background for the container */
+  border: 1px solid #ddd; /* Border around the container */
+  border-radius: 15px; /* Oval shape for the container */
+  padding: 6px; /* Padding around the buttons */
 }
 
-.action-button {
-  margin-left: 10px;
-  padding: 6px;
-  background-color: transparent;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Action Button Styling */
+.download-modal-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; /* Width of the button */
+  height: 20px; /* Height of the button */
+  border: none; /* Remove default border */
   cursor: pointer;
   transition: background-color 0.3s ease;
-  position: relative;
+  background-color: #ffffff;
 }
 
-.action-button:hover {
-  background-color: #f0f0f0;
-}
-
-.action-button i {
-  color: #000;
-}
-
-.delete-button i {
-  color: #D32F2F; /* Red color */
-}
-
-.move-button i {
-  color: #4CAF50; /* Green color */
+/* Image Inside Button */
+.download-modal-action-button img {
+  width: 18px; /* Set image size */
+  height: 18px; /* Set image size */
 }
 
 /* Divider Styling */
-.divider {
-  border-left: 1px solid #ddd;
-  height: 24px;
-  margin: 0 10px;
+.download-modal-divider {
+  width: 1px;
+  height: 20px; /* Match button height */
+  background-color: #ddd; /* Light gray color */
+  margin: 0 6px; /* Adjust space between buttons and divider */
 }

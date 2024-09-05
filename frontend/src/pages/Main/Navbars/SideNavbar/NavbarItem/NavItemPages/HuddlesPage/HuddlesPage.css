@@ -1,0 +1,118 @@
+.huddles-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.huddles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.new-huddle-btn {
+  padding: 8px 16px;
+  background-color: #f2f4f7;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.huddles-banner {
+  display: flex;
+  background-color: #dfffe0;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.banner-content {
+  flex: 1;
+}
+
+.start-huddle-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #004c3f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.banner-image img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+.recent-huddles {
+  margin-top: 20px;
+}
+
+.huddles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.huddle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.huddle-info {
+  display: flex;
+  align-items: center;
+}
+
+.huddle-icon {
+  font-size: 24px;
+  color: #ff5e5e;
+  margin-right: 10px;
+}
+
+.huddle-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.huddle-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.huddle-time {
+  color: #777;
+}
+
+.huddle-actions {
+  display: flex;
+  align-items: center;
+}
+
+.profile-matrix {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.huddle-profile-icon {
+  background-color: #c4c4c4;
+  border-radius: 50%;
+  padding: 8px;
+  margin-left: -6px;
+  z-index: 1;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.more-options {
+  cursor: pointer;
+  margin-left: 10px;
+}

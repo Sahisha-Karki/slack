@@ -11,7 +11,7 @@ function TwoFactorAuth() {
 
   return (
     <div className="two-factor-auth-container">
-      <div className="auth-header">
+      <div className="two-factor-auth-header">
         <h2>Two-Factor Authentication</h2>
         <button
           className={`password-toggle-button ${isExpanded ? 'toggle-button-expanded' : ''}`} 

@@ -10,7 +10,8 @@ import DirectMessagesPage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPag
 import MentionsReactionsPage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/MentionPage/Mention';
 import DraftsPage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/DraftPage/Draft';
 import FilesPage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/FilesPage/Files';
-import MorePage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/MorePage/More';
+import HuddlesPage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/HuddlesPage/HuddlesPage'; // Import HuddlesPage component
+import PeoplePage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/PeoplePage/PeoplePage'; // Import PeoplePage component
 import MessagePage from '../Main/Navbars/SideNavbar/NavbarItem/NavItemPages/Message/Message';
 import SearchResults from '../Main/Navbars/TopNavbar/Search/SearchResults';
 import BrowseChannels from '../Main/Navbars/SideNavbar/Channels/Context/BrowseChannels/BrowseChannels';
@@ -175,8 +176,10 @@ const Main = () => {
               return <DraftsPage />;
             case 'files':
               return <FilesPage />;
-            case 'more':
-              return <MorePage />;
+            case 'huddles':
+              return <HuddlesPage />;
+            case 'people':
+              return <PeoplePage />;
             case 'message':
               return <MessagePage />;
             default:
@@ -198,8 +201,10 @@ const Main = () => {
         return <DraftsPage />;
       case 'files':
         return <FilesPage />;
-      case 'more':
-        return <MorePage />;
+      case 'huddles':
+        return <HuddlesPage />;
+      case 'people':
+        return <PeoplePage />;
       case 'message':
         return <MessagePage />;
       default:

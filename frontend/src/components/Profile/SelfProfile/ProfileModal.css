@@ -1,8 +1,7 @@
 .profile-modal-overlay {
   position: fixed;
-  top: 7.2%;
-  left: 82.5%;
-  right: 0;
+  top: 6.4%;
+  left: 82.8%;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -11,11 +10,10 @@
 }
 
 .profile-modal-content {
-  background: #C4CCD3;
-  padding: 20px;
-  width: 320px;
-  max-width: 88%;
-  height: 835px;
+  background: #f7fafd;
+  padding: 10px 22px;
+  max-width: 100%;
+  height: 845px;
   position: relative;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -24,23 +22,6 @@
 .profile-header {
   padding: 15px;
   position: relative;
-}
-.profile-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.status-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-}
-
-.status-text {
-  font-size: 16px;
-  color: #333;
 }
 
 .close-icon {
@@ -67,14 +48,32 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  border: 1px solid black;
   overflow: hidden;
   margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e4e6eb; /* Background color when no image is available */
 }
 
 .profile-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.profile-initial {
+  font-size: 48px; /* Adjust font size as needed */
+  color: #4e4949;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-transform: uppercase; /* Ensure the letter is uppercase */
 }
 
 .profile-name {
@@ -93,13 +92,34 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  border: 2px solid #a8a8a8;
+  border-radius:5px;
+  max-width: 100%;
+  
 }
 
 .status-dot {
   width: 10px;
   height: 10px;
-  background-color: #31a24c;
   border-radius: 50%;
+  margin-right: 8px;
+  
+}
+
+.status-text {
+  font-size: 16px;
+  color: #333;
+  
+}
+
+.custom-status {
+  display: flex;
+  align-items: center;
+  
+}
+
+.status-emoji {
+  font-size: 20px; /* Adjust size as needed */
   margin-right: 8px;
 }
 
@@ -110,7 +130,7 @@
 
 .profile-actions {
   display: flex;
-  justify-content: space-between; /* Arrange buttons in a row */
+  justify-content: space-between;
   gap: 12px;
 }
 
@@ -136,10 +156,13 @@
 .icon {
   margin-right: 8px;
   font-size: 18px;
+  color: #f7fafd;
 }
 
 .contact-info {
   margin-top: 30px;
+  max-width: fit-content;
+
 }
 
 .contact-info p {
@@ -162,8 +185,9 @@
 }
 
 .contact-item .value {
-  font-size: 16px;
+  font-size: 14px;
   color: #6a6e73;
+  
 }
 
 .about-me {
@@ -195,7 +219,8 @@
   font-size: 16px;
   color: #6a6e73;
 }
-/* ProfileModal.css */
+
+/* Status Dot Colors */
 .status-dot.online {
   background-color: #31a24c; /* Green for online */
 }
@@ -208,7 +233,7 @@
   background-color: #b0b0b0; /* Gray for invisible */
 }
 
-/* Ensure other styles like text colors are also defined */
+/* Status Text Colors */
 .status-text.online {
   color: #2b2b2b;
 }

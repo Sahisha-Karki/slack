@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../../src/Styles/Setting/ProfileSection.css';
 import { FaChevronUp } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const authAxios = axios.create({
   baseURL: 'http://localhost:5000/api',
@@ -31,6 +32,7 @@ function ProfileSection() {
   const [audioUrl, setAudioUrl] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
+  const [hasChanges, setHasChanges] = useState(false);
 
   const [profile, setProfile] = useState({
     title: '',
@@ -38,17 +40,16 @@ function ProfileSection() {
     displayname: '',
     email: '',
     phoneNumber: '',
-    profilePicture: 'path_to_default_image.jpg'
+    profilePicture: null
   });
 
   useEffect(() => {
     fetchUserData();
   }, []);
 
-   const fetchUserData = async () => {
+  const fetchUserData = async () => {
     try {
-      // Instead of using userId, we'll use the /user/profile endpoint
-      const response = await authAxios.get('/users/profile');
+      const response = await authAxios.get('users/get-profile');
       const userData = response.data;
       setProfile({
         title: userData.title,
@@ -56,7 +57,7 @@ function ProfileSection() {
         displayname: userData.displayName,
         email: userData.email,
         phoneNumber: userData.phone,
-        profilePicture: userData.profilePicture || 'path_to_default_image.jpg'
+        profilePicture: userData.profilePicture || null
       });
     } catch (error) {
       console.error('Error fetching user data:', error.response?.data || error.message);
@@ -70,57 +71,51 @@ function ProfileSection() {
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
+    setHasChanges(true); 
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfile({ ...profile, profilePicture: imageUrl });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile({ ...profile, profilePicture: reader.result });
+        setHasChanges(true);
+      };
+      reader.readAsDataURL(file); // Convert to Base64
     }
   };
-  
-  
- 
+
+  const handleRemoveImage = () => {
+    setProfile({ ...profile, profilePicture: null });
+    setHasChanges(true); 
+  };
+
   const handleSave = async () => {
     try {
-      console.log('Sending update with data:', {
+      const updateData = {
         fullName: profile.fullname,
         displayName: profile.displayname,
         title: profile.title,
         phone: profile.phoneNumber,
-      });
+        profilePicture: profile.profilePicture, // Include profilePicture
+      };
+      
+      const response = await authAxios.put('users/update', updateData);
   
-      const response = await authAxios.put('/users/update', {
-        fullName: profile.fullname,
-        displayName: profile.displayname,
-        title: profile.title,
-        phone: profile.phoneNumber,
-      });
-      
-      console.log('Server response:', response.data);
-      
       setProfile(prevProfile => ({
         ...prevProfile,
         fullname: response.data.fullName,
         displayname: response.data.displayName,
         title: response.data.title,
         phoneNumber: response.data.phone,
+        profilePicture: response.data.profilePicture, // Update profile picture from response
       }));
-      
+  
       alert('Profile updated successfully!');
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating profile:', error);
-      if (error.response) {
-        console.error('Error response:', error.response.data);
-        console.error('Error status:', error.response.status);
-        console.error('Error headers:', error.response.headers);
-      } else if (error.request) {
-        console.error('Error request:', error.request);
-      } else {
-        console.error('Error message:', error.message);
-      }
       alert('Failed to update profile. ' + (error.response?.data?.message || error.message));
     }
   };
@@ -133,7 +128,6 @@ function ProfileSection() {
     console.log('Start Recording clicked'); // Debugging statement
   
     try {
-      // Request audio stream from the microphone
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       console.log('Microphone access granted'); // Debugging statement
   
@@ -180,6 +174,26 @@ function ProfileSection() {
     }
   };
 
+  const renderProfilePicture = () => {
+    if (profile.profilePicture) {
+      return (
+        <img
+          src={profile.profilePicture}
+          className="settings-profile-image"
+          alt="Profile"
+          style={{ width: '150px', height: '150px', borderRadius: '50%' }}
+        />
+      );
+    } else {
+      const initials = profile.email.split(' ').map(name => name[0]).join('').toUpperCase();
+      return (
+        <div className="settings-profile-image-placeholder">
+          {initials}
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="settings-profile-section">
       <div className="settings-profile-header">
@@ -194,23 +208,29 @@ function ProfileSection() {
       {isEditing && (
         <div className="settings-profile-edit">
           <div className="settings-profile-image-container">
-            <input
-              type="file"
-              accept="image/*"
-              id="profilePictureUpload"
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-            />
-            <label htmlFor="profilePictureUpload">
-              <img
-                src={profile.profilePicture}
-                alt="Profile"
-                className="settings-profile-image"
-              />
-            </label>
+            {renderProfilePicture()}
             <div className="settings-profile-name-role">
-              <h3>{profile.name}</h3>
+              <h3>{profile.fullname}</h3>
               <p>{profile.title}</p>
+            </div>
+
+            <div className="act-img-btn">
+              <input
+                type="file"
+                accept="image/*"
+                id="profilePictureUpload"
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+              />
+              <button className="add-btn" onClick={() => document.getElementById('profilePictureUpload').click()}>
+                <FontAwesomeIcon icon={faPlus} />
+                <span className="tooltip">Choose profile image</span>
+              </button>
+              <div className="divider"></div>
+              <button className="delete-btn" onClick={handleRemoveImage}>
+                <FontAwesomeIcon icon={faTrash} />
+                <span className="tooltip">Remove profile image</span>
+              </button>
             </div>
           </div>
           <div className="settings-profile-fields">
@@ -249,19 +269,18 @@ function ProfileSection() {
             <label>Name recording</label>
             <div className="settings-profile-input-container">
               <button 
-                className="settings-profile-voice-button" 
+                className="recording-button" 
                 onClick={handleVoiceButtonClick}
               >
-                <FontAwesomeIcon className="settings-profile-microphone" icon={faMicrophone} />
-                {isRecording ? 'Stop Recording' : 'Record audio clip'}
+                <FontAwesomeIcon icon={faMicrophone} />
               </button>
-              {audioUrl && (
-                <audio controls>
-                  <source src={audioUrl} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-              )}
             </div>
+
+            {audioUrl && (
+              <div className="audio-player">
+                <audio controls src={audioUrl}></audio>
+              </div>
+            )}
 
             <label>Title</label>
             <div className="settings-profile-input-container">
@@ -273,30 +292,25 @@ function ProfileSection() {
               />
               <span className="settings-profile-edit-icon">✎</span>
             </div>
-
-            <label>Phone Number</label>
+            <label>Phone</label>
             <div className="settings-profile-input-container">
               <input
-                type="tel"
+                type="text"
                 name="phoneNumber"
                 value={profile.phoneNumber}
                 onChange={handleChange}
               />
               <span className="settings-profile-edit-icon">✎</span>
             </div>
-
-            <label>Joined Date</label>
-            <div className="settings-profile-input-container">
-              <input
-                type="date"
-                name="date"
-                value={profile.date || ''}
-                onChange={handleChange}
-              />
-            </div>
           </div>
-          <button className="settings-profile-save-button" onClick={handleSave}>Save</button>
-          <button className="settings-profile-cancel-button" onClick={handleCancelEdit}>Cancel</button>
+          <div className="settings-profile-actions">
+            <button className="settings-profile-save-button" onClick={handleSave}>
+              Save
+            </button>
+            <button className="settings-profile-cancel-button" onClick={handleCancelEdit}>
+              Cancel
+            </button>
+          </div>
         </div>
       )}
     </div>

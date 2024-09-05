@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
 import './DownloadModal.css';
-import DeleteConfirmationModal from './DeleteConfirmationModal'; // Import the new component
+import ConfirmationModal from './ConfirmationModal'; // Import the ConfirmationModal component
 
 const DownloadModal = ({ files = [], onClose, onVisitFolder, onRemove, onClearAll }) => {
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showClearAllModal, setShowClearAllModal] = useState(false);
+  const [showDeleteFileModal, setShowDeleteFileModal] = useState(false);
+  const [fileToDelete, setFileToDelete] = useState(null);
 
   const handleClearAll = () => {
-    setShowDeleteConfirmation(true);
+    setShowClearAllModal(true);
   };
 
-  const confirmDelete = () => {
+  const handleDeleteFile = (file) => {
+    setFileToDelete(file);
+    setShowDeleteFileModal(true);
+  };
+
+  const confirmClearAll = () => {
     onClearAll();
-    setShowDeleteConfirmation(false);
+    setShowClearAllModal(false);
+  };
+
+  const confirmDeleteFile = () => {
+    if (fileToDelete) {
+      onRemove(fileToDelete);
+      setFileToDelete(null);
+    }
+    setShowDeleteFileModal(false);
   };
 
   return (
@@ -19,10 +34,13 @@ const DownloadModal = ({ files = [], onClose, onVisitFolder, onRemove, onClearAl
       <div className="download-modal">
         <div className="download-modal-header">
           <h2>Downloads</h2>
-          <button className="clear-all" onClick={handleClearAll}>
-            <i className="fas fa-broom"></i> Clear all
-          </button>
-          <button className="dld_close" onClick={onClose}>×</button>
+          <div className="header-buttons">
+            <button className="clear-all" onClick={handleClearAll}>
+              <img src="./images/HistoryModal/carbon_clean.png" alt="Clear All" />
+              Clear All
+            </button>
+            <button className="dld_close" onClick={onClose}>×</button>
+          </div>
         </div>
         <div className="download-list">
           {files.length === 0 ? (
@@ -32,12 +50,13 @@ const DownloadModal = ({ files = [], onClose, onVisitFolder, onRemove, onClearAl
               <div key={index} className="download-modal-download-item">
                 <img src={file.icon} alt={`${file.name} icon`} className="download-modal-file-icon" />
                 <span className="download-modal-file-name">{file.name}</span>
-                <div className="action-buttons">
-                  <button className="action-button move" onClick={() => onVisitFolder(file)}>
-                    <i className="fas fa-folder-open"></i>
+                <div className="download-modal-action-buttons">
+                  <button className="download-modal-action-button" onClick={() => onVisitFolder(file)}>
+                    <img src="./images/HistoryModal/gravity-ui_folder.png" alt="folder" />
                   </button>
-                  <button className="action-button delete" onClick={() => onRemove(file)}>
-                    <i className="fas fa-trash"></i>
+                  <div className="download-modal-divider"></div>
+                  <button className="download-modal-action-button" onClick={() => handleDeleteFile(file)}>
+                    <img src="./images/HistoryModal/delete-outline.png" alt="DeleteIcon" />
                   </button>
                 </div>
               </div>
@@ -46,10 +65,22 @@ const DownloadModal = ({ files = [], onClose, onVisitFolder, onRemove, onClearAl
         </div>
       </div>
 
-      <DeleteConfirmationModal
-        isOpen={showDeleteConfirmation}
-        onClose={() => setShowDeleteConfirmation(false)}
-        onConfirm={confirmDelete}
+      <ConfirmationModal
+        isVisible={showClearAllModal}
+        title="Clear all downloads?"
+        message="Are you sure you want to clear all downloaded files? Once, it’s done it cannot be undone."
+        onClose={() => setShowClearAllModal(false)}
+        onConfirm={confirmClearAll}
+        confirmButtonText="Delete All"
+      />
+
+      <ConfirmationModal
+        isVisible={showDeleteFileModal}
+        title="Delete download?"
+        message="Are you sure you want to delete this file? Once, it’s done it cannot be undone."
+        onClose={() => setShowDeleteFileModal(false)}
+        onConfirm={confirmDeleteFile}
+        confirmButtonText="Delete"
       />
     </div>
   );

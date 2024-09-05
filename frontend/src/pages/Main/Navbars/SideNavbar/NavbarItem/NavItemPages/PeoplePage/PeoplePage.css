@@ -1,0 +1,187 @@
+/* General Styling */
+.people-page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 24px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+/* Search Bar Styling */
+.people-page-search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.people-page-search-input-container {
+  flex-grow: 1;
+  position: relative;
+}
+
+.people-page-search-input {
+  width: 50%;
+  padding: 8px 32px 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.people-page-search-icon {
+  position: absolute;
+  right: 48%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+}
+
+/* Action Buttons Styling */
+.people-page-action-buttons {
+  margin-right: 45px;
+}
+
+.people-page-action-button{
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333333;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin-right: 10px;
+}
+
+.people-page-action-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* Info Banner Styling */
+.info-banner {
+  background-color: #395C7A;
+  color: #ffffff;
+  padding: 16px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  width: 94.5%;
+}
+
+.learn-more {
+  color: #aeeeee;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* People Grid Styling */
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+  max-width: 1200px; /* Adjust according to your needs */
+  justify-content: center;
+  margin: 0 auto; /* Center the grid container within its parent */
+}
+
+/* Person Card Styling */
+.person-card {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.person-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.person-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  object-fit: cover;
+}
+
+.person-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verified-icon {
+  width: 12px;
+  height: 12px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.person-role {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.person-subrole,
+.person-pronouns {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* Pagination Styling */
+.people-page-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.page-number {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333333;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.page-number:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .people-page-search-bar {
+    flex-direction: column;
+  }
+
+  .people-page-search-input-container {
+    width: 100%;
+  }
+
+  .people-page-action-button {
+    width: 100%;
+  }
+}

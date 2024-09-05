@@ -1,4 +1,3 @@
-// SignOutConfirmationModal.js
 import React from 'react';
 import './SignOutConfirmationModal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,11 +12,11 @@ const SignOutConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
         <button className="signout-confirmation-close" onClick={onClose} aria-label="Close">
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <h2>Ready to Say Goodbye?</h2>
-        <p>We’ll be sad to see you go! Are you sure you want to sign out?</p>
+        <h2 className="signout-confirmation-title">Sign Out?</h2>
+        <p className="signout-confirmation-message">Are you sure you want to sign out?</p>
         <div className="signout-confirmation-buttons">
           <button onClick={onConfirm} className="signout-confirmation-confirm">Yes, Sign Out</button>
-          <button onClick={onClose} className="signout-confirmation-cancel">Cancel</button>
+          <button onClick={onClose} className="signout-confirmation-cancel">No, Stay</button>
         </div>
       </div>
     </div>

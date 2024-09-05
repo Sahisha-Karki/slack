@@ -20,7 +20,7 @@ function TimeZoneSettings() {
 
   return (
     <div className="timezone-settings-container">
-      <div className="auth-header">
+      <div className="timezone-auth-header">
         <h2>Time Zone</h2>
         <button
           className={`password-toggle-button ${isExpanded ? 'toggle-button-expanded' : ''}`}

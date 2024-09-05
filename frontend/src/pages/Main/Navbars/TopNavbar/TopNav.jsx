@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./TopNav.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import CustomStatusModal from "./Modals/CustomStatusModal";
 import SettingsModal from "../../../../components/Setting/SettingModal";
 import DownloadModal from './Modals/DownloadModal';
 import HistoryModal from './Modals/HistoryModal';
-import SignOutConfirmationModal from '../../../Main/Navbars/SideNavbar/Company/SignOutConfirmationModal'; // Import the new modal
+import ProfileModal from "../../../../components/Profile/SelfProfile/ProfileModal";
+import SignOutConfirmationModal from '../../../Main/Navbars/SideNavbar/Company/SignOutConfirmationModal'; 
 
 const TopNav = ({ showContent, onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +15,10 @@ const TopNav = ({ showContent, onSearch }) => {
   const [isCustomStatusModalOpen, setIsCustomStatusModalOpen] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false); 
+  const [openDropdown, setOpenDropdown] = useState(null);
   const [userStatus, setUserStatus] = useState('online');
   const [files, setFiles] = useState([
     { name: 'Proposal for Application.docx', icon: '/path/to/word-icon.png' },
@@ -20,25 +26,43 @@ const TopNav = ({ showContent, onSearch }) => {
     { name: 'Awsdawd.docx', icon: '/path/to/word-icon.png' },
     { name: 'awdawwdaw.docx', icon: '/path/to/word-icon.png' },
   ]);
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-  const [isSignOutConfirmationModalOpen, setIsSignOutConfirmationModalOpen] = useState(false); // Initialize state for sign out modal
 
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
-  const dropdownRef = useRef(null); // Create ref for dropdown
+  const [user, setUser] = useState({
+    email: localStorage.getItem('email') || "",
+    profilePictureUrl: localStorage.getItem('profilePictureUrl') || "",
+    username: localStorage.getItem('username') || "",
+  });
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
+  useEffect(() => {
+    const email = localStorage.getItem('email');
+    const profilePictureUrl = localStorage.getItem('profilePictureUrl');
+    const username = localStorage.getItem('username');
 
-  const handleSearchSubmit = () => {
-    onSearch(searchQuery);
-  };
+    setUser({
+      email: email || "",
+      profilePictureUrl: profilePictureUrl || "",
+      username: username || email?.split('@')[0] || "User",
+    });
+  }, []);
+
+  const handleSearchChange = (event) => setSearchQuery(event.target.value);
+
+  const handleSearchSubmit = () => onSearch(searchQuery);
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-    setOpenDropdown(isDropdownOpen ? null : 'main');
+    setIsDropdownOpen(prev => !prev);
+    setOpenDropdown(prev => prev ? null : 'main');
   };
+
+  const openProfileModal = () => {
+    setIsProfileModalOpen(true);
+    setIsDropdownOpen(false);
+  };
+
+  const closeProfileModal = () => setIsProfileModalOpen(false);
 
   const openCustomStatusModal = () => {
     setIsCustomStatusModalOpen(true);
@@ -46,9 +70,7 @@ const TopNav = ({ showContent, onSearch }) => {
     setOpenDropdown(null);
   };
 
-  const closeCustomStatusModal = () => {
-    setIsCustomStatusModalOpen(false);
-  };
+  const closeCustomStatusModal = () => setIsCustomStatusModalOpen(false);
 
   const openSettingsModal = () => {
     setIsSettingsModalOpen(true);
@@ -56,17 +78,11 @@ const TopNav = ({ showContent, onSearch }) => {
     setOpenDropdown(null);
   };
 
-  const closeSettingsModal = () => {
-    setIsSettingsModalOpen(false);
-  };
+  const closeSettingsModal = () => setIsSettingsModalOpen(false);
 
-  const togglePauseNotificationSubdropdown = () => {
-    setOpenDropdown(openDropdown === 'pause' ? null : 'pause');
-  };
+  const togglePauseNotificationSubdropdown = () => setOpenDropdown(prev => prev === 'pause' ? null : 'pause');
 
-  const toggleSetYourselfSubdropdown = () => {
-    setOpenDropdown(openDropdown === 'setYourself' ? null : 'setYourself');
-  };
+  const toggleSetYourselfSubdropdown = () => setOpenDropdown(prev => prev === 'setYourself' ? null : 'setYourself');
 
   const handleStatusChange = (status) => {
     setUserStatus(status);
@@ -74,33 +90,45 @@ const TopNav = ({ showContent, onSearch }) => {
     setIsDropdownOpen(false);
   };
 
-  const handleVisitFolder = (file) => {
-    console.log('Visiting folder of', file.name);
+  const handleVisitFolder = (file) => console.log('Visiting folder of', file.name);
+
+  const handleRemove = (fileToRemove) => setFiles(prevFiles => prevFiles.filter(file => file !== fileToRemove));
+
+  const handleClearAll = () => setFiles([]);
+
+  const statusIconMap = {
+    online: "./images/online.png",
+    away: "./images/away.png",
+    invisible: "./images/invisible.png"
   };
 
-  const handleRemove = (fileToRemove) => {
-    setFiles(files.filter(file => file !== fileToRemove));
+  const statusLabelMap = {
+    online: "Active",
+    away: "Away",
+    invisible: "Invisible"
   };
 
-  const handleClearAll = () => {
-    setFiles([]);
+  const handleCustomStatusSave = (status) => {
+    setUserStatus(status);
+    closeCustomStatusModal();
   };
 
   const handleSignOut = () => {
-    setIsSignOutConfirmationModalOpen(true);
+    setIsSignOutModalOpen(true);
+    setIsDropdownOpen(false);
   };
 
   const confirmSignOut = () => {
-    setIsSignOutConfirmationModalOpen(false);
-    // Add your sign-out logic here
-    console.log('User signed out');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('email');
+    navigate('/login');
   };
 
-  const cancelSignOut = () => {
-    setIsSignOutConfirmationModalOpen(false);
-  };
+  const cancelSignOut = () => setIsSignOutModalOpen(false);
 
-  // Hook to handle clicks outside of the dropdown
+  const getInitial = (email) => email ? email.split('@')[0].charAt(0).toUpperCase() : "?";
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -114,18 +142,6 @@ const TopNav = ({ showContent, onSearch }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  const statusIconMap = {
-    online: "./images/online.png",
-    away: "./images/away.png",
-    invisible: "./images/invisible.png"
-  };
-
-  const statusLabelMap = {
-    online: "Active",
-    away: "Away",
-    invisible: "Invisible"
-  };
 
   return (
     <div className="top-nav-header">
@@ -175,21 +191,35 @@ const TopNav = ({ showContent, onSearch }) => {
               <img src="./images/btn4.png" alt="settings" />
             </button>
             <div className="top-nav-profile">
-              <div className="profile-pic-container">
-                <img
-                  className="top-nav-profile-pic"
-                  src="/images/profile.png"
-                  alt="Profile"
-                  onClick={toggleDropdown}
-                />
+              <div className="profile-pic-container" onClick={toggleDropdown}>
+                {user.profilePictureUrl ? (
+                  <img
+                    className="top-nav-profile-pic"
+                    src={user.profilePictureUrl}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className="top-nav-profile-initial">
+                    {getInitial(user.username)}
+                  </div>
+                )}
                 <div className={`status-indicator ${userStatus}`}></div>
               </div>
               {isDropdownOpen && (
-                <div ref={dropdownRef} className="top-nav-profile-dropdown">
+                <div className="top-nav-profile-dropdown">
                   <div className="top-nav-dropdown-header">
-                    <img src="/images/profile.png" alt="Profile" />
+                    {user.profilePictureUrl ? (
+                      <img
+                        src={user.profilePictureUrl}
+                        alt="Profile"
+                      />
+                    ) : (
+                      <div className="top-nav-profile-initial">
+                        {getInitial(user.username)}
+                      </div>
+                    )}
                     <div className="user-info">
-                      <span className="user-name">John Doe</span>
+                      <span className="user-name">{user.username || "User"}</span>
                       <span className="user-status">
                         {statusLabelMap[userStatus]}
                       </span>
@@ -252,7 +282,7 @@ const TopNav = ({ showContent, onSearch }) => {
                       )}
                     </li>
                     <li>
-                      <button className="custom-dropdown-item">
+                    <button className="custom-dropdown-item" onClick={openProfileModal}>
                         <span>Profile</span>
                         <i className="fas fa-user"></i>
                       </button>
@@ -276,11 +306,21 @@ const TopNav = ({ showContent, onSearch }) => {
           </div>
         </div>
       )}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={closeProfileModal}
+        email={user.email}
+        profilePictureUrl={user.profilePictureUrl}
+        username={user.username}
+      />
       <CustomStatusModal
         isOpen={isCustomStatusModalOpen}
         onClose={closeCustomStatusModal}
       />
-      <SettingsModal isOpen={isSettingsModalOpen} onClose={closeSettingsModal} /> 
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        onClose={closeSettingsModal}
+      />
       {showDownloadModal && (
         <DownloadModal
           files={files}
@@ -291,11 +331,14 @@ const TopNav = ({ showContent, onSearch }) => {
         />
       )}
       {showHistoryModal && (
-        <HistoryModal onClose={() => setShowHistoryModal(false)} />
+        <HistoryModal
+          isOpen={showHistoryModal}
+          onClose={() => setShowHistoryModal(false)}
+        />
       )}
-      {isSignOutConfirmationModalOpen && ( // Corrected the condition here
+      {isSignOutModalOpen && (
         <SignOutConfirmationModal
-          isOpen={isSignOutConfirmationModalOpen}
+          isOpen={isSignOutModalOpen}
           onClose={cancelSignOut}
           onConfirm={confirmSignOut}
         />

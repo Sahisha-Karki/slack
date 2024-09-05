@@ -1,0 +1,144 @@
+.huddle-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* Slightly less opaque */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.huddle-modal-container {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* Ensures no overflow within the modal */
+}
+
+.huddle-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.huddle-modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.huddle-modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.huddle-modal-close-btn:hover {
+  color: #555;
+}
+
+.huddle-modal-content p {
+  margin: 0 0 15px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.huddle-modal-search-input {
+  width: 80%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.huddle-modal-search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.huddle-modal-info {
+  margin: 15px 0;
+  font-size: 0.875rem;
+  background-color: #e7f5f0;
+  padding: 15px;
+  border-radius: 5px;
+  color: #333;
+  border-left: 4px solid #007bff; /* Add a border for emphasis */
+}
+
+.huddle-modal-people {
+  max-height: 200px; /* Adjust height as needed */
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.huddle-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px; /* Add a gap to separate the profile picture from the name/status */
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.profile-name-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Ensures it takes up available space */
+}
+
+.profile-name {
+  margin-right: 8px; /* Space between name and status */
+  font-size: 1rem; /* Adjust as needed */
+}
+
+.profile-status {
+  width: 12px; /* Slightly larger for better visibility */
+  height: 12px;
+  border-radius: 50%;
+  background-color: green;
+}
+
+
+.huddle-modal-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.huddle-modal-cancel-btn,
+.huddle-modal-start-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.huddle-modal-cancel-btn {
+  background: none;
+  border: 1px solid #ddd;
+}
+
+.huddle-modal-start-btn {
+  background-color: #ccc;
+  color: #222;
+}

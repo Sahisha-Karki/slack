@@ -1,29 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfileSection.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons'; // Import the faEdit icon
 
-const dummyProfile = {
-  name: "John Doe",
-  role: "Developer",
-  status: "Active",
-  email: "johndoe@gmail.com",
-  phone: "+977-9123456789",
-  localTime: "4:26 PM Local Time",
-};
+const ProfileSection = ({ userId }) => { // Expect userId as a prop
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const ProfileSection = () => {
+  useEffect(() => {
+    if (!userId) {
+      setError('No user ID provided');
+      setLoading(false);
+      return;
+    }
+
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+
+      try {
+        const response = await fetch(`http://localhost:5000/api/users/${userId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.status === 401) {
+          setError('Unauthorized access. Please log in again.');
+          return;
+        }
+
+        if (response.status === 404) {
+          setError('User not found');
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setProfile(data);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        setError('Failed to fetch profile data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [userId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!profile) {
+    return <div>No profile data available</div>;
+  }
 
   return (
     <div className="profile-user-profile">
       <h3>Profile</h3>
       <div className="profile-user-avatar">
-        <img src="./images/profile.png" alt="User Avatar" />
+        <img src={profile.profilePicture || './images/profile.png'} alt="User Avatar" />
       </div>
       <div className="profile-user-info">
-        <h3>{dummyProfile.name}</h3>
-        <p>{dummyProfile.role}</p>
-        <span className="profile-user-status">{dummyProfile.status}</span>
+        <h3>{profile.name}</h3>
+        <p>{profile.role}</p>
+        <span className="profile-user-status">{profile.status && profile.status.type}</span>
       </div>
       <div className="profile-user-actions">
         <img src="./images/phone.png" alt="Phone" />
@@ -34,13 +83,13 @@ const ProfileSection = () => {
         <h4>Details</h4>
         <ul>
           <li>
-            <img src="./images/email2.png" alt="Email" /> {dummyProfile.email}
+            <img src="./images/email2.png" alt="Email" /> {profile.email}
           </li>
           <li>
-            <img src="./images/phone2.png" alt="Phone" /> {dummyProfile.phone}
+            <img src="./images/phone2.png" alt="Phone" /> {profile.phone}
           </li>
           <li>
-            <img src="./images/clock.png" alt="Clock" /> {dummyProfile.localTime}
+            <img src="./images/clock.png" alt="Clock" /> {profile.localTime}
           </li>
         </ul>
       </div>

@@ -14,16 +14,87 @@ function AuthForm({
   showPassword,
   setShowPassword,
   formType,
+  emailError,
+  passwordError,
+  confirmPasswordError,
 }) {
-  // State for "Remember Me" checkbox
   const [rememberMe, setRememberMe] = useState(false);
-  // State for OTP sent message visibility (only for new workspace form)
   const [otpSent, setOtpSent] = useState(false);
+  const [errors, setErrors] = useState({ email: '', password: '', confirmPassword: '' });
 
-  // Function to toggle password visibility
+  const passwordRules = {
+    minLength: 8,
+    upperCase: /[A-Z]/,
+    lowerCase: /[a-z]/,
+    number: /[0-9]/,
+    specialCharacter: /[!@#$%^&*(),.?":{}|<>]/,
+  };
+
+  const validatePassword = (pwd) => {
+    let error = '';
+    if (pwd.length < passwordRules.minLength) error = 'Password must be at least 8 characters long.';
+    else if (!passwordRules.upperCase.test(pwd)) error = 'Password must contain at least one uppercase letter.';
+    else if (!passwordRules.lowerCase.test(pwd)) error = 'Password must contain at least one lowercase letter.';
+    else if (!passwordRules.number.test(pwd)) error = 'Password must contain at least one number.';
+    else if (!passwordRules.specialCharacter.test(pwd)) error = 'Password must contain at least one special character.';
+    return error;
+  };
+
+  const handlePasswordChange = (pwd) => {
+    setPassword(pwd);
+    if (formType === 'signup') {
+      const error = validatePassword(pwd);
+      setErrors((prevErrors) => ({ ...prevErrors, password: error }));
+    }
+  };
+  
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    let valid = true;
+    let newErrors = { email: '', password: '', confirmPassword: '' };
+  
+    if (!email.includes('@')) {
+      newErrors.email = 'Please enter a valid email address.';
+      valid = false;
+    }
+  
+    if (formType === 'signup') {
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        newErrors.password = passwordError;
+        valid = false;
+      }
+      if (password !== confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match.';
+        valid = false;
+      }
+    } else if (formType === 'login') {
+      // For login, you might want to check if the password is non-empty or any other condition
+      if (!password) {
+        newErrors.password = 'Password is required.';
+        valid = false;
+      }
+    }
+  
+    setErrors(newErrors);
+  
+    if (valid && onSubmit) {
+      try {
+        await onSubmit(e);
+      } catch (error) {
+        console.error('Form submission error:', error);
+      }
+  
+      if (formType === "newWorkspace") {
+        setOtpSent(true);
+      }
+    }
+  };
+  
+
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-  // Function to render the header text based on form type
   const renderHeader = () => {
     switch (formType) {
       case "login":
@@ -39,7 +110,6 @@ function AuthForm({
     }
   };
 
-  // Function to render the message text based on form type
   const renderMessage = () => {
     switch (formType) {
       case "login":
@@ -55,7 +125,6 @@ function AuthForm({
     }
   };
 
-  // Function to render the submit button text based on form type
   const renderSubmitButtonText = () => {
     switch (formType) {
       case "login":
@@ -71,7 +140,6 @@ function AuthForm({
     }
   };
 
-  // Alternate actions and links based on form type
   const alternateActions = {
     login: "Register",
     signup: "Login",
@@ -84,49 +152,27 @@ function AuthForm({
     signup: "/login",
     recovery: "/signup",
     newWorkspace: "/login",
-  }
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    if (onSubmit) {
-      try {
-        await onSubmit(e); // Await the completion of onSubmit
-      } catch (error) {
-        console.error('Form submission error:', error);
-      }
-    }
-    
-    if (formType === "newWorkspace") {
-      setOtpSent(true); // Manage OTP state if applicable
-    }
   };
-  
 
   return (
     <div className="auth">
-      {/* Main container for the authentication form */}
       <div className="auth-main-container">
         <div className="auth-sub-container">
           <div className="auth-container">
-            {/* Header and Content Section */}
             <div className="auth-header">
-              {/* logo */}
               <img
                 src="./images/slack.svg.png"
                 alt="Slack Logo"
                 className="auth-logo"
               />
               <div className="auth-content">
-                {/* Header and message based on form type */}
                 <h2>{renderHeader()}</h2>
                 <p>{renderMessage()}</p>
               </div>
             </div>
 
-            {/* Form Section */}
             <form onSubmit={handleFormSubmit} className="auth-form">
               <div className="auth-fields">
-                {/* Email input field */}
                 <input
                   type="email"
                   placeholder="Email"
@@ -134,38 +180,38 @@ function AuthForm({
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                
-                {/* Conditional rendering for password and confirm password fields */}
+                {emailError && <div className="auth-error-message">{emailError}</div>}
+
                 {formType !== "recovery" && formType !== "newWorkspace" && (
                   <>
                     <div className="auth-password-container">
-                      {/* Password input field */}
                       <input
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => handlePasswordChange(e.target.value)}
                         required
                       />
-                      {/* Toggle for password visibility */}
                       <span
-                        className="auth-password-toggle"
+                        className={`auth-password-toggle ${passwordError ? 'error-visible' : ''}`}
                         onClick={togglePasswordVisibility}
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
-                        }
+                        aria-label={showPassword ? "Hide password" : "Show password"}
                       >
                         <FontAwesomeIcon
                           icon={showPassword ? faEyeSlash : faEye}
                         />
                       </span>
+
+                      {passwordError && (
+                        <div className="auth-error-message">
+                          {passwordError}
+                        </div>
+                      )}
                     </div>
 
-                    {/* Options Section (visible only for login form) */}
                     {formType === "login" && (
                       <div className="auth-options">
                         <div className="remember-me">
-                          {/* Remember Me checkbox */}
                           <input
                             type="checkbox"
                             id="remember-me"
@@ -175,16 +221,13 @@ function AuthForm({
                           <label htmlFor="remember-me">Remember Me</label>
                         </div>
                         <div className="forgot-password">
-                          {/* Forgot password link */}
                           <a href="/recovery">Forgot your password?</a>
                         </div>
                       </div>
                     )}
 
-                    {/* Confirm Password Section (visible only for signup form) */}
                     {confirmPassword !== undefined && (
                       <div className="auth-password-container">
-                        {/* Confirm Password input field */}
                         <input
                           type={showPassword ? "text" : "password"}
                           placeholder="Re-enter Password"
@@ -192,25 +235,27 @@ function AuthForm({
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           required
                         />
+                        {confirmPasswordError && (
+                          <div className="auth-error-message">
+                            {confirmPasswordError}
+                          </div>
+                        )}
                       </div>
                     )}
                   </>
                 )}
               </div>
-              {/* Submit button with text based on form type */}
               <button type="submit" className="auth-button auth-button-primary">
                 {renderSubmitButtonText()}
               </button>
             </form>
 
-            {/* OTP Sent Message (visible only for new workspace form) */}
             {formType === "newWorkspace" && otpSent && (
               <div className="workspace-otp-message">
                 We’ll email you an OTP code to verify your account.
               </div>
             )}
 
-            {/* Google Sign-in Button (visible only if not on recovery form) */}
             {formType !== "recovery" && (
               <>
                 <div className="auth-divider">Or</div>
@@ -223,9 +268,7 @@ function AuthForm({
               </>
             )}
 
-            {/* Alternate Action Link and Message */}
             <div className="auth-message">
-              {/* Message and link for switching between forms */}
               {formType === "login"
                 ? "Need a new account? "
                 : formType === "signup"

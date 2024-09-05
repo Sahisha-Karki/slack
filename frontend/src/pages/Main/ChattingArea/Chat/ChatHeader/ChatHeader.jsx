@@ -5,8 +5,6 @@ import SessionModal from "./SessionModal/SessionModal";
 import './ChatHeader.css';
 import DirectMessageModal from "./DirectMessageModal/DirectMessageModal";
 
-
-
 const ChannelHeader = ({ channelName, description, onDropdownClick, channelType }) => (
   <div className="chat-header-brand" onClick={onDropdownClick}>
     <div className="chat-header-channel-info">
@@ -19,7 +17,6 @@ const ChannelHeader = ({ channelName, description, onDropdownClick, channelType 
     </div>
   </div>
 );
-
 
 const DirectMessageHeader = ({ userEmail, onDropdownClick }) => {
   const userName = userEmail ? userEmail.split('@')[0] : 'Unknown User';
@@ -40,6 +37,7 @@ const ChatHeader = ({
   description,
   channelType,
   userEmail,
+  userId,  // Add userId as a prop
   onCanvasClick,
   onDirectMessageModalClick,
 }) => {
@@ -109,11 +107,11 @@ const ChatHeader = ({
           </div>
         </nav>
       </header>
-      <SessionModal isOpen={isModalOpen} onClose={closeModal} />
+      {/* Pass the userId to SessionModal */}
+      <SessionModal isOpen={isModalOpen} onClose={closeModal} userId={userId} />
       <DirectMessageModal isOpen={isDirectMessageModalOpen} onClose={closeDirectMessageModal} userEmail={userEmail} />
     </>
   );
 };
-
 
 export default ChatHeader;
