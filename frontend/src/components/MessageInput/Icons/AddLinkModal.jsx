@@ -8,19 +8,22 @@ const AddLinkModal = ({ isOpen, onClose, onSave }) => {
   if (!isOpen) return null;
 
   const handleSave = () => {
-    onSave(modalLinkText, modalLinkUrl);
-    setModalLinkText('');
-    setModalLinkUrl('');
+    if (modalLinkText && modalLinkUrl) {
+      onSave(modalLinkText, modalLinkUrl);
+      setModalLinkText('');
+      setModalLinkUrl('');
+    } else {
+      alert('Please provide both title and URL.');
+    }
   };
 
   return (
     <div className="add-link-modal-overlay">
       <div className="add-link-modal-content">
-        <button className="add-link-modal-close" onClick={onClose}>&times;</button>
         <h3>Add Link</h3>
         <div className="add-link-modal-form">
           <label>
-            Text Label:
+            Title:
             <input 
               type="text" 
               value={modalLinkText} 
@@ -28,7 +31,7 @@ const AddLinkModal = ({ isOpen, onClose, onSave }) => {
             />
           </label>
           <label>
-            Link URL:
+            URL:
             <input 
               type="text" 
               value={modalLinkUrl} 

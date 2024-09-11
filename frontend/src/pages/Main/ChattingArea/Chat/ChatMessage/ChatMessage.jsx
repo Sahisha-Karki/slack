@@ -1,8 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { format, toZonedTime } from "date-fns-tz";
 import EmojiReactions from "../../../../../components/ReactionEmojies/ReactionEmojies";
 import "./ChatMessage.css";
+
+// Axios instance with token
+const authAxios = axios.create({
+  baseURL: 'http://localhost:5000/api/users',
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+authAxios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Function to get the part of email before '@'
+const getEmailPrefix = (email) => {
+  return email ? email.split('@')[0] : "Unknown User";
+};
 
 const ChatMessage = ({
   message,
@@ -13,10 +39,37 @@ const ChatMessage = ({
   isCurrentUser,
   isSelfMessage,
   userEmail,
+  setSelectedUserProfile,
+  setselectedChat,
 }) => {
   const [reactions, setReactions] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(message.content);
+  const [senderProfile, setSenderProfile] = useState({
+    fullName: 'User',
+    profilePicture: null,
+    email: userEmail || ''
+  });
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!message.sender || !message.sender._id) return;
+
+      try {
+        const response = await authAxios.get(`/users/${message.sender._id}`);
+        const userData = response.data;
+        setSenderProfile({
+          fullName: userData.fullName || getEmailPrefix(userEmail) || 'User',
+          profilePicture: userData.profilePicture || null,
+          email: userData.email || userEmail
+        });
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [message.sender?._id, userEmail]);
 
   // Function to format the date
   const formatDate = (dateString) => {
@@ -45,17 +98,6 @@ const ChatMessage = ({
     });
   };
 
-  // Function to convert newlines to <br> tags
-  const formatMessageContent = (content) => {
-    if (!content) return "";
-    return content.split("\n").map((part, index) => (
-      <React.Fragment key={index}>
-        {part}
-        <br />
-      </React.Fragment>
-    ));
-  };
-
   // Function to handle edit
   const handleEditClick = () => {
     setIsEditing(true);
@@ -82,14 +124,24 @@ const ChatMessage = ({
     }
   };
 
-  // Function to get the part of email before '@'
-  const getUserDisplayName = (message) => {
-    if (message.sender && message.sender.email) {
-      return message.sender.email.split('@')[0];
+  // Render profile picture or initial if picture is not available
+  const renderProfilePicture = () => {
+    if (senderProfile.profilePicture) {
+      return <img src={`http://localhost:5000${senderProfile.profilePicture}`} alt="Profile" />;
+    } else {
+      const emailInitial = getEmailPrefix(senderProfile.email).charAt(0).toUpperCase();
+      return (
+        <div className="profile-initial">
+          {emailInitial}
+        </div>
+      );
     }
-    return "Unknown User";
   };
-  
+
+  if (!message) {
+    return null; // or some placeholder component
+  }
+
   return (
     <div
       className={`chat-message ${
@@ -98,21 +150,17 @@ const ChatMessage = ({
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
-      <div className="chat-message-avatar" onClick={handleAvatarClick}>
-        <img
-          src={message.sender?.avatar || "https://via.placeholder.com/40"}
-          alt={message.sender?.email || "Unknown User"}
-        />
+      <div className="chat-message-avatar" onClick={() => handleAvatarClick(senderProfile)}>
+        {renderProfilePicture()}
       </div>
       <div className="chat-message-text">
         <div className="chat-message-author-time">
           <span className="chat-message-author">
-            {getUserDisplayName(message)}
+            {senderProfile.fullName}
           </span>
-          <span className="chat-message-time">
-            {formatDate(message.createdAt)}
-          </span>
+          <span className="chat-message-time">{formatDate(message.createdAt)}</span>
         </div>
+
         {isSelfMessage && (
           <span className="self-message-indicator">Note to self</span>
         )}
@@ -127,20 +175,18 @@ const ChatMessage = ({
             <button onClick={handleCancelEdit}>Cancel</button>
           </div>
         ) : (
-          <>
-            <p>{formatMessageContent(message.content)}</p>
-            {reactions[message.id] && (
-              <div className="chat-reaction-display">
-                <img
-                  src={reactions[message.id].src}
-                  alt={reactions[message.id].alt}
-                  className="chat-emoji"
-                />
-              </div>
-            )}
-          </>
+          <p dangerouslySetInnerHTML={{ __html: message.content }} />
         )}
-        
+
+        {reactions[message.id] && (
+          <div className="chat-reaction-display">
+            <img
+              src={reactions[message.id].src}
+              alt={reactions[message.id].alt}
+              className="chat-emoji"
+            />
+          </div>
+        )}
       </div>
       {isHovered && (
         <EmojiReactions

@@ -103,7 +103,7 @@
 
 .top-nav-header-actions img {
   width: 35px;
-  height: auto;
+  height: 35px;
 }
 
 .top-nav-profile {
@@ -111,42 +111,26 @@
   z-index: 1100; 
 }
 
-.top-nav-profile-pic {
-  width: 40px;
-  height: 40px;
+.top-nav-profile .profile-picture{
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid #b3b3b3; 
+ 
   cursor: pointer;
 }
 
 .profile-pic-container {
-  position: relative;
-  width: 40px; /* Same as your profile image width */
-  height: 40px; /* Same as your profile image height */
+  align-self: center;
+  width: 45px; /* Same as your profile image width */
+  height: 45px; /* Same as your profile image height */
 }
 
-.status-indicator {
+.profile-pic-container .status-indicator {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid #00294B; /* Border color to match the background or profile image */
+  top: 22px;
+  left: 0px;
 }
 
-/* Different status colors */
-.status-indicator.online {
-  background-color: #4CAF50; /* Green for online */
-}
-
-.status-indicator.away {
-  background-color: #FFC107; /* Yellow for away */
-}
-
-.status-indicator.invisible {
-  background-color: #757575; /* Gray for invisible */
-}
 
 
 .top-nav-profile-dropdown {
@@ -196,7 +180,7 @@
 
 .user-status {
   margin: 0; 
-  border: 1px solid rgb(134, 134, 134);
+  
   border-radius: 3px;
   padding: 0px 20px;
   font-size: 12px;
@@ -354,7 +338,8 @@
 
 
 
-.top-nav-profile-initial {
+.profile-pic-container .profile-initial,
+.top-nav-dropdown-header .profile-initial{
   width: 40px;
   height: 40px;
   background-color: #747980; /* Example background color */
@@ -367,27 +352,3 @@
   font-weight: 500;
   cursor: pointer;
 }
-
-.status-indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  border: 2px solid white;
-}
-
-.status-indicator.online {
-  background-color: green;
-}
-
-.status-indicator.away {
-  background-color: yellow;
-}
-
-.status-indicator.invisible {
-  background-color: gray;
-}
-
-/* Additional CSS for dropdowns, modals, etc., would go here */

@@ -45,9 +45,24 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
         console.error("Received direct message not intended for this user:", data);
       }
     });
+
+    socket.on("receiveMessage", (messageData) => {
+      console.log("New message received:", messageData);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          _id: messageData._id, // Ensure this is included
+          content: messageData.content,
+          sender: messageData.sender._id,
+          receiver: messageData.receiverId,
+          createdAt: messageData.createdAt || new Date().toISOString(), // Ensure timestamp is set
+        },
+      ]);
+    });
   
     return () => {
       socket.off("receiveDirectMessage");
+      socket.off("receiveMessage");
     };
   }, [userId]);
   
@@ -85,6 +100,8 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
     fetchMessages();
   }, [channel, userId]);
 
+  
+
   useEffect(() => {
     const handleReceiveMessage = (message) => {
       if (message.channelId === channel?._id) {
@@ -97,22 +114,29 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
         setMessages((prevMessages) => [...prevMessages, message]);
       }
     };
-
+  
     const handleChannelCreated = (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     };
-
+  
     if (userId) {
       socket.emit('joinUser', userId);
     }
     if (channel?._id) {
       socket.emit('joinChannel', channel._id);
     }
-
-    socket.on('receiveMessage', handleReceiveMessage);
-    socket.on('receiveDirectMessage', handleReceiveDirectMessage);
-    socket.on('channelCreated', handleChannelCreated);
-
+  
+    // Attach listeners only if they aren't already attached
+    socket.off('receiveMessage', handleReceiveMessage); // Make sure previous listener is detached
+    socket.on('receiveMessage', handleReceiveMessage);  // Attach new listener
+    
+    socket.off('receiveDirectMessage', handleReceiveDirectMessage); // Detach previous direct message listener
+    socket.on('receiveDirectMessage', handleReceiveDirectMessage);  // Attach new direct message listener
+    
+    socket.off('channelCreated', handleChannelCreated); // Detach previous channel created listener
+    socket.on('channelCreated', handleChannelCreated);  // Attach new channel created listener
+  
+    // Cleanup on unmount or when the effect is rerun
     return () => {
       if (userId) {
         socket.emit('leaveUser', userId);
@@ -121,10 +145,11 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
         socket.emit('leaveChannel', channel._id);
       }
       socket.off('receiveMessage', handleReceiveMessage);
-      // socket.off('receiveDirectMessage', handleReceiveDirectMessage);
+      socket.off('receiveDirectMessage', handleReceiveDirectMessage);
       socket.off('channelCreated', handleChannelCreated);
     };
   }, [channel, userId]);
+  
 
   const handleAvatarClick = (e) => {
     e.stopPropagation();
@@ -205,7 +230,7 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
     }));
   }, [channel, userId, receiverId, currentKey]);
   
-  
+   
 
   const handleEditMessage = (messageId, messageContent) => {
     setEditMessageId(messageId);
@@ -299,6 +324,8 @@ const handleSelfMessage = (messageContent) => {
           setCurrentKey={setCurrentKey}
           messageInput={messageInput}
           setMessages={setMessages}
+          receiverId={receiverId}
+          
         />
       </div>
       <GeneralModal

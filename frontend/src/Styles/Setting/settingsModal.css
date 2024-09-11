@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .settings-modal-content {
@@ -38,11 +38,12 @@
     margin: 0; /* Add space between items */
 }
 
-.settings-close-button {
+.settingss-close-button {
   background: none;
   border: none;
   font-size: 28px;
   cursor: pointer;
+  color: #000;
 }
 
 .settings-modal-body {

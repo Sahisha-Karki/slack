@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import SignOutConfirmationModal from "./SignOutConfirmationModal";
 import "./Company.css";
 
@@ -86,6 +88,16 @@ const CompanyHeading = () => {
           src="./images/v.png"
           alt="Dropdown"
           className="company-heading-dropdown-icon"
+        />
+      </div>
+      <div className="company-heading-icons">
+        <FontAwesomeIcon
+          icon={faFilter}
+          className="company-heading-icon"
+        />
+        <FontAwesomeIcon
+          icon={faSquarePlus}
+          className="company-heading-icon"
         />
       </div>
       {isOpen && (

@@ -34,7 +34,7 @@ const ChannelModal = ({ closeModal, addChannel, workspaceId }) => {
       }
   
       const response = await axios.post(
-        `http://localhost:5000/api/channels/workspaces/${workspaceId}/channels/create-multiple`, 
+        `http://localhost:5000/api/channels/${workspaceId}/create-multiple`, 
         {
           channels: [
             {

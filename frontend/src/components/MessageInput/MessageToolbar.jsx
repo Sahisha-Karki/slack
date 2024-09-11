@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMicrophone,
@@ -15,7 +15,8 @@ import {
   faAlignCenter,
   faAlignRight,
   faListOl,
-  faStop // Import the stop icon
+  faStop,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import '../../Styles/MessageInput/MessageInput.css';
 import Tooltip from '@mui/material/Tooltip';
@@ -26,21 +27,75 @@ import EmojiPickerComponent from './Icons/EmojiPicker';
 const MessageToolbar = ({ 
   handleEmojiSelect, 
   handleLinkInsert, 
-  handleSend, 
+  handleSend,
+  handleImageSelect, 
   setMessage,
   message, 
   isLoading,
   setAudioBlob,
-  setVideoBlob
+  setVideoBlob,
+  applyFormatting,
+  onMention,
 }) => {
-  const [isRecording, setIsRecording] = useState(false);
+  const [isMicRecording, setIsMicRecording] = useState(false);
+  const [isScreenRecording, setIsScreenRecording] = useState(false);
   const [recordedBlob, setRecordedBlob] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(60); // Countdown time in seconds
+  const [timerId, setTimerId] = useState(null); // Store timer ID for clearing
   const mediaRecorderRef = useRef(null);
   const [stream, setStream] = useState(null);
   
-  // Function to start screen recording
+  const startMicRecording = async () => {
+    try {
+      // Request access to the microphone
+      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(audioStream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      const chunks = [];
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/wav' });
+        setAudioBlob(blob); // Set audio blob
+      };
+
+      mediaRecorder.start();
+      setIsMicRecording(true);
+      setRecordingTime(60); // Reset countdown time to 60 seconds
+      const id = setInterval(() => {
+        setRecordingTime(prevTime => {
+          if (prevTime <= 1) {
+            clearInterval(id);
+            stopMicRecording();
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+      setTimerId(id);
+    } catch (err) {
+      console.error('Error accessing audio:', err);
+      alert('Failed to access microphone. Please check your permissions.');
+    }
+  };
+
+  const stopMicRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setIsMicRecording(false);
+      clearInterval(timerId); // Clear the timer when stopping the recording
+    } else {
+      console.error('No media recorder instance found.');
+    }
+  };
+  
   const startScreenRecording = async () => {
     try {
       const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
@@ -63,55 +118,23 @@ const MessageToolbar = ({
       };
 
       mediaRecorder.start();
-      setIsRecording(true);
+      setIsScreenRecording(true);
     } catch (err) {
       console.error("Error accessing screen: ", err);
+      alert('Failed to access screen recording. Please check your permissions.');
     }
   };
-
-  // Function to stop screen recording
+  
   const stopScreenRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setStream(null);
-      setIsRecording(false);
+      setIsScreenRecording(false);
+    } else {
+      console.error('No media recorder instance found.');
     }
   };
-
-  // Function to start audio recording
-  const startRecording = async () => {
-    try {
-      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(audioStream);
-      mediaRecorderRef.current = mediaRecorder;
-
-      const chunks = [];
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          chunks.push(event.data);
-        }
-      };
-
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'audio/wav' });
-        setAudioBlob(blob);
-      };
-
-      mediaRecorder.start();
-      setIsRecording(true);
-    } catch (err) {
-      console.error('Error accessing audio:', err);
-    }
-  };
-
-  // Function to stop audio recording
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    }
-  };
-
+  
   // Close the modal
   const handleCloseModal = () => setOpenModal(false);
 
@@ -119,59 +142,60 @@ const MessageToolbar = ({
     <div className="toolbar-icons">
       <div className="icon-section first-icon-section">
         <AddFile />
-        <AddImage />
+        <AddImage onImageSelect={handleImageSelect} />
         <button
-          title={isRecording ? 'Stop Recording' : 'Start Recording'}
-          aria-label={isRecording ? 'Stop Recording' : 'Start Recording'}
-          onClick={isRecording ? stopRecording : startRecording}
+          title={isMicRecording ? 'Stop Microphone Recording' : 'Start Microphone Recording'}
+          aria-label={isMicRecording ? 'Stop Microphone Recording' : 'Start Microphone Recording'}
+          onClick={isMicRecording ? stopMicRecording : startMicRecording}
         >
-          <FontAwesomeIcon icon={isRecording ? faStop : faMicrophone} />
+          <FontAwesomeIcon icon={isMicRecording ? faStop : faMicrophone} />
         </button>
         <button 
-          title={isRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
-          aria-label={isRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
-          onClick={isRecording ? stopScreenRecording : startScreenRecording}
+          title={isScreenRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
+          aria-label={isScreenRecording ? "Stop Screen Recording" : "Start Screen Recording"} 
+          onClick={isScreenRecording ? stopScreenRecording : startScreenRecording}
         >
-          <FontAwesomeIcon icon={faScreenRecord} />
+          <FontAwesomeIcon icon={isScreenRecording ? faStop : faScreenRecord} />
         </button>
         <EmojiPickerComponent onSelect={handleEmojiSelect} />
       </div>
 
       <div className="icon-section second-icon-section">
-        <button title="Change Font" aria-label="Change Font" disabled>
-          <FontAwesomeIcon icon={faFont} />
-        </button>
-        <button title="Bold" aria-label="Bold" disabled>
+        <button title="Bold" aria-label="Bold" onClick={() => applyFormatting('bold')}>
           <FontAwesomeIcon icon={faBold} />
         </button>
-        <button title="Italic" aria-label="Italic" disabled>
+        <button title="Italic" aria-label="Italic" onClick={() => applyFormatting('italic')}>
           <FontAwesomeIcon icon={faItalic} />
         </button>
-        <button title="Bullet Points" aria-label="Bullet Points" disabled>
+        <button title="Bullet Points" aria-label="Bullet Points" onClick={() => applyFormatting('insertUnorderedList')}>
           <FontAwesomeIcon icon={faListUl} />
         </button>
-        <button title="Numbered List" aria-label="Numbered List" disabled>
+        <button title="Numbered List" aria-label="Numbered List" onClick={() => applyFormatting('insertOrderedList')}>
           <FontAwesomeIcon icon={faListOl} />
         </button>
       </div>
 
       <div className="icon-section third-icon-section">
-        <button title="Align Left" aria-label="Align Left" disabled>
+        <button title="Align Left" aria-label="Align Left" onClick={() => applyFormatting('justifyLeft')}>
           <FontAwesomeIcon icon={faAlignLeft} />
         </button>
-        <button title="Align Center" aria-label="Align Center" disabled>
+        <button title="Align Center" aria-label="Align Center" onClick={() => applyFormatting('justifyCenter')}>
           <FontAwesomeIcon icon={faAlignCenter} />
         </button>
-        <button title="Align Right" aria-label="Align Right" disabled>
+        <button title="Align Right" aria-label="Align Right" onClick={() => applyFormatting('justifyRight')}>
           <FontAwesomeIcon icon={faAlignRight} />
         </button>
-        <button title="Mention" aria-label="Mention" disabled>
+        <button title="Mention" onClick={onMention}>
           <FontAwesomeIcon icon={faAt} />
         </button>
         <button title="Insert Link" onClick={handleLinkInsert} aria-label="Insert Link">
           <FontAwesomeIcon icon={faLink} />
         </button>
-        <button title="Code" aria-label="Code" disabled>
+        <button
+          title="Code"
+          aria-label="Code"
+          onClick={() => applyFormatting('code')}
+        >
           <FontAwesomeIcon icon={faCode} />
         </button>
       </div>
@@ -188,6 +212,17 @@ const MessageToolbar = ({
           </button>
         </Tooltip>
       </div>
+
+      {isMicRecording && (
+        <div className="recording-timer">
+          Mic Recording Time: {recordingTime}s
+        </div>
+      )}
+      {isScreenRecording && (
+        <div className="recording-timer">
+          Screen Recording Time: {recordingTime}s
+        </div>
+      )}
     </div>
   );
 };

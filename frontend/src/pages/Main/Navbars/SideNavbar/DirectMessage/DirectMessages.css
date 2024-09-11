@@ -1,9 +1,11 @@
 .direct-message-header {
   display: flex;
-  align-items: center; 
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 10px; 
+  color: #fff; /* White text color */
+  border-radius: 5px;
+  align-content: center;
 }
-
 .toggle-message-list {
   background: none;
   border: none;
@@ -27,8 +29,8 @@
   }
   
   .direct-messages h3 {
-    margin-bottom: 10px;
-    margin-left: 10px;
+    margin: 0px 0px 0px 10px;
+    align-self: center;
   }
   
   .direct-message-list {
@@ -39,16 +41,45 @@
   }
   
   .direct-message-item {
-    padding: 10px 0;
+    padding: 8px 0px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
   }
   
-  .direct-message-item img {
-    margin-right: 10px;
-    width: 20px;
-    height: auto;
+  .direct-message-item:hover {
+    background-color: #f0f0f0; /* Light background on hover */
   }
+  
+  
+  .profile-initials {
+    width: 30px;
+    height: 30px;
+    background-color: #7F8C8D; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .user-details {
+    flex-grow: 1; /* Take up available space */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .username {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2C3E50; /* Darker text color */
+  }
+
   
   .add-member {
     display: flex;
@@ -65,5 +96,35 @@
   .add-member img {
     margin: 0;
     margin-right: 8px;
+  }
+  
+
+.direct-user-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+
+
+  .profile-picture-container {
+    position: relative;
+    width: 40px; 
+    height: 40px;
+  }
+  
+  .profile-picture, .profile-initials {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+  }
+  
+  .direct-status-indicator {
+    position: absolute;
+    bottom: 0px; /* Position at the bottom-left */
+    left: 0;
+    height: 20px;
   }
   

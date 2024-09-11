@@ -19,7 +19,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
       <div className="settings-modal-content">
         <div className="settings-modal-header">
           <h2> <FontAwesomeIcon icon={faCog} /> Settings</h2>
-          <button className="settings-close-button" onClick={handleClose}>×</button>
+          <button className="settingss-close-button" onClick={handleClose}>×</button>
         </div>
         <div className="settings-modal-body">
           <Sidebar onSectionChange={setSelectedSection} />

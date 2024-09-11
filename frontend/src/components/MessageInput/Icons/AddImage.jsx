@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 
-const AddImage = () => {
+const AddImage = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file));
-      console.log('Selected file:', file);
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+      onImageSelect(imageUrl); // Pass the image URL to the parent
     }
   };
 
@@ -18,7 +19,7 @@ const AddImage = () => {
       <label htmlFor="image-upload" className="upload-button">
         <FontAwesomeIcon
           icon={faImage}
-          style={{ fontSize: '18px', color: 'white' }} // Adjust icon size and color here
+          style={{ fontSize: '18px', color: 'white' }}
         />
       </label>
       <input
@@ -26,14 +27,9 @@ const AddImage = () => {
         type="file"
         accept="image/*"
         onChange={handleFileChange}
-        className="upload-image" // Ensure this class is correctly used
+        className="upload-image"
         style={{ display: 'none' }}
       />
-      {selectedImage && (
-        <div className="image-preview">
-          <img src={selectedImage} alt="Selected" />
-        </div>
-      )}
     </div>
   );
 };

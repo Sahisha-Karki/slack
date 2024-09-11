@@ -30,9 +30,9 @@ socket.io.on("reconnect_attempt", () => {
 
 socket.io.on("reconnect", () => {
   console.log("Reconnected successfully");
-  
+
   socket.emit("register", userId);
-  
+
   const currentChannelId = localStorage.getItem("currentChannelId");
   if (currentChannelId) {
     socket.emit("joinChannel", currentChannelId);
@@ -59,7 +59,15 @@ export const joinChannel = (channelId) => {
 
 export const sendChannelMessage = (channelId, content) => {
   if (socket) {
-    socket.emit("sendMessage", { channelId, content });
+    socket.emit("sendMessage", { channelId, content, messageType: "channel" });
+  } else {
+    console.error("Socket not initialized.");
+  }
+};
+
+export const sendDirectMessage = (receiverId, content) => {
+  if (socket) {
+    socket.emit("sendMessage", { receiverId, content, messageType: "direct" });
   } else {
     console.error("Socket not initialized.");
   }

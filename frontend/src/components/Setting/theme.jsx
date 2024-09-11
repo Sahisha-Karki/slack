@@ -1,6 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import { SketchPicker } from 'react-color';
 import '../../../src/Styles/Setting/theme.css';
+// import DropdownMenu from '../../pages/Main/Navbars/VerticalNavbar/Dropdown/DropdownMenu';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 
 function ThemesContent() {
   const [colorMode, setColorMode] = useState('light');
@@ -17,9 +20,309 @@ function ThemesContent() {
 
 
   
+  useEffect(() => {
+    // Fetch initial theme
+    fetchTheme();
+  }, []);
+
+ const fetchTheme = async () => {
+  try {
+    const token = localStorage.getItem('token'); // Assume you store the token in localStorage after login
+    const response = await fetch(`${API_URL}/api/themes/get-themes`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch theme');
+    }
+    const data = await response.json();
+    return data;
+    console.log(data);
+  } catch (error) {
+    console.error('Error fetching theme:', error);
+  }
+};
+
+useEffect(() => {
+  // Fetch the saved theme from the backend when the component is mounted
+  const fetchAndApplyTheme = async () => {
+    const savedTheme = await fetchTheme();
+    if (savedTheme) {
+      // Apply the saved theme to the UI
+      if (savedTheme.customTheme) {
+        // Apply custom theme
+        applyCustomTheme(savedTheme.customTheme);
+      } else {
+        // Apply predefined theme (light or dark)
+        applyTheme(savedTheme.theme);
+      }
+    }
+  };
+  fetchAndApplyTheme();
+}, []);
+
+
+  const applyCustomTheme = (theme) => {
+    const SideNav = document.querySelector('.side-nav');
+    const TopNavbar = document.querySelector('.top-nav-header');
+    const VerticalNav = document.querySelector('.vertical-nav');
+    const main = document.querySelector('.main-container');
+    const channel = document.querySelector('.add-channel');
+    const member = document.querySelector('.add-member');
+    const buttonContainer = document.querySelector('.top-nav-header-buttons');
+    const header = document.querySelector('.channel-header h3');
+    const direct = document.querySelector('.direct-messages h3');
+  
+    if (SideNav) {
+      SideNav.style.background = `${theme.systemNavigation.color}66`;
+      SideNav.style.color = '#ffffff';
+    }
+    if (TopNavbar) {
+      TopNavbar.style.background = theme.systemNavigation.color;
+      TopNavbar.style.color = '#ffffff';
+    }
+
+  
+    // Ensure that emojis and icons retain their original colors
+    const emojis = document.querySelectorAll('.emoji');
+    emojis.forEach((emoji) => {
+      emoji.style.filter = 'none';
+    });
+  
+    const navIcons = document.querySelectorAll('.nav-list .nav-item img');
+    navIcons.forEach((icon) => {
+      icon.style.filter = 'none';
+    });
+  };
+
+  const applyTheme = (theme) => {
+    const  SideNav = document.querySelector(' .side-nav ');
+    const TopNavbar = document.querySelector('.top-nav-header');
+    const VerticalNav = document.querySelector('.vertical-nav');
+    const main = document.querySelector('.main-container');
+    const channel= document.querySelector('.add-channel');
+    const member = document.querySelector('.add-member');
+    const buttonContainer  = document.querySelector('.top-nav-header-buttons');
+    const header  = document.querySelector('.channel-header h3');
+    const direct  = document.querySelector('.direct-messages h3');
 
 
 
+
+
+
+    
+    if (theme === 'light') {
+      applyLightTheme( SideNav, TopNavbar, VerticalNav,main,channel,member,buttonContainer );
+    } else if (theme === 'dark') {
+      applyDarkTheme( SideNav, TopNavbar, VerticalNav,main,channel,member,buttonContainer,header,direct );
+    } else {
+      applySolidColorTheme(theme,  SideNav, TopNavbar, VerticalNav,main,channel,member,buttonContainer );
+    }
+  };
+  
+  const applyLightTheme = ( SideNav, TopNavbar, VerticalNav,main,channel,member,buttonContainer ) => {
+    if ( SideNav) {
+       SideNav.style.background = '#FAFAFA';
+       SideNav.style.color = '#000000';
+    }
+    if (TopNavbar) {
+      TopNavbar.style.background = '#EEEAEA';
+      TopNavbar.style.color = '#000000';
+    }
+
+    if (buttonContainer) {
+      const buttons = buttonContainer.querySelectorAll('button');  // Select all buttons inside the container
+      buttons.forEach((btn) => {
+        btn.style.background = '#EEEAEA';  // Apply light theme styles
+        btn.style.color = '#000000';  // Text color
+      });
+    }
+    if (VerticalNav) {
+      VerticalNav.style.background = '#EEEAEA';
+      VerticalNav.style.color = '#000000';
+    }
+    if (main){
+      main.style.background='#EEEAEA';
+    }
+
+    
+    if (channel) {
+      channel.style.background = '#FAFAFA'; // Light background for channel
+      channel.style.color = '#000000'; // Set text color to black for channel in light mode
+    }
+
+    if(member){
+      member.style.background='#FAFAFA';
+      member.style.color = '#000000';
+    }
+
+    const navIcons = document.querySelectorAll('.nav-list .nav-item img');
+    const navTexts = document.querySelectorAll('.nav-list .nav-item span');
+  
+    navIcons.forEach((icon) => {
+      icon.style.filter = 'none'; // Original color (black) for icons in light mode
+    });
+  
+    navTexts.forEach((text) => {
+      text.style.color = '#000000'; // Make text black
+    });
+
+    // Apply styles to images inside buttons
+    const images = document.querySelectorAll('.top-nav-header-actions button img');
+    images.forEach((img) => {
+      img.style.filter = 'brightness(0.3) contrast(1.5)'; // Darken images by reducing brightness and increasing contrast
+      img.style.transition = 'filter 0.3s ease'; // Smooth transition for image filters
+    });
+  };
+  
+ const applyDarkTheme = (SideNav, TopNavbar, VerticalNav, main, channel, member, buttonContainer, header,direct) => {
+  if (SideNav) {
+    SideNav.style.background = '#1A1616'; // Dark background
+    SideNav.style.color = '#ffffff'; // Text color
+  }
+  if (TopNavbar) {
+    TopNavbar.style.background = '#121010'; // Dark background
+    TopNavbar.style.color = '#ffffff'; // Text color
+  }
+
+
+  if (buttonContainer) {
+    const buttons = buttonContainer.querySelectorAll('button');
+    buttons.forEach((btn) => {
+      btn.style.background = '#121010'; // Dark background
+      btn.style.color = '#ffffff'; // Text color
+    });
+  }
+
+  if (VerticalNav) {
+    VerticalNav.style.background = '#121010'; // Dark background
+    VerticalNav.style.color = '#ffffff'; // Text color
+  }
+  if (main) {
+    main.style.background = '#121010'; // Dark background
+  }
+  if (channel) {
+    channel.style.background = '#1A1616'; // Dark background
+    channel.style.color = '#ffffff'; // Text color
+  }
+
+  if (header) {
+    header.style.color = '#ffffff'; // Text color
+  }
+
+  if (direct) {
+    direct.style.color = '#ffffff'; // Text color
+  }
+
+
+  if (member) {
+    member.style.background = '#1A1616'; // Dark background
+    member.style.color = '#ffffff'; // Text color
+  }
+
+  // Ensure icons and text in dark mode are white
+  const navIcons = document.querySelectorAll('.nav-list .nav-item img');
+  const navTexts = document.querySelectorAll('.nav-list .nav-item span');
+
+  navIcons.forEach((icon) => {
+    icon.style.filter = 'brightness(0) invert(1)'; // White icons
+  });
+
+  navTexts.forEach((text) => {
+    text.style.color = '#ffffff'; // White text
+  });
+
+  const images = document.querySelectorAll('.top-nav-header-actions button img');
+  images.forEach((img) => {
+    img.style.filter = 'none'; // Reset image filters
+  });
+};
+
+
+  const applySolidColorTheme = (color,  SideNav, TopNavbar, VerticalNav,main,channel,member,buttonContainer) => {
+     if ( SideNav) {
+       SideNav.style.background = `${color}66`;
+       SideNav.style.color = '#ffffff';
+     }
+    if (TopNavbar) {
+      TopNavbar.style.background = color;
+      TopNavbar.style.color = '#ffffff';
+    }
+    if (buttonContainer) {
+      const buttons = buttonContainer.querySelectorAll('button');  // Select all buttons inside the container
+      buttons.forEach((btn) => {
+        btn.style.background = color;  // Apply solid color theme
+        btn.style.color = '#ffffff';  // Text color
+      });
+    }
+    if (VerticalNav) {
+      VerticalNav.style.background = color; 
+      VerticalNav.style.color = '#ffffff';
+    }
+    if (main){
+      main.style.background=`${color}B3`;
+      VerticalNav.style.color = '#ffffff';
+    }
+    if (channel) {
+      channel.style.background = `${color}33` ; 
+      channel.style.color = '#ffffff';  
+    }
+    if (member) {
+      member.style.background = `${color}33` ; 
+      member.style.color = '#ffffff';  
+    }
+
+      // Ensure that the nav icons and text in solid color mode are white
+  const navIcons = document.querySelectorAll('.nav-list .nav-item img');
+  const navTexts = document.querySelectorAll('.nav-list .nav-item span');
+
+  navIcons.forEach((icon) => {
+    icon.style.filter = 'brightness(0) invert(1)'; // Make icons white
+  });
+
+  navTexts.forEach((text) => {
+    text.style.color = '#ffffff'; // Make text white
+  });
+
+    const images = document.querySelectorAll('.top-nav-header-actions button img');
+    images.forEach((img) => {
+      img.style.filter = 'none'; // Reset to original image
+    });
+
+ 
+  };
+
+  const handleThemeChange = (theme) => {
+    applyTheme(theme);
+    saveTheme(theme);
+  };
+  
+
+  // const handleCustomThemeChange = async (color, key) => {
+  //   const newColor = color.hex;
+  //   const newCustomTheme = {
+  //     ...customTheme,
+  //     [key]: { name: newColor, color: newColor }
+  //   };
+  //   setCustomTheme(newCustomTheme);
+  //   setColorMode('custom');
+  
+  //   applyCustomTheme(newCustomTheme);
+  
+  //   try {
+  //       await fetch('http://localhost:3001/api', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ theme: 'custom', customTheme: newCustomTheme }),
+  //     });
+  //   } catch (error) {
+  //     console.error('Error saving custom theme:', error);
+  //   }
+  // };
+
+  
 
   const slackThemes = [
     { category: 'Single color', themes: [
@@ -52,14 +355,16 @@ function ThemesContent() {
       }
 
        // Random button functionality
-  const handleRandomTheme = () => {
-    setCustomTheme({
-      systemNavigation: { name: getRandomColor(), color: getRandomColor() },
-      selectedItems: { name: getRandomColor(), color: getRandomColor() },
-      presenceIndication: { name: getRandomColor(), color: getRandomColor() },
-      notifications: { name: getRandomColor(), color: getRandomColor() },
-    });
-  };
+       const handleRandomTheme = () => {
+        const newColor = getRandomColor();
+        const newTheme = {
+          ...customTheme,
+          systemNavigation: { name: newColor, color: newColor }
+        };
+        setCustomTheme(newTheme);
+        applyTheme(newColor);
+        saveTheme('custom', newTheme);
+      };
 
     // Share button functionality
     const handleShare = () => {
@@ -76,14 +381,43 @@ function ThemesContent() {
 
  
   const handleColorChange = (color, key) => {
-    setCustomTheme(prevTheme => ({
-      ...prevTheme,
+    const newColor = color.hex;
+    const newCustomTheme = {
+      ...customTheme,
       [key]: { 
-        ...prevTheme[key], 
-        color: color.hex,
-        name: color.hex  // We're now setting the name to be the hex code
+        ...customTheme[key],
+        color: newColor,
+        name: newColor
       }
-    }));
+    };
+    setCustomTheme(newCustomTheme);
+    
+    if (key === 'systemNavigation') {
+      applyTheme(newColor);
+      saveTheme('custom', newCustomTheme);
+    }
+  };
+
+
+  const saveTheme = async (theme, customTheme = null) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/api/themes/post-themes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ theme, customTheme }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to save theme');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error saving theme:', error);
+    }
   };
 
   const handleImportApply = () => {
@@ -126,12 +460,18 @@ function ThemesContent() {
         <h3>Color Mode</h3>
         <p>Choose if Slack's appearance should be light or dark, or follow your computer's settings.</p>
         <div className="color-mode-buttons">
-          <button className={colorMode === 'light' ? 'active' : ''} onClick={() => setColorMode('light')}>
-            ☀️ Light
-          </button>
-          <button className={colorMode === 'dark' ? 'active' : ''} onClick={() => setColorMode('dark')}>
-            🌙 Dark
-          </button>
+        <button 
+          className={colorMode === 'light' ? 'active' : ''}
+          onClick={() => handleThemeChange('light')}
+        >
+          ☀️ Light
+        </button>
+        <button 
+          className={colorMode === 'dark' ? 'active' : ''}
+          onClick={() => handleThemeChange('dark')}
+        >
+          🌙 Dark
+        </button>
         </div>
       </div>
 
@@ -157,7 +497,9 @@ function ThemesContent() {
               <h4>{category.category}</h4>
               <div className="theme-colors">
                 {category.themes.map((theme) => (
-                  <div key={theme.name} className="theme-color-button">
+                  <div key={theme.name} className="theme-color-button"
+                  onClick={() => handleThemeChange(theme.color)}
+>
                     <div className="color-circle" style={{ background: theme.color }}></div>
                     <span>{theme.name}</span>
                   </div>
@@ -184,11 +526,11 @@ function ThemesContent() {
                     <span>{value.name}</span>
                     <button className="theme-edit-button" onClick={() => handleEditClick(key)}>✎</button>
                   </div>
-                  {editingColor === key && (
+                  {editingColor === 'systemNavigation' && (
                      <div className="color-picker-container">
                 <SketchPicker
-                  color={value.color}
-                  onChangeComplete={(color) => handleColorChange(color, key)}
+                  color={customTheme.systemNavigation.color}
+                  onChangeComplete={(color) => handleColorChange(color, 'systemNavigation')}
                 />
               </div>
                   )}
@@ -239,7 +581,3 @@ function ThemesContent() {
 
  
 export default ThemesContent;
-
-
-
- 

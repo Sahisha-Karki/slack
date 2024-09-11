@@ -9,7 +9,6 @@ const useFetchData = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      // Replace with actual API call
       const result = await getMockData();
       setData(result);
     } catch (err) {
@@ -48,7 +47,6 @@ const Mention = () => {
 
   return (
     <div className="mention-container">
-      
       {mentions.length > 0 && (
         <div className="mentions-section">
           <div className="section-header">
@@ -77,25 +75,27 @@ const Mention = () => {
   );
 };
 
-const MentionItem = React.memo(({ user, message, time, mentions }) => (
-  <div className="mention-item" data-channel={user === 'general' ? 'general' : ''}>
-    {user === 'general' ? (
-      <div className="user-avatar">#</div>
-    ) : (
-      <img src={`./images/${user.toLowerCase()}.jpg`} alt={user} className="user-avatar" />
-    )}
-    <div className="mention-content">
-      <span className="user-name">{user}</span>
-      <span className="mention-message">{message}</span>
-      <span className="mention-time">{time}</span>
-      <div>
-        {mentions.map((mention, index) => (
-          <span key={index} className="mention-tag">{mention}</span>
-        ))}
+const MentionItem = React.memo(({ user, message, time, mentions }) => {
+  const avatarSrc = user === 'general' ? './images/general.jpg' : `./images/${user.toLowerCase()}.jpg`;
+
+  return (
+    <div className="mention-item" data-channel={user === 'general' ? 'general' : ''}>
+      <div className="user-avatar">
+        {user === 'general' ? '#' : <img src={avatarSrc} alt={user} />}
+      </div>
+      <div className="mention-content">
+        <span className="user-name">{user}</span>
+        <span className="mention-message">{message}</span>
+        <span className="mention-time">{time}</span>
+        <div>
+          {mentions.map((mention, index) => (
+            <span key={index} className="mention-tag">{mention}</span>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-));
+  );
+});
 
 const ReactionItem = React.memo(({ user, message, time, reactions, reactors, onReact, onRemoveReact }) => {
   const [userReactions, setUserReactions] = useState(reactions);
@@ -103,12 +103,14 @@ const ReactionItem = React.memo(({ user, message, time, reactions, reactors, onR
   const handleReactionClick = (emoji) => {
     if (userReactions.includes(emoji)) {
       setUserReactions(userReactions.filter(reaction => reaction !== emoji));
-      onRemoveReact(emoji); // Call the remove reaction function
+      if (onRemoveReact) onRemoveReact(emoji);
     } else {
       setUserReactions([...userReactions, emoji]);
-      onReact(emoji); // Call the add reaction function
+      if (onReact) onReact(emoji);
     }
   };
+
+  const avatarSrc = `./images/${user.toLowerCase()}.jpg`;
 
   return (
     <div className="reaction-item">
@@ -119,7 +121,7 @@ const ReactionItem = React.memo(({ user, message, time, reactions, reactors, onR
       </div>
       <div className="reaction-content">
         <div className="reaction-left">
-          <img src={`./images/${user.toLowerCase()}.jpg`} alt={user} className="user-avatar" />
+          <img src={avatarSrc} alt={user} className="user-avatar" />
           <div className="reaction-message-content">
             <span className="user-name">{user}</span>
             <span className="reaction-message">{message}</span>
@@ -130,7 +132,7 @@ const ReactionItem = React.memo(({ user, message, time, reactions, reactors, onR
           <div className="reaction-emojis">
             {userReactions.map((emoji, index) => (
               <span key={index} className="reaction-emoji" onClick={() => handleReactionClick(emoji)}>
-                {emoji} {/* Display the emoji */}
+                {emoji}
               </span>
             ))}
           </div>

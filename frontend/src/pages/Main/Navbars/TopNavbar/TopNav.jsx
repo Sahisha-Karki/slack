@@ -9,6 +9,32 @@ import HistoryModal from './Modals/HistoryModal';
 import ProfileModal from "../../../../components/Profile/SelfProfile/ProfileModal";
 import SignOutConfirmationModal from '../../../Main/Navbars/SideNavbar/Company/SignOutConfirmationModal'; 
 
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle, faMoon} from '@fortawesome/free-solid-svg-icons'; // Replace these with suitable icons if necessary
+import { faCircle as faRegularCircle } from '@fortawesome/free-regular-svg-icons';
+
+const authAxios = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+authAxios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+
 const TopNav = ({ showContent, onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -18,8 +44,9 @@ const TopNav = ({ showContent, onSearch }) => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false); 
+  const [isSetYourselfSubdropdownOpen, setIsSetYourselfSubdropdownOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [userStatus, setUserStatus] = useState('online');
+  const [userStatus, setUserStatus] = useState(localStorage.getItem('profileStatus') || 'online');  // Default to 'online' or stored status
   const [files, setFiles] = useState([
     { name: 'Proposal for Application.docx', icon: '/path/to/word-icon.png' },
     { name: 'Employee List.xlsx', icon: '/path/to/excel-icon.png' },
@@ -31,22 +58,96 @@ const TopNav = ({ showContent, onSearch }) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    email: localStorage.getItem('email') || "",
-    profilePictureUrl: localStorage.getItem('profilePictureUrl') || "",
-    username: localStorage.getItem('username') || "",
+    email: '',
+    profilePicture: '',
+    fullname: '',
   });
 
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    const profilePictureUrl = localStorage.getItem('profilePictureUrl');
-    const username = localStorage.getItem('username');
+    const fetchUserProfile = async () => {
+      try {
+        const response = await authAxios.get('users/get-profile');
+        const userData = response.data;
 
-    setUser({
-      email: email || "",
-      profilePictureUrl: profilePictureUrl || "",
-      username: username || email?.split('@')[0] || "User",
-    });
+        setUser({
+          email: userData.email,
+          fullname: userData.fullName,
+          profilePicture: userData.profilePicture || null
+        });
+
+        const savedStatus = localStorage.getItem('profileStatus');
+        setUserStatus(savedStatus || 'invisible');
+      } catch (error) {
+        console.error('Error fetching user data:', error.response?.data || error.message);
+        alert('Failed to fetch user data. ' + (error.response?.data?.message || error.message));
+      }
+    };
+
+    const fetchUserStatus = async () => {
+      try {
+        const response = await authAxios.get('/users/profile-status');
+        const status = response.data.profileStatus || 'invisible';
+        
+        setUserStatus(status);
+        localStorage.setItem('profileStatus', status);
+      } catch (error) {
+        console.error('Error fetching user status:', error.response?.data || error.message);
+        setUserStatus('invisible');
+      }
+    };
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetchUserProfile();
+      fetchUserStatus();
+    } else {
+      setUserStatus('invisible');
+    }
+
+    const handleOnline = () => {
+      const savedStatus = localStorage.getItem('profileStatus');
+      if (savedStatus === 'online') {
+        setUserStatus('online');
+      }
+    };
+
+    const handleOffline = () => {
+      const savedStatus = localStorage.getItem('profileStatus');
+      if (savedStatus === 'online') {
+        setUserStatus('invisible');
+        localStorage.setItem('profileStatus', 'invisible');
+      }
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
+
+
+  const renderProfilePicture = () => {
+    if (user.profilePicture) {
+      const profileImageUrl = `http://localhost:5000${user.profilePicture}`;
+      return (
+        <img
+          src={profileImageUrl}
+          alt="Profile"
+          className="profile-picture"
+        />
+      );
+    } else {
+      const emailInitial = user.email ? user.email.charAt(0).toUpperCase() : "?";
+      return (
+        <div className="profile-initial">
+          {emailInitial}
+        </div>
+      );
+    }
+  };
 
   const handleSearchChange = (event) => setSearchQuery(event.target.value);
 
@@ -84,22 +185,29 @@ const TopNav = ({ showContent, onSearch }) => {
 
   const toggleSetYourselfSubdropdown = () => setOpenDropdown(prev => prev === 'setYourself' ? null : 'setYourself');
 
-  const handleStatusChange = (status) => {
-    setUserStatus(status);
-    setOpenDropdown(null);
-    setIsDropdownOpen(false);
+  const handleStatusChange = async (status) => {
+    try {
+      await authAxios.post('/users/profile-status', { status });
+      setUserStatus(status);
+      localStorage.setItem('profileStatus', status);  // Update localStorage with the new status
+      setIsSetYourselfSubdropdownOpen(false);
+      setIsDropdownOpen(false);
+    } catch (error) {
+      console.error('Error updating status:', error.response?.data || error.message);
+      alert('Failed to update status. ' + (error.response?.data?.message || error.message));
+    }
   };
-
   const handleVisitFolder = (file) => console.log('Visiting folder of', file.name);
 
   const handleRemove = (fileToRemove) => setFiles(prevFiles => prevFiles.filter(file => file !== fileToRemove));
 
   const handleClearAll = () => setFiles([]);
 
+  // Map of status icons
   const statusIconMap = {
-    online: "./images/online.png",
-    away: "./images/away.png",
-    invisible: "./images/invisible.png"
+    Online: <FontAwesomeIcon icon={faCircle} style={{ color: 'green', width: '14px', height: '14px' }} />,
+    Away: <FontAwesomeIcon icon={faMoon} style={{ color: 'orange', width: '14px', height: '14px' }} />,
+    Invisible: <FontAwesomeIcon icon={faRegularCircle} style={{ color: 'white', width: '14px', height: '14px' }} /> 
   };
 
   const statusLabelMap = {
@@ -192,34 +300,15 @@ const TopNav = ({ showContent, onSearch }) => {
             </button>
             <div className="top-nav-profile">
               <div className="profile-pic-container" onClick={toggleDropdown}>
-                {user.profilePictureUrl ? (
-                  <img
-                    className="top-nav-profile-pic"
-                    src={user.profilePictureUrl}
-                    alt="Profile"
-                  />
-                ) : (
-                  <div className="top-nav-profile-initial">
-                    {getInitial(user.username)}
-                  </div>
-                )}
-                <div className={`status-indicator ${userStatus}`}></div>
+              {renderProfilePicture()}
+                <div className={`status-indicator`}>   {statusIconMap[userStatus]} </div>
               </div>
               {isDropdownOpen && (
                 <div className="top-nav-profile-dropdown">
                   <div className="top-nav-dropdown-header">
-                    {user.profilePictureUrl ? (
-                      <img
-                        src={user.profilePictureUrl}
-                        alt="Profile"
-                      />
-                    ) : (
-                      <div className="top-nav-profile-initial">
-                        {getInitial(user.username)}
-                      </div>
-                    )}
+                  {renderProfilePicture()}
                     <div className="user-info">
-                      <span className="user-name">{user.username || "User"}</span>
+                      <span className="user-name">{user.fullname || "User"}</span>
                       <span className="user-status">
                         {statusLabelMap[userStatus]}
                       </span>
@@ -244,21 +333,22 @@ const TopNav = ({ showContent, onSearch }) => {
                         <i className="fa-solid fa-chevron-right"></i>
                       </button>
                       {openDropdown === 'setYourself' && (
-                        <div className="set-yourself-subdropdown">
-                          <button onClick={() => handleStatusChange('online')}>
-                            Online
-                            <img src="./images/online.png" alt="" id="online" />
-                          </button>
-                          <button onClick={() => handleStatusChange('away')}>
-                            Away
-                            <img src="./images/away.png" alt="" />
-                          </button>
-                          <button onClick={() => handleStatusChange('invisible')}>
-                            Invisible
-                            <img src="./images/invisible.png" alt="" />
-                          </button>
-                        </div>
-                      )}
+                         <div className="set-yourself-subdropdown">
+                         <button onClick={() => handleStatusChange('Online')}>
+                           Online
+                          
+                           <i className="fa-solid fa-circle" style={{ color: 'green', marginLeft: '8px' }}></i>
+                         </button>
+                         <button onClick={() => handleStatusChange('Away')}>
+                           Away
+                           <i className="fa-solid fa-moon" style={{ color: 'orange', marginLeft: '8px' }}></i>
+                         </button>
+                         <button onClick={() => handleStatusChange('Invisible')}>
+                           Invisible
+                           <i className="fa-regular fa-circle" style={{ color: 'white', marginLeft: '8px'}}></i>
+                         </button>
+                       </div>
+                     )}
                     </li>
                     <li>
                       <button
@@ -316,6 +406,7 @@ const TopNav = ({ showContent, onSearch }) => {
       <CustomStatusModal
         isOpen={isCustomStatusModalOpen}
         onClose={closeCustomStatusModal}
+        onSave={handleCustomStatusSave} // Pass the callback to update status
       />
       <SettingsModal
         isOpen={isSettingsModalOpen}

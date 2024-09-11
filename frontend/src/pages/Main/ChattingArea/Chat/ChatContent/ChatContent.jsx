@@ -13,9 +13,9 @@ const ChatContent = ({
   hoveredMessageId,
   onHover,
   onEditMessage,
-  userId,
-  userEmail, 
-  currentUserId 
+  userEmail,
+  setSelectedChat,
+  selectedChat, 
 }) => {
   return (
     <div className={`chat-contenttttttttt ${showProfile ? 'user-active' : ''}`}>
@@ -24,13 +24,13 @@ const ChatContent = ({
           <ChatMessage
             key={message._id || message.id} // Use _id or id, whichever is available
             message={message}
-            handleAvatarClick={handleAvatarClick}
+            handleAvatarClick={()=>handleAvatarClick(message)}
             isHovered={hoveredMessageId === (message._id || message.id)}
             onHover={(isHovered) => onHover(message._id || message.id, isHovered)}
             onEdit={() => onEditMessage(message._id || message.id, message.content)}
             userEmail={userEmail}
             isSelfMessage={message.isSelfMessage}
-            isCurrentUser={message.sender === currentUserId} // Add this prop
+            setSelectedChat={setSelectedChat}
           />
         ))
       ) : (
@@ -40,7 +40,7 @@ const ChatContent = ({
       )}
       {showProfile && (
         <div className="profile-section">
-          <ProfileSection userId={userId} />
+          <ProfileSection userId={selectedChat?.sender?._id}  />
           <button className="close-profile" onClick={handleCloseProfile}>
             <FontAwesomeIcon icon={faTimes} />
           </button>

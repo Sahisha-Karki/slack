@@ -43,7 +43,7 @@ const ProfileModal = ({ isOpen, onClose, status = "active", customStatus }) => {
       if (isOpen) {
         try {
           const response = await authAxios.get('http://localhost:5000/api/users/profile');
-          console.log('Profile fetcheed:', 'response.data');
+          console.log('Profile data:', response.data); // Add this line
           setProfile(response.data);
         } catch (error) {
           console.error('Error fetching profile data:', error.response?.data || error.message);
@@ -51,6 +51,7 @@ const ProfileModal = ({ isOpen, onClose, status = "active", customStatus }) => {
         }
       }
     };
+    
 
     fetchProfile();
   }, [isOpen]);
@@ -80,13 +81,20 @@ const ProfileModal = ({ isOpen, onClose, status = "active", customStatus }) => {
   };
 
   const renderProfilePicture = () => {
-    if (profile.profilePicture) {
-      return <img src={profile.profilePicture} alt="Profile" />;
-    } else {
-      const emailInitial = profile.email ? profile.email.charAt(0).toUpperCase() : "?";
-      return <div className="profile-initial">{emailInitial}</div>;
-    }
+    const baseURL = 'http://localhost:5000'; // Adjust if needed
+    const profilePicUrl = `${baseURL}${profile.profilePicture}`;
+    
+    console.log('Profile picture URL:', profilePicUrl); // Verify the URL
+  
+    return (
+      <img 
+        src={profilePicUrl} 
+        alt="Profile" 
+        onError={(e) => e.target.src = 'path/to/fallback-image.png'} 
+      />
+    );
   };
+  
 
   return (
     <div className="profile-modal-overlay" onClick={onClose}>
