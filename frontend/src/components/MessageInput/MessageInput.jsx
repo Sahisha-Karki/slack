@@ -9,8 +9,8 @@ import debounce from 'lodash/debounce';
 import AddImage from './Icons/AddImage';
 import AddLinkModal from './Icons/AddLinkModal';
 import MentionDropdown from './Icons/MentionDropdown';
+import EmojiUploadModal from './Icons/EmojiuploadModal'; // Import the EmojiUploadModal component
 
-// Initialize socket connection
 const socket = io('http://localhost:5000');
 
 const MessageInput = ({ 
@@ -35,7 +35,9 @@ const MessageInput = ({
   const [mentionData, setMentionData] = useState([]);
   const [mentionSearch, setMentionSearch] = useState('');
   const [isLinkModalOpen, setLinkModalOpen] = useState(false);
-  
+  const [isEmojiModalOpen, setIsEmojiModalOpen] = useState(false);
+  const openEmojiModal = () => setIsEmojiModalOpen(true);
+  const closeEmojiModal = () => setIsEmojiModalOpen(false);
   const senderId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -45,10 +47,7 @@ const MessageInput = ({
         const response = await axios.get(`http://localhost:5000/api/workspaces/${workspaceId}/members`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         });
-        
-        // Extract the members array from the response
         const members = response.data.members;
-        
         if (Array.isArray(members)) {
           setMentionData(members);
         } else {
@@ -60,7 +59,6 @@ const MessageInput = ({
     };
     fetchMentionData();
   }, []);
-  
 
   useEffect(() => {
     if (audioBlob && contentEditableRef.current) {
@@ -93,7 +91,6 @@ const MessageInput = ({
 
   const saveDraft = async () => {
     if (!message.trim() || !channelId) return;
-
     try {
       const draftData = { content: message, channelId };
       await axios.post('http://localhost:5000/api/drafts/drafts', draftData, {
@@ -317,13 +314,17 @@ const MessageInput = ({
     };
   }, [message]);
 
-  const handleEmojiSelect = (emojiObject) => {
-    if (emojiObject?.emoji && contentEditableRef.current) {
-      const currentContent = contentEditableRef.current.innerHTML;
-      contentEditableRef.current.innerHTML = currentContent + emojiObject.emoji;
+  const handleEmojiSelect = (emoji) => {
+    if (emoji?.imageUrl && contentEditableRef.current) {
+      const imgElement = document.createElement('img');
+      imgElement.src = emoji.imageUrl;
+      imgElement.alt = emoji.name;
+      imgElement.classList.add('emoji');
+      contentEditableRef.current.appendChild(imgElement);
       setMessage(contentEditableRef.current.innerHTML);
     }
   };
+  
 
   useEffect(() => {
     const handleReceiveDirectMessage = (message) => {
@@ -382,9 +383,9 @@ const MessageInput = ({
                 alt="Selected"
                 className="image-preview"
               />
-              <button className="close-preview-button" onClick={removeImagePreview}>
+              {/* <button className="close-preview-button" onClick={removeImagePreview}>
                 <FontAwesomeIcon icon={faTimes} />
-              </button>
+              </button> */}
             </div>
           )}
         </div>
@@ -402,7 +403,7 @@ const MessageInput = ({
         handleLinkInsert={handleLinkInsert}
         handleSend={debouncedSendMessage}
         message={message}
-        handleEmojiSelect={handleEmojiSelect}
+        handleEmojiSelect={handleEmojiSelect} // Correctly pass the emoji selection handler
         isEditing={!!editMessageId}
         applyFormatting={applyFormatting}
         handleImageSelect={handleImageSelect}
@@ -414,6 +415,11 @@ const MessageInput = ({
         isOpen={isLinkModalOpen}
         onClose={handleCloseLinkModal}
         onSave={handleSaveLink}
+      />
+     <EmojiUploadModal
+        isOpen={isEmojiModalOpen}
+        onClose={closeEmojiModal}
+        onEmojiUpload={handleEmojiSelect} // Handle emoji upload here
       />
     </div>
   );

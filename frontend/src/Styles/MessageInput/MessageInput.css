@@ -101,7 +101,6 @@
 
 /* Add Image Styles */
 .add-image-container {
-  display: flex;
   align-items: center;
   padding: 0 10px;
 }
@@ -156,6 +155,11 @@
 
 .close-preview-button:hover {
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.message-input .emoji{
+  width: 24px;
+  height: 24px;
 }
 
 /* Dropdown Styles */

@@ -9,7 +9,7 @@ function OTPVerification() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [resendMessage, setResendMessage] = useState('');
-  const [verificationType, setVerificationType] = useState('user');
+  const [verificationType, setVerificationType] = useState('user'); // Default to 'user' for registration/workspace
   const [resendDisabled, setResendDisabled] = useState(false);
   const [resendCountdown, setResendCountdown] = useState(0);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function OTPVerification() {
     if (storedEmail) {
       setEmail(storedEmail);
     } else {
-      navigate('/signup');
+      navigate('/signup'); // Redirect if email is not found
     }
 
     if (location.state?.verificationType) {
@@ -35,37 +35,44 @@ function OTPVerification() {
       const verifyOtp = async () => {
         setLoading(true);
         setErrorMessage('');
-  
+      
         try {
-          const url = verificationType === 'workspace'
+          const url = verificationType === 'pw-recover'
+            ? 'http://localhost:5000/api/auth/verify-password-recovery-otp'
+            : verificationType === 'workspace'
             ? 'http://localhost:5000/api/workspaces/verify-otp'
             : 'http://localhost:5000/api/auth/verify-otp';
-  
-          await axios.post(url, {
+      
+          const response = await axios.post(url, {
             email,
             otp: otp.join(''),
           });
-  
+      
+          // Store OTP in localStorage
+          localStorage.setItem('otp', otp.join(''));
+      
           setTimeout(() => {
             console.log('OTP verified successfully');
-            const redirectPath = verificationType === 'workspace'
+            const redirectPath = verificationType === 'pw-recover'
+              ? '/password-reset'
+              : verificationType === 'workspace'
               ? '/workspace-creation'
               : '/verified';
             navigate(redirectPath);
           }, 1000);
-  
+      
         } catch (error) {
           const message = error.response?.data?.message || 'An error occurred';
           console.error('OTP verification error:', message);
-  
+      
           setLoading(false);
           setErrorMessage(message.includes('expired')
             ? 'It looks like your OTP has expired. Please click "Resend OTP" to receive a new code.'
             : 'The OTP you entered seems to be incorrect. Please check the code and try again.');
-        
+      
           // Clear OTP fields but keep the error message
           setOtp(Array(6).fill(''));
-  
+      
           // Focus on the first input field
           setTimeout(() => {
             if (firstInputRef.current) {
@@ -74,7 +81,7 @@ function OTPVerification() {
           }, 0);
         }
       };
-  
+      
       verifyOtp();
     }
   }, [otp, email, navigate, verificationType]);
@@ -135,7 +142,9 @@ function OTPVerification() {
     if (resendDisabled) return;
 
     try {
-      const url = verificationType === 'workspace'
+      const url = verificationType === 'pw-recover'
+        ? 'http://localhost:5000/api/auth/resend-password-recovery-otp'
+        : verificationType === 'workspace'
         ? 'http://localhost:5000/api/workspaces/resend-otp'
         : 'http://localhost:5000/api/auth/resend-otp';
 

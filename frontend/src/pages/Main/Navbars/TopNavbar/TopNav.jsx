@@ -230,6 +230,7 @@ const TopNav = ({ showContent, onSearch }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('email');
+    localStorage.removeItem('workspaceId');
     navigate('/login');
   };
 

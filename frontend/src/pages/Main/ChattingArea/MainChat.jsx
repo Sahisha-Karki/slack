@@ -21,6 +21,7 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
   const [noMessages, setNoMessages] = useState(false);
   const [editMessageId, setEditMessageId] = useState(null);
   const [editMessageContent, setEditMessageContent] = useState('');
+  const [selectedChat,setSelectedChat]= useState()
 
   // State to manage unsent messages for each channel or user
   const [drafts, setDrafts] = useState({});
@@ -152,12 +153,11 @@ const MainChat = ({ channel, userId, userEmail, receiverId, showProfile }) => {
   
 
   const handleAvatarClick = (e) => {
-    e.stopPropagation();
-    // Toggle profile visibility and close notes if open
+    // e.stopPropagation();
+
+    setSelectedChat(e)
     setIsProfileVisible((prev) => {
-      if (!prev) {
-        setIsNotesVisible(false);  // Close notes if profile is opened
-      }
+      if (!prev) setIsNotesVisible(false);
       return !prev;
     });
   };
@@ -307,6 +307,8 @@ const handleSelfMessage = (messageContent) => {
           noMessages={noMessages}
           onEditMessage={handleEditMessage}
           userEmail={userEmail}
+          setSelectedChat={setSelectedChat}
+          selectedChat={selectedChat}
         />
 
       </div>

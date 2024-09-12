@@ -17,6 +17,7 @@ function AuthForm({
   emailError,
   passwordError,
   confirmPasswordError,
+  errorMessage,
 }) {
   const [rememberMe, setRememberMe] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
@@ -42,56 +43,72 @@ function AuthForm({
 
   const handlePasswordChange = (pwd) => {
     setPassword(pwd);
+
     if (formType === 'signup') {
-      const error = validatePassword(pwd);
-      setErrors((prevErrors) => ({ ...prevErrors, password: error }));
+      if (pwd === '') {
+        setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+      } else {
+        const error = validatePassword(pwd);
+        setErrors((prevErrors) => ({ ...prevErrors, password: error }));
+      }
     }
   };
-  
+
+  const handleConfirmPasswordChange = (pwd) => {
+    setConfirmPassword(pwd);
+    if (pwd === '') {
+      setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: '' }));
+    } else if (pwd !== password) {
+      setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: 'Passwords do not match.' }));
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: '' }));
+    }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
     let newErrors = { email: '', password: '', confirmPassword: '' };
-  
+
+    // Validate email
     if (!email.includes('@')) {
       newErrors.email = 'Please enter a valid email address.';
       valid = false;
     }
-  
+
+    // Validate password
     if (formType === 'signup') {
       const passwordError = validatePassword(password);
       if (passwordError) {
         newErrors.password = passwordError;
         valid = false;
       }
+      // Check if passwords match
       if (password !== confirmPassword) {
         newErrors.confirmPassword = 'Passwords do not match.';
         valid = false;
       }
     } else if (formType === 'login') {
-      // For login, you might want to check if the password is non-empty or any other condition
       if (!password) {
         newErrors.password = 'Password is required.';
         valid = false;
       }
     }
-  
+
     setErrors(newErrors);
-  
+
     if (valid && onSubmit) {
       try {
         await onSubmit(e);
       } catch (error) {
         console.error('Form submission error:', error);
       }
-  
+
       if (formType === "newWorkspace") {
         setOtpSent(true);
       }
     }
   };
-  
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -105,6 +122,8 @@ function AuthForm({
         return "Recover Password";
       case "newWorkspace":
         return "First, enter your email";
+      case "password-reset":
+        return "Reset Your Password";
       default:
         return "";
     }
@@ -120,6 +139,8 @@ function AuthForm({
         return "Enter the email address associated with your account and we'll send you a link to reset your password.";
       case "newWorkspace":
         return "We suggest using the email address you use at work.";
+      case "password-reset":
+        return "Enter your new password below.";
       default:
         return "";
     }
@@ -135,6 +156,8 @@ function AuthForm({
         return "Continue";
       case "newWorkspace":
         return "Continue";
+      case "password-reset":
+        return "Reset Password";
       default:
         return "Submit";
     }
@@ -153,6 +176,7 @@ function AuthForm({
     recovery: "/signup",
     newWorkspace: "/login",
   };
+
 
   return (
     <div className="auth">
@@ -180,6 +204,7 @@ function AuthForm({
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
+                {errorMessage && <div className="auth-error-message">{errorMessage}</div>}
                 {emailError && <div className="auth-error-message">{emailError}</div>}
 
                 {formType !== "recovery" && formType !== "newWorkspace" && (
@@ -193,7 +218,7 @@ function AuthForm({
                         required
                       />
                       <span
-                        className={`auth-password-toggle ${passwordError ? 'error-visible' : ''}`}
+                        className={`auth-password-toggle ${errors.password ? 'error-visible' : ''}`}
                         onClick={togglePasswordVisibility}
                         aria-label={showPassword ? "Hide password" : "Show password"}
                       >
@@ -202,9 +227,9 @@ function AuthForm({
                         />
                       </span>
 
-                      {passwordError && (
+                      {errors.password && (
                         <div className="auth-error-message">
-                          {passwordError}
+                          {errors.password}
                         </div>
                       )}
                     </div>
@@ -232,12 +257,12 @@ function AuthForm({
                           type={showPassword ? "text" : "password"}
                           placeholder="Re-enter Password"
                           value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          onChange={(e) => handleConfirmPasswordChange(e.target.value)}
                           required
                         />
-                        {confirmPasswordError && (
+                        {errors.confirmPassword && (
                           <div className="auth-error-message">
-                            {confirmPasswordError}
+                            {errors.confirmPassword}
                           </div>
                         )}
                       </div>
@@ -275,6 +300,8 @@ function AuthForm({
                 ? "Already have an account? "
                 : formType === "newWorkspace"
                 ? "Already Using Slack? "
+                : formType === "password-reset"
+                ? "Remember your password? "
                 : "Don't have an account? "}
               <a href={alternateLinks[formType]}>
                 {alternateActions[formType]}

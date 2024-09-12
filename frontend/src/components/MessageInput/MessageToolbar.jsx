@@ -23,6 +23,7 @@ import Tooltip from '@mui/material/Tooltip';
 import AddFile from './Icons/AddFile';
 import AddImage from './Icons/AddImage';
 import EmojiPickerComponent from './Icons/EmojiPicker';
+import EmojiUploadModal from './Icons/EmojiuploadModal';
 
 const MessageToolbar = ({ 
   handleEmojiSelect, 
@@ -42,6 +43,7 @@ const MessageToolbar = ({
   const [recordedBlob, setRecordedBlob] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [openEmojiModal, setOpenEmojiModal] = useState(false); // Add state to handle Emoji modal
   const [recordingTime, setRecordingTime] = useState(60); // Countdown time in seconds
   const [timerId, setTimerId] = useState(null); // Store timer ID for clearing
   const mediaRecorderRef = useRef(null);
@@ -138,6 +140,16 @@ const MessageToolbar = ({
   // Close the modal
   const handleCloseModal = () => setOpenModal(false);
 
+    
+  // Handle opening the emoji upload modal
+  const handleUploadEmojiClick = () => setOpenEmojiModal(true);
+  
+ // Handle emoji selection
+ const handleEmojiSelection = (emojiData) => {
+  handleEmojiSelect(emojiData); // Call the passed-in handler
+  setOpenEmojiModal(false); // Close the emoji upload modal if needed
+};
+  
   return (
     <div className="toolbar-icons">
       <div className="icon-section first-icon-section">
@@ -157,7 +169,13 @@ const MessageToolbar = ({
         >
           <FontAwesomeIcon icon={isScreenRecording ? faStop : faScreenRecord} />
         </button>
-        <EmojiPickerComponent onSelect={handleEmojiSelect} />
+        <EmojiPickerComponent onSelect={handleEmojiSelection} />
+        <button
+          title="Upload Emoji"
+          onClick={handleUploadEmojiClick} // Open the upload emoji modal
+        >
+          <FontAwesomeIcon icon={faStar} />
+        </button>
       </div>
 
       <div className="icon-section second-icon-section">
@@ -223,6 +241,13 @@ const MessageToolbar = ({
           Screen Recording Time: {recordingTime}s
         </div>
       )}
+
+      {/* Emoji Upload Modal */}
+      <EmojiUploadModal 
+        isOpen={openEmojiModal}
+        onClose={() => setOpenEmojiModal(false)}
+        onEmojiUpload={handleEmojiSelect} // Directly handle emoji upload
+      />
     </div>
   );
 };

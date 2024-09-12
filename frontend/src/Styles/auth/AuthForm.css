@@ -117,6 +117,16 @@
   top: 28%; /* Position when error is visible */
 }
 
+.auth-password-toggle2 {
+  position: absolute;
+  top: 63%;
+  right: 18px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+}
+
 .auth-button {
   width: 100%;
   padding: 10px;

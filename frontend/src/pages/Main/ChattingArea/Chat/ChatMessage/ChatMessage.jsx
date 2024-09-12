@@ -4,7 +4,6 @@ import { format, toZonedTime } from "date-fns-tz";
 import EmojiReactions from "../../../../../components/ReactionEmojies/ReactionEmojies";
 import "./ChatMessage.css";
 
-// Axios instance with token
 const authAxios = axios.create({
   baseURL: 'http://localhost:5000/api/users',
   headers: {
@@ -25,7 +24,6 @@ authAxios.interceptors.request.use(
   }
 );
 
-// Function to get the part of email before '@'
 const getEmailPrefix = (email) => {
   return email ? email.split('@')[0] : "Unknown User";
 };
@@ -71,18 +69,16 @@ const ChatMessage = ({
     fetchUserProfile();
   }, [message.sender?._id, userEmail]);
 
-  // Function to format the date
   const formatDate = (dateString) => {
     if (!dateString) return ""; // Handle empty dateString
 
-    const timeZone = "Asia/Kathmandu"; // Replace with your time zone
+    const timeZone = "Asia/Kathmandu";
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return ""; // Handle invalid date
     const zonedDate = toZonedTime(date, timeZone);
     return format(zonedDate, "hh:mm a", { timeZone });
   };
 
-  // Function to handle reactions
   const handleReaction = (emoji) => {
     setReactions((prev) => {
       if (prev[message.id] && prev[message.id].src === emoji.src) {
@@ -98,7 +94,6 @@ const ChatMessage = ({
     });
   };
 
-  // Function to handle edit
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -120,11 +115,9 @@ const ChatMessage = ({
       setIsEditing(false);
     } catch (error) {
       console.error("Error editing message:", error);
-      // Handle error (e.g., show a notification to the user)
     }
   };
 
-  // Render profile picture or initial if picture is not available
   const renderProfilePicture = () => {
     if (senderProfile.profilePicture) {
       return <img src={`http://localhost:5000${senderProfile.profilePicture}`} alt="Profile" />;
@@ -142,6 +135,13 @@ const ChatMessage = ({
     return null; // or some placeholder component
   }
 
+  const renderContent = () => {
+    // Properly handle emojis and content injection
+    const content = message.content.replace(/(<img\s+[^>]*class=")(emoji)([^>]*>)/gi, '$1chat-emoji $2$3');
+
+    return { __html: content };
+  };
+ 
   return (
     <div
       className={`chat-message ${
@@ -175,7 +175,7 @@ const ChatMessage = ({
             <button onClick={handleCancelEdit}>Cancel</button>
           </div>
         ) : (
-          <p dangerouslySetInnerHTML={{ __html: message.content }} />
+          <p dangerouslySetInnerHTML={renderContent()} />
         )}
 
         {reactions[message.id] && (

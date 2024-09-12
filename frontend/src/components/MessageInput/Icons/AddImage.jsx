@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
+import '../../../Styles/MessageInput/MessageInput.css';
 
 const AddImage = ({ onImageSelect }) => {
   const [selectedImage, setSelectedImage] = useState(null);

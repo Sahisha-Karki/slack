@@ -10,6 +10,7 @@ import OTPVerificationPage from './components/auth/OTPVerification';
 import VerificationCompleted from './components/auth/VerificationCompleted';
 import NewWorkspaceForm from './components/auth/NewWorkspaceForm';
 import WorkspaceCreation from './pages/WelcomePage/WorkspaceCreation/WorkspaceRoutes';
+import PasswordReset from './components/auth/PasswordReset';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/recovery" element={<RecoveryPage />} />
         <Route path="/otp" element={<OTPVerificationPage />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
         <Route path="/verified" element={<VerificationCompleted />} />
         <Route path="/workspace-login" element={<NewWorkspaceForm />} />
         <Route path="/workspace-creation" element={<WorkspaceCreation />} />

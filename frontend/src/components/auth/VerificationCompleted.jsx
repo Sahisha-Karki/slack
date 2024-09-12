@@ -6,10 +6,9 @@ function VerificationCompleted() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect after a 2-second delay
     const timer = setTimeout(() => {
       navigate('/login');
-    }, 3000); // 2 seconds delay
+    }, 2000); 
 
     // Clear the timer if the component is unmounted before the timeout
     return () => clearTimeout(timer);
